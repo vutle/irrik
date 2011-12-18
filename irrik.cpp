@@ -123,7 +123,7 @@ int main() {
 	textinfo->setOverrideFont(font);
 	textinfo->setWordWrap(true);
 	int lastFPS = -1;
-
+	camera->bindTargetAndRotation(false);
 	//main loop
 	while (dev->run()) {
 		drv->beginScene(true, true, video::SColor(1));
@@ -150,19 +150,19 @@ int main() {
 			return EXIT_SUCCESS;
 		}
 		if( input.isPressed(irr::KEY_KEY_W) ){
-			core::vector3df vec;
+			core::vector3df vec,normal;
 			vec = camera->getTarget();
 
-			std::cout<<"W\n"<<vec.X<<std::endl;
-			vec.X+=1;
+			std::cout<<"W"<<std::endl;
+			std::cout<<"vec( "<<vec.X<<", "<<vec.Y<<", "<<vec.Z<<" )"<<std::endl;
+
+			normal=camera->getUpVector();
+			std::cout<<"rot( "<<normal.X<<", "<<normal.Y<<", "<<normal.Z<<" )"<<std::endl;
+			normal.normalize();
+			vec+=normal;
 			camera->setTarget(vec);
-			std::cout<<vec.X<<std::endl;
 
-
-
-
-
-
+			std::cout<<"vec( "<<vec.X<<", "<<vec.Y<<", "<<vec.Z<<" )"<<std::endl;
 
 		}
 
