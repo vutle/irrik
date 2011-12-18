@@ -219,6 +219,7 @@ int main()
         int i = (int) node->getFrameNr();
 
         sbone = node->getJointNode((u32)9);
+        sbone->positionHint
         sbone->setRotation(core::vector3df(20.0f*angles[i%11],0,0) );
 
         target.show();
