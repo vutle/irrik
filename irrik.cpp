@@ -18,12 +18,13 @@ void boneLabels(scene::ISceneManager *scene, gui::IGUIFont* font, scene::IBoneSc
 	core::list<scene::ISceneNode*>::ConstIterator end = root->getChildren().end();
 		for(;begin != end; ++begin){
 			child = (scene::IBoneSceneNode *)(*begin);
-			std::cout<<"joint name: "<<child->getBoneName()<<std::endl;
+			std::cout<<"joint name: "<<child->getName()<<std::endl;
 			boneLabels(scene,font,child);
 		}
-	scene->addBillboardTextSceneNode(font, L"test", root);
-
+		core::stringw str(root->getName());
+		scene->addBillboardTextSceneNode(font, str.c_str(),root, core::dimension2d<f32>(10.0f, 4.0f));
 }
+
 int main() {
 	Input input;
 	//create irrlicht opengl device
@@ -75,7 +76,7 @@ int main() {
 			(scene::E_DEBUG_SCENE_TYPE) (node->isDebugDataVisible()
 					^ scene::EDS_SKELETON));
 
-//	// Load a ninja model
+	// Load a ninja model
 	node = scene->addAnimatedMeshSceneNode(
 			scene->getMesh("media/ninja/ninja.b3d"));
 
@@ -100,12 +101,11 @@ int main() {
 	node->setDebugDataVisible(
 			(scene::E_DEBUG_SCENE_TYPE) (node->isDebugDataVisible()
 					^ scene::EDS_SKELETON));
-	node->setLoopMode(true);
-	node->setFrameLoop(2, 18);
-	node->setFrameLoop(137, 169);
 	node->setAnimationSpeed(5);
 	node->setJointMode(scene::EJUOR_CONTROL);
-//	material.Lighting = false;
+	node->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
+
+	// material.Lighting = false;
 
 	//let there be light
 	scene::ILightSceneNode * light = scene->addLightSceneNode(0,
@@ -143,12 +143,13 @@ int main() {
 	int lastFPS = -1;
 	float wheel=0;
 
-	scene::IBoneSceneNode *bone = node->getJointNode((u32)0);
-	boneLabels(scene,font,bone);
+	scene::IBoneSceneNode *bone, *rootbone = node->getJointNode((u32)0);
+
+	boneLabels(scene,font,rootbone);
 
 	static int angles[] = {2, 3, 4, 4, 3, 2, 1, 0, 0, 1, 2};
 
-	Target target(dev);
+	Target target(dev,-20, -20, 150);
     target.show();
 
     core::vector3df vec,normal;
@@ -157,13 +158,18 @@ int main() {
 	while (dev->run()) {
 
 		drv->beginScene(true, true, video::SColor(1));
+
+		bone=node->getJointNode("Joint12");
         int i = (int) node->getFrameNr();
+        rootbone->updateAbsolutePositionOfAllChildren();
         bone->setRotation(core::vector3df(20.0f*angles[i%11],0,0) );
+
 
 		scene->drawAll();
 		guienv->drawAll();
 
 		drv->endScene();
+
 		int fps = drv->getFPS();
 
 		if (lastFPS != fps)
@@ -218,7 +224,6 @@ int main() {
 			normal.normalize();
 			vec+=normal*wheel*10;
 			camera->setTarget(vec);
-
 			std::cout<<"vec( "<<vec.X<<", "<<vec.Y<<", "<<vec.Z<<" )"<<std::endl;
 		}
 
