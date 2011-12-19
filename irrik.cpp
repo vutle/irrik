@@ -10,6 +10,34 @@
 #include "Input.h"
 #include <iostream>
 
+void anim_ccd(scene::IBoneSceneNode &effector,scene::IBoneSceneNode &bone, core::vector3df target, int steps=10){
+	core::vector3df vec1, vec2,ort;
+	float anglex=0,angley=0,anglez=0;
+	scene::IBoneSceneNode *parent;
+
+	vec1 = bone.getAbsolutePosition(); //get abs pos to calculate vector to target
+	vec2 = target - vec1;
+	vec1 = effector.getPosition();
+	ort = vec2.crossProduct(vec1); //TODO ok or invert?
+
+	core::quaternion quat;
+	quat.rotationFromTo(vec1,vec2);
+	core::matrix4 mat;
+	mat=quat.getMatrix();
+	mat.rotateVect(vec1);
+	bone.setRotation(vec1);
+	bone.updateAbsolutePosition();
+//target.rotationToDirection();
+//core::matrix4 matrix;
+//matrix.setRotationDegrees();
+//matrix.rotateVect()
+//	anglex=acos(vec1.dotProduct(vec2));
+//
+//	parent=(scene::IBoneSceneNode*)bone.getParent();
+//	parent->setRotation(core::vector3df(anglex, angley, anglez));
+//	if(steps>0)
+//		return;anim_ccd(bone,bone,target, steps-1);
+}
 void boneLabels(scene::ISceneManager *scene, gui::IGUIFont* font, scene::IBoneSceneNode *root){
 
 	scene::IBoneSceneNode *child;
@@ -26,6 +54,7 @@ void boneLabels(scene::ISceneManager *scene, gui::IGUIFont* font, scene::IBoneSc
 }
 
 int main() {
+
 	Input input;
 	//create irrlicht opengl device
 	IrrlichtDevice *dev = createDevice(video::EDT_OPENGL,
@@ -55,8 +84,8 @@ int main() {
 	// Load a dwarf model
 	node = scene->addAnimatedMeshSceneNode(
 			scene->getMesh("media/dwarf/dwarf1.x"));
-	node->setPosition(core::vector3df(0, -86, 50)); // Put its feet on the floor.
-	node->setRotation(core::vector3df(0, -90, 0)); // And turn it towards the camera.
+	node->setPosition(core::vector3df(0, -86, 50));
+	node->setRotation(core::vector3df(0, -90, 0));
 	node->setAnimationSpeed(10.f);
 	node->setScale(core::vector3df(12, 12, 12));
 	node->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
@@ -67,8 +96,8 @@ int main() {
 	// Load a dwarf model
 	node = scene->addAnimatedMeshSceneNode(
 			scene->getMesh("media/dwarf/dwarf2.x"));
-	node->setPosition(core::vector3df(-200, -86, 50)); // Put its feet on the floor.
-	node->setRotation(core::vector3df(0, 90, 0)); // And turn it towards the camera.
+	node->setPosition(core::vector3df(-200, -86, 50));
+	node->setRotation(core::vector3df(0, 90, 0));
 	node->setAnimationSpeed(10.f);
 	node->setScale(core::vector3df(12, 12, 12));
 	node->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
@@ -159,12 +188,11 @@ int main() {
 
 		drv->beginScene(true, true, video::SColor(1));
 
-		bone=node->getJointNode("Joint12");
-        int i = (int) node->getFrameNr();
+		bone=node->getJointNode("Joint13");
+//        int i = (int) node->getFrameNr();
         rootbone->updateAbsolutePositionOfAllChildren();
-        bone->setRotation(core::vector3df(20.0f*angles[i%11],0,0) );
-
-
+//        bone->setRotation(core::vector3df(20.0f*angles[i%11],0,0) );
+        anim_ccd(*bone,(scene::IBoneSceneNode &)*(bone->getParent()),target.getAbsolutePosition());
 		scene->drawAll();
 		guienv->drawAll();
 

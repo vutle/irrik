@@ -33,6 +33,7 @@ public:
 	;
 	void setPosition(const core::vector3df &nposition);
 	core::vector3df getPosition();
+	core::vector3df getAbsolutePosition();
 	void show();
 
 	virtual ~Target();

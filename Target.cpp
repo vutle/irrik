@@ -34,6 +34,11 @@ core::vector3df Target::getPosition()
 	return position;
 }
 
+core::vector3df Target::getAbsolutePosition()
+{
+	return marker->getAbsolutePosition();
+}
+
 Target::~Target() {
 	// TODO Auto-generated destructor stub
 }
