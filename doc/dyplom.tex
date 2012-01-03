@@ -1,0 +1,61 @@
+\documentclass[11pt]{mwrep}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage{pwrdtyt}
+\renewcommand{\baselinestretch}{1.5}
+\usepackage[a4paper]{geometry}
+\author{Marcin Załuski}
+\title{Animacja 3D z wykorzystaniem kinematyki odwrotnej}
+\promotor{dr inż. Tomasz Kapłon}
+\wydzial{Elektronika}
+\kluczowe{animacja, 3D, kinematyka, odwrotna, gra, silnik graficzny, ruch, postać}
+\streszczenie{Streszczenie pracy}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\chapter{Wprowadzenie}
+Parę słów po co, gdzie i do czego jest animacja stosowana, jak to mamy coraz lepszy sprzęt itp
+  \section{Określenie problemu}
+Nieco bliższe przedstawienie problemu animacji i kinematyki odwrotnej
+  \section{Cel pracy}
+Analiza porównawcza metod animacji trójwymiarowej
+  \section{Etapy pracy i założenia}
+
+Zagadnienia dotyczące animacji, a w szczególności animacji trójwymiarowej są złożone oraz bardzo rozległe, tym samym oferując szerokie pole do badań i rozwoju. Z tego względu pracę podzielono na etapy oraz przyjęto odpowiednie założenia, nadając tym samym kierunek w jakim podążały badania i określając ramy w jakich powinny się one zawierać. Dzięki temu oraz dzięki sprecyzowaniu celu w poprzednim rozdziale wiadomo było, w którym momencie niniejsze dzieło można uznać za ukończone.
+
+
+\chapter{Animacja 3D}
+Wyjaśnienie terminów związanych z animacją itp, opis różnych metod, algorytmy, rysunki poglądowe...
+  \section{kinematyka prosta}
+  \section{kinematyka odwrotna}
+  \section{animacja szkieletowa}
+  \section{animacja klatkowa}
+  \section{animacja ...}
+  
+\chapter{Kinematyka odwrotna}
+Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zastosowań i paru algorytmów, ze szczególnym uwzględnieniem implementowanego CCD.
+  \section{Geneza}
+  \section{Zastosowania}
+  \section{Algorytmy}
+
+\chapter{Projekt}
+  \section{Założenia}
+  \section{Przegląd i wybór technologii}
+    \subsection{Silnik Graficzny}
+    Bez wykorzystania silników graficznych prawdopodobnie nie powstałyby wielkie, wy\-so\-ko\-bud\-że\-to\-we produkcje, jakie ukazują się obecnie na rynku gier komputerowych	. Wiąże się to ze stale rosnącym, wysokim stopniem skomplikowania układów graficznych, coraz większym poziomem realizmu oraz wykorzystaniem zaawansowanych efektów wizualnych, takich jak \texttt{HDR}.
+      \subsubsection{OGRE}
+  \texttt{OGRE} jest popularnym silnikiem graficznym na wolnej licencji. Nazwa jest skrótem od angielskiego \textit{Object-Oriented Graphics Rendering Engine}, czyli Zorientowany Obiektowo Silnik Renderujący Grafikę. OGRE, jak większość szeroko stosowanych silników graficznych, został napisany w języku \texttt{C++}. Wszelkie szczegóły dotyczące implementacji niższych warstw, takich jak wywołania API \texttt{OpenGL} lub \texttt{DirectX}, podlegając hermetyzacji dzięki użyciu klas. Daje to możliwość szybkiego osiągnięcia zamierzonych rezultatów bez konieczności zapoznawania się ze specyfiką konkretnej biblioteki graficznej oraz ułatwia przenoszenie aplikacji między platformami systemowymi. OGRE, jak już wcześniej wspomniano, wspiera zarówno OpenGL, jak i DirectX oraz główne systemy operacyjne -- Windows, Linux oraz Mac OS X. Oferuje ponadto możliwość użycia programów cieniujących, animacji szkieletowej, skórowania i wiele innych technik. Wysoka krzywa uczenia. Historia, kto co jak gdzie kiedy
+      \subsubsection{Panda3D}
+      \subsubsection{Irrlicht}
+     \subsection{Interfejs programowy dla sprzętu graficznego}
+  \section{Implementacja}
+
+\chapter{Analiza porównawcza}
+  \section{Metodologia}
+  \section{Eksperymenty}
+  \section{Wyniki}
+
+\chapter{Podsumowanie}
+\end{document}

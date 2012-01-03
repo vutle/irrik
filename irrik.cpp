@@ -10,7 +10,7 @@
 #include "Input.h"
 #include <iostream>
 
-void anim_ccd(scene::IBoneSceneNode &effector,scene::IBoneSceneNode &bone, core::vector3df target, int steps=10){
+void anim_ccd(scene::IBoneSceneNode &effector,scene::IBoneSceneNode &bone, core::vector3df target, int steps=3){
 	core::vector3df vec1, vec2,ort;
 	float anglex=0,angley=0,anglez=0;
 	scene::IBoneSceneNode *parent;
@@ -18,25 +18,21 @@ void anim_ccd(scene::IBoneSceneNode &effector,scene::IBoneSceneNode &bone, core:
 	vec1 = bone.getAbsolutePosition(); //get abs pos to calculate vector to target
 	vec2 = target - vec1;
 	vec1 = effector.getPosition();
-	ort = vec2.crossProduct(vec1); //TODO ok or invert?
+//	ort = vec1.crossProduct(vec2); //TODO ok or invert?
 
 	core::quaternion quat;
 	quat.rotationFromTo(vec1,vec2);
-	core::matrix4 mat;
-	mat=quat.getMatrix();
-	mat.rotateVect(vec1);
-	bone.setRotation(vec1);
+	std::cout << "1: " << vec1.X << ", " << vec1.Y << ", " << vec1.Z<<std::endl;
+	std::cout << "2: " << vec2.X << ", " << vec2.Y << ", " << vec2.Z<<std::endl;
+	core::vector3df eulers;
+	quat.toEuler(eulers);
+	eulers *= core::RADTODEG;
+	bone.setRotation(eulers);
 	bone.updateAbsolutePosition();
-//target.rotationToDirection();
-//core::matrix4 matrix;
-//matrix.setRotationDegrees();
-//matrix.rotateVect()
-//	anglex=acos(vec1.dotProduct(vec2));
-//
-//	parent=(scene::IBoneSceneNode*)bone.getParent();
-//	parent->setRotation(core::vector3df(anglex, angley, anglez));
-//	if(steps>0)
-//		return;anim_ccd(bone,bone,target, steps-1);
+
+	parent=(scene::IBoneSceneNode*)bone.getParent();
+	if(steps>0)
+		anim_ccd(bone,*parent,target, steps-1);
 }
 void boneLabels(scene::ISceneManager *scene, gui::IGUIFont* font, scene::IBoneSceneNode *root){
 
@@ -118,7 +114,18 @@ int main() {
 			(scene::E_DEBUG_SCENE_TYPE) (node->isDebugDataVisible()
 					^ scene::EDS_SKELETON));
 	node->setFrameLoop(32, 83);
-
+	// Load a zobie model
+	node = scene->addAnimatedMeshSceneNode(
+			scene->getMesh("media/zombie/zombie.b3d"));
+	node->setScale(core::vector3df(5, 5, 5));
+	node->setPosition(core::vector3df(50, -86, 150));
+	node->setRotation(core::vector3df(0, 90, 0));
+	node->setAnimationSpeed(10.f);
+	node->getMaterial(0).NormalizeNormals = true;
+	node->setDebugDataVisible(
+			(scene::E_DEBUG_SCENE_TYPE) (node->isDebugDataVisible()
+					^ scene::EDS_SKELETON));
+	node->setAnimationSpeed(5);
 	// Load a zobie model
 	node = scene->addAnimatedMeshSceneNode(
 			scene->getMesh("media/zombie/zombie.b3d"));
@@ -178,7 +185,7 @@ int main() {
 
 	static int angles[] = {2, 3, 4, 4, 3, 2, 1, 0, 0, 1, 2};
 
-	Target target(dev,-20, -20, 150);
+	Target target(dev,-0, -0, 0);
     target.show();
 
     core::vector3df vec,normal;
