@@ -1,3 +1,18 @@
+%% Marcin Załuski - praca dyplomowa
+%%
+%% http://www.immt.pwr.wroc.pl/index.php?option=com_docman&task=down&bid=75 - instrukcja do szablonu
+%%
+%% mwrep:
+%% 	sudo apt-get install texlive-lang-polish 
+%% textpops
+%%	sudo apt-get install texlive-latex-extra
+%%
+%% *.sty do katalogu:
+%% 	mkdir -p ~/texmf/tex/latex/pwr
+%% 	texhash ~/texmf
+%% 	sudo updmap
+
+\newcommand{\cmnt}[1]{}
 \documentclass[11pt]{mwrep}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -44,9 +59,16 @@ Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zast
   \section{Założenia}
   \section{Przegląd i wybór technologii}
     \subsection{Silnik Graficzny}
-    Bez wykorzystania silników graficznych prawdopodobnie nie powstałyby wielkie, wy\-so\-ko\-bud\-że\-to\-we produkcje, jakie ukazują się obecnie na rynku gier komputerowych	. Wiąże się to ze stale rosnącym, wysokim stopniem skomplikowania układów graficznych, coraz większym poziomem realizmu oraz wykorzystaniem zaawansowanych efektów wizualnych, takich jak \texttt{HDR}.
+    Bez wykorzystania silników graficznych prawdopodobnie nie powstałyby wielkie, wy\-so\-ko\-bud\-że\-to\-we produkcje, jakie ukazują się obecnie na rynku gier komputerowych	. Wiąże się to ze stale rosnącym, wysokim stopniem skomplikowania układów graficznych, coraz większym poziomem realizmu oraz wykorzystaniem zaawansowanych efektów wizualnych, takich jak \texttt{HDR}, czy efekty cząsteczkowe. 
+
+    Obecnie dostępnych jest wiele zróżnicowanych silników graficznych, odmiennych pod wieloma względami i prezentujących dużą liczbę indywidualnych cech oraz funkcjonalności. Dzięki ich zastosowaniu programiści mogą się skupić na implementacji innych, unikalnych dla danej gry elementów, takich jak choćby logika. Wiąże się to z oszczędnością czasu pracy i optymalizacją zasobów. Ponadto powszechnym zjawiskiem jest, że firmy na bazie jednego silnika wydają kilka różnych produkcji w dość krótkim czasie, co nie byłoby możliwe, gdyby dla każdej z nich należało od podstaw obsłużyć renderowanie grafiki. Co więcej, częstokroć bywa, że producent nie posiada silnika graficznego, ani nie zamierza go rozwijać samemu od podstaw, lecz używa już dostępnego. Zazwyczaj dzieje się tak w projektach amatorskich, hobbystycznych, niskobudżetowych, lub badawczych, acz nie jest to regułą. W tych wymienionych wybór przeważnie pada na rozwiązania otwartoźródłowe.
+
+    Przykładem komercyjnego silnika wykorzystywanego w licznych, uznanych, dużych i popularnych produkcjach niezależnych firm może być \texttt{RenderWare}. Jest to produkt studia \texttt{Criterion}, które było częścią firmy \texttt{Canon}. Został on użyty w takich tytułach jak \textit{Tony Hawk's Pro Skater 3}, \textit{Battlefield 2: Modern Combat}, czy choćby w słynnej serii \textit{Grand Theft Auto} oraz wiele innych -- obszerna lista wykorzystujących go produktów jest dostępna na \ref{renderware:list}. Wymienione gry wydane zostały przez kolejno  \textit{Neversoft/Activision}, \textit{DICE}, \textit{Rockstar Games}. Można zauważyć, że są to światowej sławy firmy, co świadczy o prestiżu RenderWare, o którym więcej można się dowiedzieć na \ref{renderware}.
+
+%TODO  jakie wytyczne? opensource, brak IK itp, czego nie trzeba (shader, supergrafa) rezygnacja z własnego
+
       \subsubsection{OGRE}
-  \texttt{OGRE} jest popularnym silnikiem graficznym na wolnej licencji. Nazwa jest skrótem od angielskiego \textit{Object-Oriented Graphics Rendering Engine}, czyli Zorientowany Obiektowo Silnik Renderujący Grafikę. OGRE, jak większość szeroko stosowanych silników graficznych, został napisany w języku \texttt{C++}. Wszelkie szczegóły dotyczące implementacji niższych warstw, takich jak wywołania API \texttt{OpenGL} lub \texttt{DirectX}, podlegając hermetyzacji dzięki użyciu klas. Daje to możliwość szybkiego osiągnięcia zamierzonych rezultatów bez konieczności zapoznawania się ze specyfiką konkretnej biblioteki graficznej oraz ułatwia przenoszenie aplikacji między platformami systemowymi. OGRE, jak już wcześniej wspomniano, wspiera zarówno OpenGL, jak i DirectX oraz główne systemy operacyjne -- Windows, Linux oraz Mac OS X. Oferuje ponadto możliwość użycia programów cieniujących, animacji szkieletowej, skórowania i wiele innych technik. Wysoka krzywa uczenia. Historia, kto co jak gdzie kiedy
+  \texttt{OGRE} jest popularnym silnikiem graficznym na wolnej licencji. Nazwa jest skrótem od angielskiego \textit{Object-Oriented Graphics Rendering Engine}, czyli Zorientowany Obiektowo Silnik Renderujący Grafikę. OGRE, jak większość szeroko stosowanych silników graficznych, został napisany w języku \texttt{C++}. Wszelkie szczegóły dotyczące implementacji niższych warstw, takich jak wywołania API \texttt{OpenGL} lub \texttt{DirectX}, podlegając hermetyzacji dzięki użyciu klas. Daje to możliwość szybkiego osiągnięcia zamierzonych rezultatów bez konieczności zapoznawania się ze specyfiką konkretnej biblioteki graficznej oraz ułatwia przenoszenie aplikacji między platformami systemowymi. OGRE, jak już wcześniej wspomniano, wspiera zarówno OpenGL, jak i DirectX oraz główne systemy operacyjne -- Windows, Linux oraz Mac OS X. Oferuje ponadto możliwość użycia programów cieniujących, animacji szkieletowej, skórowania i wiele innych technik. Wysoka krzywa uczenia. Historia, kto co jak gdzie kiedy %TODO
       \subsubsection{Panda3D}
       \subsubsection{Irrlicht}
      \subsection{Interfejs programowy dla sprzętu graficznego}
@@ -58,4 +80,8 @@ Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zast
   \section{Wyniki}
 
 \chapter{Podsumowanie}
+
+%%Bibliografia
+%%http://www.mobygames.com/game-group/graphics-engine-renderware
+
 \end{document}
