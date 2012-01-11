@@ -18,6 +18,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[polish]{babel}
 \usepackage{pwrdtyt}
+\usepackage{url}
 \renewcommand{\baselinestretch}{1.5}
 \usepackage[a4paper]{geometry}
 \author{Marcin Załuski}
@@ -38,7 +39,7 @@ Nieco bliższe przedstawienie problemu animacji i kinematyki odwrotnej
 Analiza porównawcza metod animacji trójwymiarowej
   \section{Etapy pracy i założenia}
 
-Zagadnienia dotyczące animacji, a w szczególności animacji trójwymiarowej są złożone oraz bardzo rozległe, tym samym oferując szerokie pole do badań i rozwoju. Z tego względu pracę podzielono na etapy oraz przyjęto odpowiednie założenia, nadając tym samym kierunek w jakim podążały badania i określając ramy w jakich powinny się one zawierać. Dzięki temu oraz dzięki sprecyzowaniu celu w poprzednim rozdziale wiadomo było, w którym momencie niniejsze dzieło można uznać za ukończone.
+Zagadnienia dotyczące animacji, a w szczególności animacji trójwymiarowej są złożone oraz bardzo rozległe, tym samym oferując szerokie pole do badań i rozwoju. Z tego względu pracę podzielono na etapy oraz przyjęto odpowiednie założenia, nadając tym samym kierunek w jakim podążały badania i określając ramy w jakich powinny się one zawierać. Dzięki temu oraz dzięki sprecyzowaniu celu w poprzednim rozdziale, wiadomo było w którym momencie niniejsze dzieło można uznać za ukończone.
 
 
 \chapter{Animacja 3D}
@@ -56,22 +57,53 @@ Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zast
   \section{Algorytmy}
 
 \chapter{Projekt}
+
   \section{Założenia}
+
   \section{Przegląd i wybór technologii}
+
     \subsection{Silnik Graficzny}
+
     Bez wykorzystania silników graficznych prawdopodobnie nie powstałyby wielkie, wy\-so\-ko\-bud\-że\-to\-we produkcje, jakie ukazują się obecnie na rynku gier komputerowych	. Wiąże się to ze stale rosnącym, wysokim stopniem skomplikowania układów graficznych, coraz większym poziomem realizmu oraz wykorzystaniem zaawansowanych efektów wizualnych, takich jak \texttt{HDR}, czy efekty cząsteczkowe. 
 
     Obecnie dostępnych jest wiele zróżnicowanych silników graficznych, odmiennych pod wieloma względami i prezentujących dużą liczbę indywidualnych cech oraz funkcjonalności. Dzięki ich zastosowaniu programiści mogą się skupić na implementacji innych, unikalnych dla danej gry elementów, takich jak choćby logika. Wiąże się to z oszczędnością czasu pracy i optymalizacją zasobów. Ponadto powszechnym zjawiskiem jest, że firmy na bazie jednego silnika wydają kilka różnych produkcji w dość krótkim czasie, co nie byłoby możliwe, gdyby dla każdej z nich należało od podstaw obsłużyć renderowanie grafiki. Co więcej, częstokroć bywa, że producent nie posiada silnika graficznego, ani nie zamierza go rozwijać samemu od podstaw, lecz używa już dostępnego. Zazwyczaj dzieje się tak w projektach amatorskich, hobbystycznych, niskobudżetowych, lub badawczych, acz nie jest to regułą. W tych wymienionych wybór przeważnie pada na rozwiązania otwartoźródłowe.
 
-    Przykładem komercyjnego silnika wykorzystywanego w licznych, uznanych, dużych i popularnych produkcjach niezależnych firm może być \texttt{RenderWare}. Jest to produkt studia \texttt{Criterion}, które było częścią firmy \texttt{Canon}. Został on użyty w takich tytułach jak \textit{Tony Hawk's Pro Skater 3}, \textit{Battlefield 2: Modern Combat}, czy choćby w słynnej serii \textit{Grand Theft Auto} oraz wiele innych -- obszerna lista wykorzystujących go produktów jest dostępna na \ref{renderware:list}. Wymienione gry wydane zostały przez kolejno  \textit{Neversoft/Activision}, \textit{DICE}, \textit{Rockstar Games}. Można zauważyć, że są to światowej sławy firmy, co świadczy o prestiżu RenderWare, o którym więcej można się dowiedzieć na \ref{renderware}.
+    Przykładem komercyjnego silnika wykorzystywanego w licznych, uznanych, dużych i popularnych produkcjach niezależnych firm może być \texttt{RenderWare}. Jest to produkt studia \textit{Criterion}, które było częścią firmy \textit{Canon}. Został on użyty w takich tytułach jak \textit{Tony Hawk's Pro Skater 3}, \textit{Battlefield 2: Modern Combat}, czy choćby w słynnej serii \textit{Grand Theft Auto} oraz wiele innych -- obszerna lista wykorzystujących go produktów jest dostępna na \cite{renderware:list}. Wymienione gry wydane zostały przez kolejno  \textit{Neversoft/Activision}, \textit{DICE}, \textit{Rockstar Games}. Można zauważyć, że są to światowej sławy firmy, co świadczy o prestiżu RenderWare, o którym więcej można się dowiedzieć na \cite{renderware}.Niestety po wykupieniu przez \textit{Electronic Arts} dystrybucja licencji oraz rozwój silnika zostały wstrzymane.
 
-%TODO  jakie wytyczne? opensource, brak IK itp, czego nie trzeba (shader, supergrafa) rezygnacja z własnego
 
+    W związku z faktem, iż nawet najwięksi wydawcy gier stosują w swoich produktach zewnętrzne rozwiązania oraz ze względu na zakres i czas ograniczony terminem złożenia pracy dyplomowej, postanowiono również w projekcie użyć istniejącego już silnika graficznego. W dalszej części rozdziału przedstawione zostaną kryteria i wymogi jakie postawiono przed poszukiwanym silnikiem oraz pokrótce opisano rozważane rozwiązania. Na koniec znajdzie się uzasadnienie ostatecznego wyboru silnika graficznego.
+
+    Głównym kryterium przy wyborze była licencja, na której opublikowany został dany silnik graficzny. Ze względu na naukowy i niedochodowy charakter projektu poszukiwano rozwiązania o otwartych źródłach, a co za tym idzie, licencji zgodniej z \texttt{GPL}/\texttt{BSD}, bądź zbliżonej. Kolejnym istotnym wymogiem były obsługiwane platformy sprzętowo-sys\-te\-mo\-we, jako że projekt rozwijano przy wykorzystaniu systemu operacyjnego \texttt{GNU/Linux} i mikrokomputera o architekturze \texttt{x86}.  Kluczowa była także możliwości użycia danego silnika graficznego w aplikacji pisanej w języku programowania \texttt{C/C++}. Ponadto ze względu na presję czasu poszukiwano rozwiązania o stosunkowo łagodnej krzywej uczenia. W związku z tym za duży atut uważano również popularność silnika, a także ilość oraz jakoś dokumentacji i materiałów dydaktycznych. Z tego samego powodu za istotną uznano dużą dostępność materiałów gotowych i dozwolonych do użycia, takich jak sceny i modele postaci. To z kolei przekłada się na ilość i rodzaj obsługiwanych formatów wejściowych. Biorąc pod uwagę stawiany cel, implementację algorytmu kinematyk odwrotnej, wykorzystanie systemu szkieletowego przyjęto za bardzo ważne kryterium. Zwracano również uwagę, aby silnik graficzny nie posiadał jeszcze metod kinematyki odwrotnej. Za drugorzędne, bądź nieistotne uznano takie cechy jak jakość renderowanej grafiki i możliwość użycia shaderów oraz zaawansowanych efektów specjalnych czy oświetleniowych.
+
+ 
       \subsubsection{OGRE}
-  \texttt{OGRE} jest popularnym silnikiem graficznym na wolnej licencji. Nazwa jest skrótem od angielskiego \textit{Object-Oriented Graphics Rendering Engine}, czyli Zorientowany Obiektowo Silnik Renderujący Grafikę. OGRE, jak większość szeroko stosowanych silników graficznych, został napisany w języku \texttt{C++}. Wszelkie szczegóły dotyczące implementacji niższych warstw, takich jak wywołania API \texttt{OpenGL} lub \texttt{DirectX}, podlegając hermetyzacji dzięki użyciu klas. Daje to możliwość szybkiego osiągnięcia zamierzonych rezultatów bez konieczności zapoznawania się ze specyfiką konkretnej biblioteki graficznej oraz ułatwia przenoszenie aplikacji między platformami systemowymi. OGRE, jak już wcześniej wspomniano, wspiera zarówno OpenGL, jak i DirectX oraz główne systemy operacyjne -- Windows, Linux oraz Mac OS X. Oferuje ponadto możliwość użycia programów cieniujących, animacji szkieletowej, skórowania i wiele innych technik. Wysoka krzywa uczenia. Historia, kto co jak gdzie kiedy %TODO
+
+      OGRE jest popularnym silnikiem graficznym na wolnej licencji \texttt{MIT}, która to jest kompatybilna z licencją \texttt{GPL}. Nazwa jest skrótem od angielskiego \textit{Object-Oriented Graphics Rendering Engine}, czyli Zorientowany Obiektowo Silnik Renderujący Grafikę.
+
+      OGRE, jak większość szeroko stosowanych silników graficznych, został napisany w języku \texttt{C++}. Wszelkie szczegóły dotyczące implementacji niższych warstw, takich jak wywołania API \texttt{OpenGL} lub \texttt{DirectX}, podlegając hermetyzacji dzięki użyciu klas. Daje to możliwość szybkiego osiągnięcia zamierzonych rezultatów bez konieczności zapoznawania się ze specyfiką konkretnej biblioteki graficznej oraz ułatwia przenoszenie aplikacji między platformami systemowymi. OGRE, jak już wcześniej wspomniano, wspiera zarówno OpenGL, jak i DirectX oraz główne systemy operacyjne -- \texttt{Windows}, \texttt{Linux} oraz \texttt{Mac OS X}. Oferuje także możliwość użycia programów cieniujących, animacji szkieletowej, skórowania i wiele innych technik. 
+
+      Ze względu na popularność tego silnika graficznego, istnieje bardzo dużo materiałów dydaktycznych dotyczących go. Na uwagę zasługuje liczba publikacji w formie książki, która jak na projekt tego typu jest pokaźna. Dobrym przykładem są takie pozycje jak \cite{ogreb1}, czy też najnowsza publikacja dostępna w chwili pisania niniejszej pracy, cechująca się nieco innym podejściem do tematu \cite{ogreb2}. Na początku warto jednak zapoznać się przede wszystkim z materiałami dostępnymi na \cite{ogre}.
+
+      OGRE niestety nie jest szczególnie łatwym w użyciu silnikiem graficznym. Aby zrozumieć filozofię jego działania i programowania aplikacji, należy poświęcić sporo czasu. Wynikowy kod dla prostej sceny również zdaje się być dość rozwlekły. Głównym mankamentem w kontekście niniejszej pracy jest fakt, iż co prawda sam silnik nie oferuje metod animacji opartych o kinematykę odwrotną, ale istnieją poboczne implementacje algorytmów IK z użyciem OGRE, które jak dotąd nie zostały włączone do głównego projektu.
+
       \subsubsection{Panda3D}
+      W odróżnieniu od pozostałych rozpatrywanych rozwiązań \texttt{Panda3D} jest projektem dalece bardziej złożonym. Takiego stanu rzeczy należy upatrywać w tym, że nie jest to jedynie silnik graficzny, a kompletny silnik gry. W związku z powyższym \texttt{Panda3D} posiada skomplikowaną strukturę oraz podsystemy odpowiedzialne za renderowanie grafiki, animacje, odtwarzanie dźwięku, sterowanie, detekcję kolizji, obsługę sieci, symulacje fizyczne, sztuczną inteligencję i inne.
+
+      Zdecydowanie warto zaznaczyć, że projekt ten powstał jako zamknięte oprogramowanie rozwijane na własne potrzeby przez studio \texttt{Disney VR} będące częścią dobrze wszystkim znanej korporacji \texttt{The Walt Disney Company}. W roku 2002 silnik został opublikowany jako wolne oprogramowanie. Obecnie jego rozwój jest kontynuowany na licencji \texttt{BSD} przez \texttt{Entertainment Technology Center} przy uniwersytecie \texttt{Carnegie Mellon} we współpracy z \texttt{Disneyem}.
+
+
+
+% 	system budowania, cpp/python, disney, prosty, game engine, komplikacja, czas kompilacji
+	
+
       \subsubsection{Irrlicht}
+
      \subsection{Interfejs programowy dla sprzętu graficznego}
+
+      \subsubsection{DirectX}
+
+      \subsubsection{OpenGL}
+
   \section{Implementacja}
 
 \chapter{Analiza porównawcza}
@@ -81,7 +113,19 @@ Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zast
 
 \chapter{Podsumowanie}
 
+
+\begin{thebibliography}{99}
+% \addcontentsline{toc}{section}{Bibliografia}
+
+\bibitem{renderware:list} MobyGames, \textit{Graphics Engine: RenderWare}, \url{http://www.advancedlinuxprogramming.com/alp-folder}
+\bibitem{renderware} Criterion Software, \textit{RENDERWARE GRAPHICS}, \url{http://web.archive.org/web/20070105144827/http://www.renderware.com/graphics.asp}
+\bibitem{ogreb1} Gregory Junker, \textit{Pro OGRE 3D Programming (Expert's Voice in Open Source)}, Apress 2006
+\bibitem{ogreb2} Ilya Grinblat, \textit{OGRE 3D 1.7 Application Development Cookbookt}, Packt Publishing 2011
+\bibitem{ogre} Torus Knot Software Ltd, \textit{OGRE -- Open Source 3D Graphics Engine}, \url{http://www.ogre3d.org/}
+
+\end{thebibliography}
+
 %%Bibliografia
 %%http://www.mobygames.com/game-group/graphics-engine-renderware
-
+%%http://web.archive.org/web/20070105144827/http://www.renderware.com/graphics.asp
 \end{document}
