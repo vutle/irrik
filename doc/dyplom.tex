@@ -19,6 +19,8 @@
 \usepackage[polish]{babel}
 \usepackage{pwrdtyt}
 \usepackage{url}
+\usepackage{array}
+\usepackage[dvips, pdfborder={0}, bookmarks, colorlinks=false, pdftitle={Animacja 3D z wykorzystaniem kinematyki odwrotnej}, pdfauthor={Marcin Załuski}, pdfsubject={Animacja 3D z wykorzystaniem kinematyki odwrotnej}, pdfkeywords={Animacja, 3D, kinematyka odwrotna, Irrlicht}]{hyperref}
 \renewcommand{\baselinestretch}{1.5}
 \usepackage[a4paper]{geometry}
 \author{Marcin Załuski}
@@ -28,18 +30,39 @@
 \kluczowe{animacja, 3D, kinematyka, odwrotna, gra, silnik graficzny, ruch, postać}
 \streszczenie{Streszczenie pracy}
 
+
 \begin{document}
 \maketitle
 \tableofcontents
+
 \chapter{Wprowadzenie}
 Parę słów po co, gdzie i do czego jest animacja stosowana, jak to mamy coraz lepszy sprzęt itp
   \section{Określenie problemu}
 Nieco bliższe przedstawienie problemu animacji i kinematyki odwrotnej
   \section{Cel pracy}
-Analiza porównawcza metod animacji trójwymiarowej
-  \section{Etapy pracy i założenia}
 
-Zagadnienia dotyczące animacji, a w szczególności animacji trójwymiarowej są złożone oraz bardzo rozległe, tym samym oferując szerokie pole do badań i rozwoju. Z tego względu pracę podzielono na etapy oraz przyjęto odpowiednie założenia, nadając tym samym kierunek w jakim podążały badania i określając ramy w jakich powinny się one zawierać. Dzięki temu oraz dzięki sprecyzowaniu celu w poprzednim rozdziale, wiadomo było w którym momencie niniejsze dzieło można uznać za ukończone.
+Aby ukierunkować rozwój pracy i określić charakter badań, ważne jest ustalenie celu, jaki zamierza się osiągnąć. W związku z tym, nie inaczej jest w tym przypadku. Celem niniejszego dzieła jest analiza porównawcza metod animacji trójwymiarowej. Dzięki temu, że został on określony, możliwe było wybranie oraz zastosowanie odpowiedniej dla niego metodologii badawczej.
+
+  \section{Etapy oraz zakres pracy}
+
+Zagadnienia dotyczące animacji komputerowej, a w szczególności animacji trójwymiarowej są złożone oraz bardzo rozległe, tym samym oferując szerokie pole do badań i rozwoju. Z tego względu pracę podzielono na etapy oraz przyjęto odpowiednie założenia, nadając tym samym kierunek w jakim podążały badania i określając ramy w jakich powinny się one zawierać. Dzięki temu oraz dzięki sprecyzowaniu celu w poprzednim rozdziale, wiadomo było w którym momencie niniejsze dzieło można uznać za ukończone.
+
+Aspektem inżynierskim pracy jest opracowanie animacji w przestrzeni 3D obiektów, których ruch oparty jest o algorytm kinematyki odwrotnej. Badawczy aspekt pracy został natomiast określony jako zastosowanie algorytmu kinematyki odwrotnej do tworzenia animacji w przestrzeni 3D oraz badanie przydatności i efektywności użycia tej metody w animacji.
+
+Jak już wspomniano powyżej, praca została podzielona na etapy. Dzięki temu zabiegowi łatwiej było rozeznać się w osiąganych postępach oraz nakreślić odpowiedni harmonogram. Obrane kroki w realizacji pracy wyglądają następująco: 
+
+\begin{enumerate}
+\item Przegląd literatury
+\item Opracowanie koncepcji rozwiązania
+\item Modelowanie aktywnych obiektów sceny
+\item Opracowanie zestawu animacji z wykorzystaniem kinematyki odwrotnej
+\item Przygotowanie platformy testowej
+\item Implementacja algorytmu kinematyki odwrotnej dla aktywnych obiektów sceny
+\item Weryfikacja poprawności i jakości wizualnej ruchu na platformie testowej
+\item Analiza, opracowanie i interpretacja wyników
+\item Redakcja pracy
+\end{enumerate}
+
 
 
 \chapter{Animacja 3D}
@@ -80,9 +103,9 @@ Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zast
 
       OGRE jest popularnym silnikiem graficznym na wolnej licencji \texttt{MIT}, która to jest kompatybilna z licencją \texttt{GPL}. Nazwa jest skrótem od angielskiego \textit{Object-Oriented Graphics Rendering Engine}, czyli Zorientowany Obiektowo Silnik Renderujący Grafikę.
 
-      OGRE, jak większość szeroko stosowanych silników graficznych, został napisany w języku \texttt{C++}. Wszelkie szczegóły dotyczące implementacji niższych warstw, takich jak wywołania API \texttt{OpenGL} lub \texttt{DirectX}, podlegając hermetyzacji dzięki użyciu klas. Daje to możliwość szybkiego osiągnięcia zamierzonych rezultatów bez konieczności zapoznawania się ze specyfiką konkretnej biblioteki graficznej oraz ułatwia przenoszenie aplikacji między platformami systemowymi. OGRE, jak już wcześniej wspomniano, wspiera zarówno OpenGL, jak i DirectX oraz główne systemy operacyjne -- \texttt{Windows}, \texttt{Linux} oraz \texttt{Mac OS X}. Oferuje także możliwość użycia programów cieniujących, animacji szkieletowej, skórowania i wiele innych technik. 
+      OGRE, jak większość szeroko stosowanych silników graficznych, został napisany w języku \texttt{C++}. Wszelkie szczegóły dotyczące implementacji niższych warstw, takich jak wywołania API \texttt{OpenGL} lub \texttt{Direct3D}, podlegając hermetyzacji dzięki użyciu klas. Daje to możliwość szybkiego osiągnięcia zamierzonych rezultatów bez konieczności zapoznawania się ze specyfiką konkretnej biblioteki graficznej oraz ułatwia przenoszenie aplikacji między platformami systemowymi. OGRE, jak już wcześniej wspomniano, wspiera zarówno OpenGL, jak i Direct3D oraz główne systemy operacyjne -- \texttt{Windows}, \texttt{Linux} oraz \texttt{Mac OS X}. Oferuje także możliwość użycia programów cieniujących, animacji szkieletowej, skórowania i wiele innych technik. 
 
-      Ze względu na popularność tego silnika graficznego, istnieje bardzo dużo materiałów dydaktycznych dotyczących go. Na uwagę zasługuje liczba publikacji w formie książki, która jak na projekt tego typu jest pokaźna. Dobrym przykładem są takie pozycje jak \cite{ogreb1}, czy też najnowsza publikacja dostępna w chwili pisania niniejszej pracy, cechująca się nieco innym podejściem do tematu \cite{ogreb2}. Na początku warto jednak zapoznać się przede wszystkim z materiałami dostępnymi na \cite{ogre}.
+      Ze względu na popularność tego silnika graficznego, istnieje bardzo dużo materiałów dydaktycznych dotyczących go. Na uwagę zasługują publikacje w formie książki. Dobrym przykładem są takie pozycje jak \cite{ogreb1}, czy też najnowsza publikacja dostępna w chwili pisania niniejszej pracy, cechująca się nieco innym podejściem do tematu \cite{ogreb2}. Na początku warto jednak zapoznać się przede wszystkim z materiałami dostępnymi na \cite{ogre}.
 
       OGRE niestety nie jest szczególnie łatwym w użyciu silnikiem graficznym. Aby zrozumieć filozofię jego działania i programowania aplikacji, należy poświęcić sporo czasu. Wynikowy kod dla prostej sceny również zdaje się być dość rozwlekły. Głównym mankamentem w kontekście niniejszej pracy jest fakt, iż co prawda sam silnik nie oferuje metod animacji opartych o kinematykę odwrotną, ale istnieją poboczne implementacje algorytmów IK z użyciem OGRE, które jak dotąd nie zostały włączone do głównego projektu.
 
@@ -91,18 +114,68 @@ Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zast
 
       Zdecydowanie warto zaznaczyć, że projekt ten powstał jako zamknięte oprogramowanie rozwijane na własne potrzeby przez studio \texttt{Disney VR} będące częścią dobrze wszystkim znanej korporacji \texttt{The Walt Disney Company}. W roku 2002 silnik został opublikowany jako wolne oprogramowanie. Obecnie jego rozwój jest kontynuowany na licencji \texttt{BSD} przez \texttt{Entertainment Technology Center} przy uniwersytecie \texttt{Carnegie Mellon} we współpracy z \texttt{Disneyem}.
 
+      Panda3D jest napisana w języku \texttt{C++} i pozwala na programowanie aplikacji zarówno z użyciem \texttt{Pythona}, jak i \texttt{C++}. Niestety przekłada się to na skomplikowany proces budowania silnika ze źródeł. Dostępne są dwa systemy -- \texttt{ppremake} i \texttt{makepanda}. Pierwszy jest rozbudowany i dostarcza szereg rozmaitych opcji konfiguracyjnych, lecz trudniejszy w obsłudze. Drugi natomiast jest rozwiązaniem prostym i pozwalającym szybko zbudować niezbędne moduły bez zagłębiania się w szczegółowe niuanse tegoż procesu.
 
+      Opisywany silnik ma możliwość korzystania z dwóch interfejsów programowych dla sprzętu graficznego -- \texttt{OpenGL} i \texttt{Direct3D}. Pozwala także na używanie programów cieniujących i animacji szkieletowej.
 
-% 	system budowania, cpp/python, disney, prosty, game engine, komplikacja, czas kompilacji
-	
+      Dokumentacja projektu jest bardzo dobra. Za pewien mankament można uznać fakt, iż podstawowym i głównie wspieranym językiem jest w tym przypadku \texttt{Python}. Wiąże się to z ukierunkowaniem dokumentacji właśnie na ten język, co można zauważyć na \cite{panda}. Obecnie dostępne są dwie pozycje książkowe w całości poświęcone programowaniu z wykorzystaniem silnika graficznego \texttt{Panda3D}. Podczas gdy \cite{pandab1}, pomimo skupienia na podstawowym języku programowania, zawiera także fragmenty przeznaczone dla programistów C++, tak \cite{pandab2} jest przeznaczona dla osób początkujących w dziedzinie projektowania oraz rozwijania gier i w pełni została napisana pod kątem Pythona.
+
+      Niestety podczas kompilacji Pandy w stabilnej wersji \textit{1.7.2} napotkano szereg problemów, a proces budowania wielokrotnie kończył się komunikatem błędu. Poszukiwania na \cite{pandaf} zakończyły się znalezieniem sugestii aby skorzystać z wersji rozwojowej silnika dostępnej przez repozytorium. Kompilacja tym razem powiodła się, ale problematyczne okazało się uruchomienie dostarczonych przykładów.
 
       \subsubsection{Irrlicht}
 
+      Silnik ten jest dystrybuowany na licencji \texttt{ZLib}, która to jest zgodna z licencją GPL. Nazwa jest złożeniem niemieckich słów \textit{Irre}, co oznacza zwariowany i \textit{Licht}, czyli światło, co w połączeniu daje błędny ognik. Początki projektu sięgają roku 2002, kiedy Nikolaus Gebhardt rozpoczął prace nad nowym silnikiem graficznym.
+
+      Irrlicht charakteryzuje się łagodną krzywą uczenia i wysoką elastycznością. Silnik został napisany w przejrzysty oraz czytelny sposób w języku \texttt{C++} z użyciem przestrzeni nazw i wzorców projektowych \texttt{GRASP}. Dzięki temu łatwo można zorientować się w jego kodzie źródłowym. Ponadto obok tych wymienionych już zalet, Irrlicht jest wieloplatformowy, stabilny, nie wymaga instalacji w systemie dodatkowych bibliotek oraz działa bardzo szybko. 
+
+      Silnik pozwala na użycie zarówno \texttt{OpenGL}, jak i \texttt{Direct3D} oraz własnego programowego mechanizmu renderowania. Na uwagę zasługuje duża ilość standardowo obsługiwanych formatów wejściowych. Dzięki temu można bez problemu użyć animowanych modeli z gry Quake w wersji 2 i 3 oraz zapisanych w formacie B3D, DirectX, czy Milkshape. Lista obsługiwanych obiektów statycznych jest jeszcze dłuższa i znajduje się na niej m.in. natywny format OGRE, 3d Studio, Alias Wavefront Maya i Lightwave. Dzięki temu możliwe jest skorzystanie z bogatej biblioteki modeli i użycie ich jako obiektów zastępczych do czasu przygotowania własnych. Zwiększa też liczbę możliwych do użycia programów służących do modelowania trójwymiarowego. Irrlicht pozwala na zastosowanie animacji szkieletowej, efektów cząsteczkowych, dynamicznego oświetlenia i programów cieniujących. Można z niego korzystać w wielu językach, n.p. C++ C$\sharp$, VisualBasic, Delphi, Java.
+
+       Obecnie na rynku znaleźć można dwie publikacje książkowe traktujące wyłącznie o opisywanym silniku graficznym. Są to \cite{irrlichtb1} i \cite{irrlichtb2}. Obie są pozycjami skierowanymi do początkujących programistów. Dokumentacja dostępna na \cite{irrlichtw} jest przejrzysta i pomocna. Jej wysoką jakość można zawdzięczać faktowi, iż została przygotowana za pomocą popularnego narzędzia \texttt{Doxygen}.
+
+      \subsubsection{Podsumowanie}
+      W powyższych trzech punktach przedstawiono pokrótce trzy silniki graficzne, których użycie rozważano w niniejszym projekcie. Podstawowe dane oraz wady i zalety zostały zebrane i przedstawione w stabelaryzowanej formie (tab. \ref{tab:silniki}). Wszystkie projekty są dojrzałe i godne uwagi oraz oferują możliwość wykorzystania animacji szkieletowej. Dodatkowo są one dostępne na licencjach zgodnych z licencją GPL i cechują się wieloplatformowością, co pozawala na przenoszenie aplikacji między różnymi systemami operacyjnymi. Można w nich korzystać zarówno z OpenGL, jak i Direct3D. Warto zauważyć, że są one cały czas rozwijane, o czym świadczą daty wydań ich najnowszych wersji stabilnych. Po analizie powyższych silników, ostatecznie zdecydowano się na użycie Irrlicht. Na taki, a nie inny wybór znaczny wpływ miała prostota użycia i duża liczba obsługiwanych formatów wejściowych oraz bezproblemowa kompilacja. Dzięki użyciu tego silnika graficznego można szybko uzyskać zadowalające efekty. Atutem jest także jego spójność, czytelność kodu źródłowego oraz bardzo dobra dokumentacja i dostępne w pakiecie praktyczne przykłady z obszernymi komentarzami.
+\begin{table}[p]
+
+\begin{center}
+\footnotesize
+%   \begin{tabular}{| x{3.6cm} || x{3cm} | x{3cm} | x{3cm} |}
+\begin{tabular}{|p{3.6cm}||>{\centering}p{3cm}|>{\centering}p{3cm}|>{\centering}p{3cm}|c} %TODO centering
+\cline{2-4}
+  \multicolumn{1}{l|}{} & \textbf{OGRE} & \textbf{Panda3D} & \textbf{Irrlicht} & \\ \cline{2-4} \noalign{\smallskip} \cline{1-4}
+Producent & Torus Knot Software Ltd & Disney i Carnegie Mellon University & Nikolaus Gebhardt &\\ \cline{1-4}
+Licencja &MIT &BSD & ZLib &\\ \cline{1-4}
+Systemy operacyjne &Windows, Linux, Mac OS X & Windows, Linux, Mac OS X, FreeBSD & indows, Linux, Mac OS X, Solaris, inne &\\ \cline{1-4}
+Rok wydania pierwszej wersji & 2005 & 2004 & 2002 &\\ \cline{1-4}
+Data wydania najnowszej wersji &8 maja 2011 & marzec 2011 & listopad 2010 &\\ \cline{1-4}
+Ilość materiałów dydaktycznych & duża & średnia & duża &\\ \cline{1-4}
+Ilość wydanych książek & 3 & 2 & 2 &\\ \cline{1-4}
+Języki programowania & C++, Java, .Net, Python, inne & Python, C++ & C++, C$\sharp$, VisualBasic, Delphi, Java, inne &\\ \cline{1-4}
+Animacja szkieletowa & tak & tak & tak &\\ \cline{1-4}
+Kinematyka odwrotna & zewnętrzna implementacja & brak & brak &\\ \cline{1-4}
+Klasyfikacja użycia & trudne & średnie & proste &\\ \cline{1-4}
+  \end{tabular}
+\end{center}
+
+  \caption{Zestawienie informacji o silnikach graficznych}
+
+
+\label{tab:silniki}
+\end{table}
      \subsection{Interfejs programowy dla sprzętu graficznego}
 
-      \subsubsection{DirectX}
+      Wykorzystywany silnik graficzny pozwala na wykorzystanie do renderowania zarówno interfejsu Direct3D, jak i OpenGL. Co prawda założenia projektowe ograniczają wybór do tego drugiego, jednak dla pełnego obrazu postanowiono przedstawić w niniejszej pracy opis obu konkurencyjnych rozwiązań.
+
+      \subsubsection{Direct3D}
+
+      Direct3D jest częścią opracowanej przez firmę \texttt{Microsoft} biblioteki DirectX -- zbioru API służącego do programowania gier. Powszechnie stosuje się go w produktach przeznaczonych dla rodziny systemów operacyjnych Windows, konsolach Windows i urządzeniach mobilnych opartych o rozwiązania Microsoftu.
+ 
+      Omawiane API oparte zostało na tak zwanych interfejsach \texttt{COM} (ang. Component Object Model), które są standardem, jaki firma Microsoft wprowadziła w swoim oprogramowaniu. Zwiększa to trudność użycia i zmniejsza czytelność kodu. DirectX jest zamkniętym rozwiązaniem kontrolowanym w całości przez Microsoft.
 
       \subsubsection{OpenGL}
+
+      Biblioteka powstała na bazie \texttt{IRIS GL} rozwijanej przez firmę \texttt{Silicon Graphics}, która była światowym potentatem w dziedzinie grafiki i animacji komputerowej. OpenGL jest standardem otwartym, a pieczę nad jego rozwojem sprawuje \texttt{Khronos Group}. Jest to związek przedsiębiorstw zajmujący się rozwojem otwartych standardów.
+
+      OpenGL jest dostępne na wielu platformach, takich jak Windows, Mac OS X, iPhone, Nintendo, Android i systemy z rodziny Unix, w tym Linux. Jest szeroko wykorzystywana w zaawansowanych narzędziach do tworzenia grafiki i wizualizacji naukowych.
 
   \section{Implementacja}
 
@@ -122,7 +195,13 @@ Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zast
 \bibitem{ogreb1} Gregory Junker, \textit{Pro OGRE 3D Programming (Expert's Voice in Open Source)}, Apress 2006
 \bibitem{ogreb2} Ilya Grinblat, \textit{OGRE 3D 1.7 Application Development Cookbookt}, Packt Publishing 2011
 \bibitem{ogre} Torus Knot Software Ltd, \textit{OGRE -- Open Source 3D Graphics Engine}, \url{http://www.ogre3d.org/}
-
+\bibitem{panda} Carnegie Mellon University, \textit{Panda3D - Free 3D Game Engine} \url{http://www.panda3d.org}
+\bibitem{pandab1} Christoph Lang, \textit{Panda3D 1.7 Game Developer's Cookbook}, Packt Publishing 2011
+\bibitem{pandab2} Dave Mathews, \textit{Panda3D 1.6 Game Engine Beginner's Guide}, Packt Publishing 2011
+\bibitem{pandaf} Carnegie Mellon University, \textit{Panda3D Forums} \url{http://www.panda3d.org/forums/}
+\bibitem{irrlichtb1} André Koscianski, \textit{Game Programming with Irrlicht}, CreateSpace 2011
+\bibitem{irrlichtb2} Johannes Stein, \textit{Irrlicht 1.7 Realtime 3D Engine Beginner's Guide}, Packt Publishing 2011
+\bibitem{irrlichtw} Nikolaus Gebhardt, \textit{Irrlicht Engine - A free open source 3D engine}, \url{http://irrlicht.sourceforge.net}
 \end{thebibliography}
 
 %%Bibliografia
