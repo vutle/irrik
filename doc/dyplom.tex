@@ -51,7 +51,10 @@ Aspektem inżynierskim pracy jest opracowanie animacji w przestrzeni 3D obiektó
 
 Jak już wspomniano powyżej, praca została podzielona na etapy. Dzięki temu zabiegowi łatwiej było rozeznać się w osiąganych postępach oraz nakreślić odpowiedni harmonogram. Obrane kroki w realizacji pracy wyglądają następująco: 
 
+
+
 \begin{enumerate}
+
 \item Przegląd literatury
 \item Opracowanie koncepcji rozwiązania
 \item Modelowanie aktywnych obiektów sceny
@@ -61,21 +64,41 @@ Jak już wspomniano powyżej, praca została podzielona na etapy. Dzięki temu z
 \item Weryfikacja poprawności i jakości wizualnej ruchu na platformie testowej
 \item Analiza, opracowanie i interpretacja wyników
 \item Redakcja pracy
+
 \end{enumerate}
 
+  \section{Struktura pracy}
 
+Opis co znajduje się w kolejnych rozdziałach
 
 \chapter{Animacja 3D}
+
 Wyjaśnienie terminów związanych z animacją itp, opis różnych metod, algorytmy, rysunki poglądowe...
-  \section{kinematyka prosta}
-  \section{kinematyka odwrotna}
+co to jest kinematyka
+
+  \section{Kinematyka prosta}
+
+ Słowo kinematyka wywodzi się od greckiego słowa \textit{kín\={e}ma}, które to oznacza ruch. Kinematyka jako dział fizyki zajmuje się zatem badaniem ruchu bez uwzględnienia sił, przez działanie których ten ruch został wywołany. Ponieważ niniejsza praca traktuje o kinematyce odwrotnej, wypadałoby zatem wyjaśnić, w stosunku do czego jest ona odwrotna. Otóż jest ona odwrotna do \texttt{kinematyki prostej}. Za tym pojęciem kryje się bardzo prosta koncepcja. Polega ona na poddawaniu sukcesywnym przekształceniom kolejnych części łańcucha kinematycznego, aż do osiągnięcia pozycji docelowej, bądź do niej możliwie najbliższej, jeśli pozycja docelowa okaże się być nieosiągalna. Dla przykładu,  jeśli chcemy aby animowana postać podniosła rękę, należy odpowiednio ustawić staw barkowy, aby przedramię osiągnęło odpowiednią pozycję, a następnie tę samą czynność wykonać dla stawu łokciowego. Wynika z tego, że w tym przypadku mamy do czynienia z bezpośrednim sterowaniem każdej części ruchomego systemu, takiego jak dla przykładu szkielet ludzki.
+  
+\section{Kinematyka odwrotna}
+
+ Kinematyka odwrotna, jak łatwo się domyślić, polega na odwróceniu procedury opisanej w punkcie poprzednim. Dzięki temu została wyeliminowana konieczność każdorazowej manipulacji elementami składowymi ruchomego układu. Bardziej wnikliwe studium rzeczonej metody animacji zostanie przedstawione w dalszej części niniejszej pracy.
+
   \section{animacja szkieletowa}
   \section{animacja klatkowa}
   \section{animacja ...}
   
 \chapter{Kinematyka odwrotna}
-Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zastosowań i paru algorytmów, ze szczególnym uwzględnieniem implementowanego CCD.
+
+ Kinematyka odwrotna jest metodą używaną od dawna w dziedzinie automatyki i robotyki do sterowania różnego rodzaju manipulatorami i kończynami robotów, w tym robotów autonomicznych. W następnej kolejności kinematyką odwrotną zainteresował się przemysł filmowy. Ze względu na minimalizację czynności koniecznych do osiągnięcia zamierzonego efektu, przyczynia się ona do przyspieszenia procesu animowania postaci wygenerowanej komputerowo. Obecnie kinematyka odwrotna jest stosowana na bardzo szeroką skalę w różnych dziedzinach życia, w tym w przemyśle gier komputerowych do animacji modeli w czasie rzeczywistym.
+ 
+W rozdziale tym dokonano bliższego niż w poprzednich częściach niniejszej pracy przedstawienia istotnego zagadnienia jakim jest kinematyka odwrotna. Opisano pokrótce historię powstania tejże techniki oraz przedstawiono nieco bliżej kilka wybranych algorytmów.
+
+% Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zastosowań i paru algorytmów, ze szczególnym uwzględnieniem implementowanego CCD.
+
+
   \section{Geneza}
+    
   \section{Zastosowania}
   \section{Algorytmy}
 
@@ -84,6 +107,10 @@ Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zast
   \section{Założenia}
 
   \section{Przegląd i wybór technologii}
+
+    Przed przystąpieniem do realizacji jakiegokolwiek projektu wysoce wskazane jest aby rozważyć możliwość i zasadność zastosowania różnego typu narzędzi oraz technologii. Dzięki takiemu podejściu możliwe jest zminimalizowanie czasu potrzebnego na ukończenie owego projektu. Inną istotną zaletą przeprowadzania wstępnej analizy dostępnych rozwiązań jest również dalece wyższe prawdopodobieństwo, że ukończony projekt będzie o wiele wyższej jakości.
+  
+    W tym podrozdziale dokonano przeglądu istniejących narzędzi i technologii pod kątem wykorzystania ich w niniejszym projekcie. Na początku znajduje się wprowadzenie w tematykę niezwykle przydatnych narzędzi, jakimi są silniki graficzne. W dalszej kolejności przedstawiono kryteria, jakimi się kierowano przy wyborze oraz opisano trzy rozważane rozwiązania. Ta część kończy się krótkim podsumowaniem i uzasadnieniem takiego, a nie innego wyboru. Na zakończenie tego podrozdziału przybliżono bez zbytniego zagłębiania się w szczegóły dwa popularne interfejsy programowe dla sprzętu graficznego.
 
     \subsection{Silnik Graficzny}
 
@@ -110,6 +137,7 @@ Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zast
       OGRE niestety nie jest szczególnie łatwym w użyciu silnikiem graficznym. Aby zrozumieć filozofię jego działania i programowania aplikacji, należy poświęcić sporo czasu. Wynikowy kod dla prostej sceny również zdaje się być dość rozwlekły. Głównym mankamentem w kontekście niniejszej pracy jest fakt, iż co prawda sam silnik nie oferuje metod animacji opartych o kinematykę odwrotną, ale istnieją poboczne implementacje algorytmów IK z użyciem OGRE, które jak dotąd nie zostały włączone do głównego projektu.
 
       \subsubsection{Panda3D}
+
       W odróżnieniu od pozostałych rozpatrywanych rozwiązań \texttt{Panda3D} jest projektem dalece bardziej złożonym. Takiego stanu rzeczy należy upatrywać w tym, że nie jest to jedynie silnik graficzny, a kompletny silnik gry. W związku z powyższym \texttt{Panda3D} posiada skomplikowaną strukturę oraz podsystemy odpowiedzialne za renderowanie grafiki, animacje, odtwarzanie dźwięku, sterowanie, detekcję kolizji, obsługę sieci, symulacje fizyczne, sztuczną inteligencję i inne.
 
       Zdecydowanie warto zaznaczyć, że projekt ten powstał jako zamknięte oprogramowanie rozwijane na własne potrzeby przez studio \texttt{Disney VR} będące częścią dobrze wszystkim znanej korporacji \texttt{The Walt Disney Company}. W roku 2002 silnik został opublikowany jako wolne oprogramowanie. Obecnie jego rozwój jest kontynuowany na licencji \texttt{BSD} przez \texttt{Entertainment Technology Center} przy uniwersytecie \texttt{Carnegie Mellon} we współpracy z \texttt{Disneyem}.
@@ -133,7 +161,9 @@ Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zast
        Obecnie na rynku znaleźć można dwie publikacje książkowe traktujące wyłącznie o opisywanym silniku graficznym. Są to \cite{irrlichtb1} i \cite{irrlichtb2}. Obie są pozycjami skierowanymi do początkujących programistów. Dokumentacja dostępna na \cite{irrlichtw} jest przejrzysta i pomocna. Jej wysoką jakość można zawdzięczać faktowi, iż została przygotowana za pomocą popularnego narzędzia \texttt{Doxygen}.
 
       \subsubsection{Podsumowanie}
+
       W powyższych trzech punktach przedstawiono pokrótce trzy silniki graficzne, których użycie rozważano w niniejszym projekcie. Podstawowe dane oraz wady i zalety zostały zebrane i przedstawione w stabelaryzowanej formie (tab. \ref{tab:silniki}). Wszystkie projekty są dojrzałe i godne uwagi oraz oferują możliwość wykorzystania animacji szkieletowej. Dodatkowo są one dostępne na licencjach zgodnych z licencją GPL i cechują się wieloplatformowością, co pozawala na przenoszenie aplikacji między różnymi systemami operacyjnymi. Można w nich korzystać zarówno z OpenGL, jak i Direct3D. Warto zauważyć, że są one cały czas rozwijane, o czym świadczą daty wydań ich najnowszych wersji stabilnych. Po analizie powyższych silników, ostatecznie zdecydowano się na użycie Irrlicht. Na taki, a nie inny wybór znaczny wpływ miała prostota użycia i duża liczba obsługiwanych formatów wejściowych oraz bezproblemowa kompilacja. Dzięki użyciu tego silnika graficznego można szybko uzyskać zadowalające efekty. Atutem jest także jego spójność, czytelność kodu źródłowego oraz bardzo dobra dokumentacja i dostępne w pakiecie praktyczne przykłady z obszernymi komentarzami.
+
 \begin{table}[p]
 
 \begin{center}
