@@ -19,6 +19,7 @@
 \usepackage[polish]{babel}
 \usepackage{pwrdtyt}
 \usepackage{url}
+\usepackage{graphicx}
 \usepackage{array}
 \usepackage[dvips, pdfborder={0}, bookmarks, colorlinks=false, pdftitle={Animacja 3D z wykorzystaniem kinematyki odwrotnej}, pdfauthor={Marcin Załuski}, pdfsubject={Animacja 3D z wykorzystaniem kinematyki odwrotnej}, pdfkeywords={Animacja, 3D, kinematyka odwrotna, Irrlicht}]{hyperref}
 \renewcommand{\baselinestretch}{1.5}
@@ -51,8 +52,6 @@ Aspektem inżynierskim pracy jest opracowanie animacji w przestrzeni 3D obiektó
 
 Jak już wspomniano powyżej, praca została podzielona na etapy. Dzięki temu zabiegowi łatwiej było rozeznać się w osiąganych postępach oraz nakreślić odpowiedni harmonogram. Obrane kroki w realizacji pracy wyglądają następująco: 
 
-
-
 \begin{enumerate}
 
 \item Przegląd literatury
@@ -76,10 +75,19 @@ Opis co znajduje się w kolejnych rozdziałach
 Wyjaśnienie terminów związanych z animacją itp, opis różnych metod, algorytmy, rysunki poglądowe...
 co to jest kinematyka
 
+%włosy odzież mięśnie napięcie emocje itp TODO
   \section{Kinematyka prosta}
 
- Słowo kinematyka wywodzi się od greckiego słowa \textit{kín\={e}ma}, które to oznacza ruch. Kinematyka jako dział fizyki zajmuje się zatem badaniem ruchu bez uwzględnienia sił, przez działanie których ten ruch został wywołany. Ponieważ niniejsza praca traktuje o kinematyce odwrotnej, wypadałoby zatem wyjaśnić, w stosunku do czego jest ona odwrotna. Otóż jest ona odwrotna do \texttt{kinematyki prostej}. Za tym pojęciem kryje się bardzo prosta koncepcja. Polega ona na poddawaniu sukcesywnym przekształceniom kolejnych części łańcucha kinematycznego, aż do osiągnięcia pozycji docelowej, bądź do niej możliwie najbliższej, jeśli pozycja docelowa okaże się być nieosiągalna. Dla przykładu,  jeśli chcemy aby animowana postać podniosła rękę, należy odpowiednio ustawić staw barkowy, aby przedramię osiągnęło odpowiednią pozycję, a następnie tę samą czynność wykonać dla stawu łokciowego. Wynika z tego, że w tym przypadku mamy do czynienia z bezpośrednim sterowaniem każdej części ruchomego systemu, takiego jak dla przykładu szkielet ludzki.
+ Słowo kinematyka wywodzi się od greckiego słowa \textit{kín\={e}ma}, które to oznacza ruch. Kinematyka jako dział fizyki zajmuje się zatem badaniem ruchu bez uwzględnienia sił, przez działanie których ten ruch został wywołany. Ponieważ niniejsza praca traktuje o kinematyce odwrotnej, wypadałoby zatem wyjaśnić, w stosunku do czego jest ona odwrotna. Otóż jest ona odwrotna do \texttt{kinematyki prostej}. Za tym pojęciem kryje się bardzo prosta koncepcja. Polega ona na poddawaniu sukcesywnym przekształceniom kolejnych części łańcucha kinematycznego, aż do osiągnięcia pozycji docelowej, bądź do niej możliwie najbliższej, jeśli pozycja docelowa okaże się być nieosiągalna. Dla przykładu,  jeśli chcemy aby animowana postać podniosła rękę, należy odpowiednio ustawić staw barkowy, aby przedramię osiągnęło odpowiednią pozycję, a następnie tę samą czynność wykonać dla stawu łokciowego. Kinematyka prosta została zilustrowana na rys. \ref{img:fk} Wynika z tego, że w tym przypadku mamy do czynienia z bezpośrednim sterowaniem każdej części ruchomego systemu, takiego jak dla przykładu szkielet ludzki.
   
+\begin{figure}
+ \centering
+  \includegraphics[keepaspectratio=true,width=\linewidth]{./img/fk.png}
+ % fk.png: 298x271 pixel, 90dpi, 8.41x7.65 cm, bb=0 0 238 217
+ \caption{Kinematyka prosta}
+ \label{img:fk}
+\end{figure}
+
 \section{Kinematyka odwrotna}
 
  Kinematyka odwrotna, jak łatwo się domyślić, polega na odwróceniu procedury opisanej w punkcie poprzednim. Dzięki temu została wyeliminowana konieczność każdorazowej manipulacji elementami składowymi ruchomego układu. Bardziej wnikliwe studium rzeczonej metody animacji zostanie przedstawione w dalszej części niniejszej pracy.
@@ -92,15 +100,44 @@ co to jest kinematyka
 
  Kinematyka odwrotna jest metodą używaną od dawna w dziedzinie automatyki i robotyki do sterowania różnego rodzaju manipulatorami i kończynami robotów, w tym robotów autonomicznych. W następnej kolejności kinematyką odwrotną zainteresował się przemysł filmowy. Ze względu na minimalizację czynności koniecznych do osiągnięcia zamierzonego efektu, przyczynia się ona do przyspieszenia procesu animowania postaci wygenerowanej komputerowo. Obecnie kinematyka odwrotna jest stosowana na bardzo szeroką skalę w różnych dziedzinach życia, w tym w przemyśle gier komputerowych do animacji modeli w czasie rzeczywistym.
  
-W rozdziale tym dokonano bliższego niż w poprzednich częściach niniejszej pracy przedstawienia istotnego zagadnienia jakim jest kinematyka odwrotna. Opisano pokrótce historię powstania tejże techniki oraz przedstawiono nieco bliżej kilka wybranych algorytmów.
+ W rozdziale tym dokonano bliższego niż w poprzednich częściach niniejszej pracy przedstawienia istotnego zagadnienia jakim jest kinematyka odwrotna. Opisano pokrótce historię powstania tejże techniki, dokonano jej formalnej definicji oraz przedstawiono nieco bliżej kilka wybranych algorytmów.
 
-% Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zastosowań i paru algorytmów, ze szczególnym uwzględnieniem implementowanego CCD.
+%  Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zastosowań i paru algorytmów, ze szczególnym uwzględnieniem implementowanego CCD.
 
-
-  \section{Geneza}
+  \section{Geneza i zastosowania}
     
-  \section{Zastosowania}
-  \section{Algorytmy}
+TODO
+
+  
+\section{Formalna definicja problemu}
+
+ Niech zadany będzie łańcuch kinematyczny długości $n$ zakończony manipulatorem \textbf{N} (ostatni z $n$ elementów składowych łańcucha). Przyjmując, że $\bf\vec{v}$ jest to wektor określający docelową pozycję manipulatora \textbf{N} w trójwymiarowej przestrzeni kartezjańskiej, natomiast $\bf\vec{s}$ definiując jako wektor stanu rozważanego układu, kinematykę prostą można sformułować jako funkcję $f$:
+$$
+\bf\vec{v} = f(\bf\vec{s})
+$$
+Dodatkowo określając $P_i$ jako macierz przekształceń składowej $a_i$ zadanego łańcucha kinematycznego, funkcję $f$ można rozwinąć do:
+$$
+{\vec{v}} = P_1a_1({s_1})P_2a_2({s_2}) \dots P_na_n({s_n})
+$$
+
+Łatwiejszym do rozwiązania problemem może być znalezienie funkcji odwrotnej do $f$, którą to określono jako kinematyka odwrotna:
+$$
+f^{-1} (\vec{v})  = \vec{s}
+$$
+
+
+  \section{Metody kinematyki odwrotnej}
+
+    TODO
+
+
+    \subsection{Transpozycja Jakobianu}
+
+     TODO
+ 
+    \subsection{Cyclic-Coordinate Descent}
+
+  Metoda ta w skrócie nazywana \texttt{CCD} należy do klasy metod heurystycznych. Idea kryjąca się za tym sposobem rozwiązywania zadania kinematyki odwrotnej polega na analitycznym rozwiązaniu szeregu prostszych problemów. W pierwszej i każdej kolejnej iteracji poszukiwane są parametry dla których zadana funkcja przyjmuje wartość minimalną przy spełnieniu określonych kryteriów. Wspomniana funkcja jest znacznie mniej złożona i cechuje się o wiele niższym stopniem komplikacji obliczeniowej w porównaniu z podejściem w pełni analitycznym.
 
 \chapter{Projekt}
 
@@ -118,7 +155,7 @@ W rozdziale tym dokonano bliższego niż w poprzednich częściach niniejszej pr
 
     Obecnie dostępnych jest wiele zróżnicowanych silników graficznych, odmiennych pod wieloma względami i prezentujących dużą liczbę indywidualnych cech oraz funkcjonalności. Dzięki ich zastosowaniu programiści mogą się skupić na implementacji innych, unikalnych dla danej gry elementów, takich jak choćby logika. Wiąże się to z oszczędnością czasu pracy i optymalizacją zasobów. Ponadto powszechnym zjawiskiem jest, że firmy na bazie jednego silnika wydają kilka różnych produkcji w dość krótkim czasie, co nie byłoby możliwe, gdyby dla każdej z nich należało od podstaw obsłużyć renderowanie grafiki. Co więcej, częstokroć bywa, że producent nie posiada silnika graficznego, ani nie zamierza go rozwijać samemu od podstaw, lecz używa już dostępnego. Zazwyczaj dzieje się tak w projektach amatorskich, hobbystycznych, niskobudżetowych, lub badawczych, acz nie jest to regułą. W tych wymienionych wybór przeważnie pada na rozwiązania otwartoźródłowe.
 
-    Przykładem komercyjnego silnika wykorzystywanego w licznych, uznanych, dużych i popularnych produkcjach niezależnych firm może być \texttt{RenderWare}. Jest to produkt studia \textit{Criterion}, które było częścią firmy \textit{Canon}. Został on użyty w takich tytułach jak \textit{Tony Hawk's Pro Skater 3}, \textit{Battlefield 2: Modern Combat}, czy choćby w słynnej serii \textit{Grand Theft Auto} oraz wiele innych -- obszerna lista wykorzystujących go produktów jest dostępna na \cite{renderware:list}. Wymienione gry wydane zostały przez kolejno  \textit{Neversoft/Activision}, \textit{DICE}, \textit{Rockstar Games}. Można zauważyć, że są to światowej sławy firmy, co świadczy o prestiżu RenderWare, o którym więcej można się dowiedzieć na \cite{renderware}.Niestety po wykupieniu przez \textit{Electronic Arts} dystrybucja licencji oraz rozwój silnika zostały wstrzymane.
+    Przykładem komercyjnego silnika wykorzystywanego w licznych, uznanych, dużych i popularnych produkcjach niezależnych firm może być \texttt{RenderWare}. Jest to produkt studia \textit{Criterion}, które było częścią firmy \textit{Canon}. Został on użyty w takich tytułach jak \textit{Tony Hawk's Pro Skater 3}, \textit{Battlefield 2: Modern Combat}, czy choćby w słynnej serii \textit{Grand Theft Auto} oraz wiele innych -- obszerna lista wykorzystujących go produktów jest dostępna na \cite{renderware:list}. Wymienione gry wydane zostały przez kolejno  \textit{Neversoft/Activision}, \textit{DICE}, \textit{Rockstar Games}. Można zauważyć, że są to światowej sławy firmy, co świadczy o prestiżu RenderWare, o którym więcej można się dowiedzieć na \cite{renderware}. Niestety po wykupieniu przez \textit{Electronic Arts} dystrybucja licencji oraz rozwój silnika zostały wstrzymane.
 
 
     W związku z faktem, iż nawet najwięksi wydawcy gier stosują w swoich produktach zewnętrzne rozwiązania oraz ze względu na zakres i czas ograniczony terminem złożenia pracy dyplomowej, postanowiono również w projekcie użyć istniejącego już silnika graficznego. W dalszej części rozdziału przedstawione zostaną kryteria i wymogi jakie postawiono przed poszukiwanym silnikiem oraz pokrótce opisano rozważane rozwiązania. Na koniec znajdzie się uzasadnienie ostatecznego wyboru silnika graficznego.
@@ -169,7 +206,7 @@ W rozdziale tym dokonano bliższego niż w poprzednich częściach niniejszej pr
 \begin{center}
 \footnotesize
 %   \begin{tabular}{| x{3.6cm} || x{3cm} | x{3cm} | x{3cm} |}
-\begin{tabular}{|p{3.6cm}||>{\centering}p{3cm}|>{\centering}p{3cm}|>{\centering}p{3cm}|c} %TODO centering
+\begin{tabular}{|p{3.6cm}||>{\centering}p{3cm}|>{\centering}p{3cm}|>{\centering}p{3cm}|c} 
 \cline{2-4}
   \multicolumn{1}{l|}{} & \textbf{OGRE} & \textbf{Panda3D} & \textbf{Irrlicht} & \\ \cline{2-4} \noalign{\smallskip} \cline{1-4}
 Producent & Torus Knot Software Ltd & Disney i Carnegie Mellon University & Nikolaus Gebhardt &\\ \cline{1-4}
@@ -183,14 +220,13 @@ Języki programowania & C++, Java, .Net, Python, inne & Python, C++ & C++, C$\sh
 Animacja szkieletowa & tak & tak & tak &\\ \cline{1-4}
 Kinematyka odwrotna & zewnętrzna implementacja & brak & brak &\\ \cline{1-4}
 Klasyfikacja użycia & trudne & średnie & proste &\\ \cline{1-4}
+
   \end{tabular}
 \end{center}
-
   \caption{Zestawienie informacji o silnikach graficznych}
-
-
 \label{tab:silniki}
 \end{table}
+
      \subsection{Interfejs programowy dla sprzętu graficznego}
 
       Wykorzystywany silnik graficzny pozwala na wykorzystanie do renderowania zarówno interfejsu Direct3D, jak i OpenGL. Co prawda założenia projektowe ograniczają wybór do tego drugiego, jednak dla pełnego obrazu postanowiono przedstawić w niniejszej pracy opis obu konkurencyjnych rozwiązań.
@@ -199,13 +235,13 @@ Klasyfikacja użycia & trudne & średnie & proste &\\ \cline{1-4}
 
       Direct3D jest częścią opracowanej przez firmę \texttt{Microsoft} biblioteki DirectX -- zbioru API służącego do programowania gier. Powszechnie stosuje się go w produktach przeznaczonych dla rodziny systemów operacyjnych Windows, konsolach Windows i urządzeniach mobilnych opartych o rozwiązania Microsoftu.
  
-      Omawiane API oparte zostało na tak zwanych interfejsach \texttt{COM} (ang. Component Object Model), które są standardem, jaki firma Microsoft wprowadziła w swoim oprogramowaniu. Zwiększa to trudność użycia i zmniejsza czytelność kodu. DirectX jest zamkniętym rozwiązaniem kontrolowanym w całości przez Microsoft.
+      Omawiane API oparte zostało na tak zwanych interfejsach \texttt{COM} (ang. Component Object Model), które są standardem, jaki firma Microsoft wprowadziła w swoim oprogramowaniu. Zwiększa to trudność użycia i zmniejsza czytelność kodu. DirectX jest zamkniętym rozwiązaniem kontrolowanym w całości przez Microsoft. Dokumentacja dostępna jest na \cite{dx}.
 
       \subsubsection{OpenGL}
 
       Biblioteka powstała na bazie \texttt{IRIS GL} rozwijanej przez firmę \texttt{Silicon Graphics}, która była światowym potentatem w dziedzinie grafiki i animacji komputerowej. OpenGL jest standardem otwartym, a pieczę nad jego rozwojem sprawuje \texttt{Khronos Group}. Jest to związek przedsiębiorstw zajmujący się rozwojem otwartych standardów.
 
-      OpenGL jest dostępne na wielu platformach, takich jak Windows, Mac OS X, iPhone, Nintendo, Android i systemy z rodziny Unix, w tym Linux. Jest szeroko wykorzystywana w zaawansowanych narzędziach do tworzenia grafiki i wizualizacji naukowych.
+      OpenGL jest dostępne na wielu platformach, takich jak Windows, Mac OS X, iPhone, Nintendo, Android i systemy z rodziny Unix, w tym Linux. Jest szeroko wykorzystywana w zaawansowanych narzędziach do tworzenia grafiki i wizualizacji naukowych. Dokumentacja dostępna jest na \cite{opengl}.
 
   \section{Implementacja}
 
@@ -232,6 +268,9 @@ Klasyfikacja użycia & trudne & średnie & proste &\\ \cline{1-4}
 \bibitem{irrlichtb1} André Koscianski, \textit{Game Programming with Irrlicht}, CreateSpace 2011
 \bibitem{irrlichtb2} Johannes Stein, \textit{Irrlicht 1.7 Realtime 3D Engine Beginner's Guide}, Packt Publishing 2011
 \bibitem{irrlichtw} Nikolaus Gebhardt, \textit{Irrlicht Engine - A free open source 3D engine}, \url{http://irrlicht.sourceforge.net}
+\bibitem{dx} Microsoft, \textit{Direct3D 10 Graphics}, \url{http://msdn.microsoft.com/en-us/library/windows/desktop/bb205066%28v=vs.85%29.aspx}
+\bibitem{opengl} Khronos Group, \textit{OpenGL - The Industry Standard for High Performance Graphics}, \url{http://www.opengl.org/}
+
 \end{thebibliography}
 
 %%Bibliografia
