@@ -31,44 +31,54 @@
 \kluczowe{animacja, 3D, kinematyka, odwrotna, gra, silnik graficzny, ruch, postać}
 \streszczenie{Streszczenie pracy}
 
-
 \begin{document}
 \maketitle
 \tableofcontents
 
 \chapter{Wprowadzenie}
-Parę słów po co, gdzie i do czego jest animacja stosowana, jak to mamy coraz lepszy sprzęt itp
-  \section{Określenie problemu}
-Nieco bliższe przedstawienie problemu animacji i kinematyki odwrotnej
-  \section{Cel pracy}
 
-Aby ukierunkować rozwój pracy i określić charakter badań, ważne jest ustalenie celu, jaki zamierza się osiągnąć. W związku z tym, nie inaczej jest w tym przypadku. Celem niniejszego dzieła jest analiza porównawcza metod animacji trójwymiarowej. Dzięki temu, że został on określony, możliwe było wybranie oraz zastosowanie odpowiedniej dla niego metodologii badawczej.
+Parę słów po co, gdzie i do czego jest animacja stosowana, jak to mamy coraz lepszy sprzęt itp
+
+  \section{Określenie problemu}
+
+  Nieco bliższe przedstawienie problemu animacji i kinematyki odwrotnej
+
+  \section{Cel pracy}
+  Aby ukierunkować rozwój pracy i określić charakter badań, które zostaną przeprowadzone w trakcie jej tworzenia, konieczne jest ustalenie celu, który student zamierza poprzez nią osiągnąć. Takie też było pierwsze zadanie, jakie postawił przed sobą autor tejże pracy. Celem niniejszego dzieła jest analiza porównawcza metod animacji trójwymiarowej. Efektem tego ukierunkowania była możliwość wybrania oraz zastosowania odpowiedniej dla niego metodologii badawczej.
 
   \section{Etapy oraz zakres pracy}
 
-Zagadnienia dotyczące animacji komputerowej, a w szczególności animacji trójwymiarowej są złożone oraz bardzo rozległe, tym samym oferując szerokie pole do badań i rozwoju. Z tego względu pracę podzielono na etapy oraz przyjęto odpowiednie założenia, nadając tym samym kierunek w jakim podążały badania i określając ramy w jakich powinny się one zawierać. Dzięki temu oraz dzięki sprecyzowaniu celu w poprzednim rozdziale, wiadomo było w którym momencie niniejsze dzieło można uznać za ukończone.
+  Obszar, jaki zajmuje problematyka dotycząca animacji komputerowej, a w szczególności animacji trójwymiarowej jest bardzo rozległy, a same zagadnienia bywają niezwykle trudne i złożone. Prowadzi to do tego, że zainteresowanym osobom, oferowane jest szerokie pole do badań i rozwoju. Pamiętając o tym, a przede wszystkim mając na względzie przejrzystość pracy, po wcześniejszym przyjęciu odpowiednich założeń, podzielono ją na etapy. W ten sposób nadano przeprowadzanym badaniom odpowiedni kierunek oraz określono ramy, w jakich powinny się one zawierać. Dzięki temu oraz poprzez sprecyzowanie celu, o którym mowa była w poprzednim rozdziale, określenie, w którym momencie niniejsze dzieło może zostać uznane za zakończone, było w znacznym stopniu ułatwione.
+  
+  Aspektem inżynierskim tej pracy jest opracowanie animacji w przestrzeni trójwymiarowej obiektów, których ruch oparty jest o algorytm kinematyki odwrotnej. Jako aspekt badawczy natomiast, określone zostało zastosowanie algorytmu kinematyki odwrotnej do tworzenia animacji w przestrzeni trójwymiarowej, a także zbadanie przydatności oraz efektywności wykorzystania tejże kinematyki.
 
-Aspektem inżynierskim pracy jest opracowanie animacji w przestrzeni 3D obiektów, których ruch oparty jest o algorytm kinematyki odwrotnej. Badawczy aspekt pracy został natomiast określony jako zastosowanie algorytmu kinematyki odwrotnej do tworzenia animacji w przestrzeni 3D oraz badanie przydatności i efektywności użycia tej metody w animacji.
+  Jak już wspomniano powyżej, praca została podzielona na etapy. Zabieg ten ułatwić miał rozeznanie się w osiąganych postępach oraz wcześniejsze nakreślenie odpowiedniego harmonogramu. Kroki, obrane przy realizacji pracy wyglądają, jak następuje:
 
-Jak już wspomniano powyżej, praca została podzielona na etapy. Dzięki temu zabiegowi łatwiej było rozeznać się w osiąganych postępach oraz nakreślić odpowiedni harmonogram. Obrane kroki w realizacji pracy wyglądają następująco: 
+  \begin{enumerate}
 
-\begin{enumerate}
+  \item Przegląd literatury
+  \item Opracowanie koncepcji rozwiązania
+  \item Modelowanie aktywnych obiektów sceny
+  \item Opracowanie zestawu animacji z wykorzystaniem kinematyki odwrotnej
+  \item Przygotowanie platformy testowej
+  \item Implementacja algorytmu kinematyki odwrotnej dla aktywnych obiektów sceny
+  \item Weryfikacja poprawności i jakości wizualnej ruchu na platformie testowej
+  \item Analiza, opracowanie i interpretacja wyników
+  \item Redakcja pracy
 
-\item Przegląd literatury
-\item Opracowanie koncepcji rozwiązania
-\item Modelowanie aktywnych obiektów sceny
-\item Opracowanie zestawu animacji z wykorzystaniem kinematyki odwrotnej
-\item Przygotowanie platformy testowej
-\item Implementacja algorytmu kinematyki odwrotnej dla aktywnych obiektów sceny
-\item Weryfikacja poprawności i jakości wizualnej ruchu na platformie testowej
-\item Analiza, opracowanie i interpretacja wyników
-\item Redakcja pracy
-
-\end{enumerate}
+  \end{enumerate}
 
   \section{Struktura pracy}
 
-Opis co znajduje się w kolejnych rozdziałach
+  W drugim rozdziale niniejszego dzieła poruszone zostały zagadnienia, które bezpośrednio dotyczą tematu animacji komputerowej. Przybliżono w nim szereg różnych terminów, których znajomość i zrozumienie są niezbędne, aby móc w pełni pojąć dalszą część tejże pracy. Przykładem takiego terminu jest choćby system szkieletowy.
+
+  Rozdział trzeci natomiast, w całości został poświęcony badanemu zagadnieniu, jakim jest kinematyka odwrotna, ze szczególnym uwzględnieniem jej zastosowania na płaszczyźnie trójwymiarowej animacji komputerowej.
+  
+  W kolejnym, czwartym rozdziale zawarto szczegóły dotyczące projektu, który został zrealizowany na potrzeby tej pracy. Na początku tejże części przedstawiono założenia, jakie autor przyjął przed przystąpieniem do wykonania projektu. Następnym etapem było dokonanie przeglądu, a wreszcie wybór technologii, które zostały później wykorzystane przy realizacji projektu. Detale oraz uwagi dotyczące implementacji zrealizowanego projektu przedstawiono na końcu rozdziału.
+
+  W piątym rozdziale, autor poświęcił się deskrypcji i specyfikacji badań, które zostały wykonane na potrzeby jego pracy. W tej części znalazły się także otrzymane w przebiegu tychże badań wyniki.
+
+  Ostatni, szósty rozdział pozostawiono na podsumowanie przeprowadzonych badań, ich wyników oraz niniejszego dzieła jako całości. Przedyskutowano w nim między innymi osiągnięte rezultaty, a także określono możliwe perspektywy dla dalszych prac badawczych.
 
 \chapter{Animacja 3D}
 
@@ -78,19 +88,19 @@ co to jest kinematyka
 %włosy odzież mięśnie napięcie emocje itp TODO
   \section{Kinematyka prosta}
 
- Słowo kinematyka wywodzi się od greckiego słowa \textit{kín\={e}ma}, które to oznacza ruch. Kinematyka jako dział fizyki zajmuje się zatem badaniem ruchu bez uwzględnienia sił, przez działanie których ten ruch został wywołany. Ponieważ niniejsza praca traktuje o kinematyce odwrotnej, wypadałoby zatem wyjaśnić, w stosunku do czego jest ona odwrotna. Otóż jest ona odwrotna do \texttt{kinematyki prostej}. Za tym pojęciem kryje się bardzo prosta koncepcja. Polega ona na poddawaniu sukcesywnym przekształceniom kolejnych części łańcucha kinematycznego, aż do osiągnięcia pozycji docelowej, bądź do niej możliwie najbliższej, jeśli pozycja docelowa okaże się być nieosiągalna. Dla przykładu,  jeśli chcemy aby animowana postać podniosła rękę, należy odpowiednio ustawić staw barkowy, aby przedramię osiągnęło odpowiednią pozycję, a następnie tę samą czynność wykonać dla stawu łokciowego. Kinematyka prosta została zilustrowana na rys. \ref{img:fk} Wynika z tego, że w tym przypadku mamy do czynienia z bezpośrednim sterowaniem każdej części ruchomego systemu, takiego jak dla przykładu szkielet ludzki.
-  
-\begin{figure}
- \centering
-  \includegraphics[keepaspectratio=true,width=\linewidth]{./img/fk.png}
- % fk.png: 298x271 pixel, 90dpi, 8.41x7.65 cm, bb=0 0 238 217
- \caption{Kinematyka prosta}
- \label{img:fk}
-\end{figure}
+  Słowo kinematyka wywodzi się od greckiego słowa \textit{kín\={e}ma}, które to oznacza ruch. Kinematyka jako dział fizyki zajmuje się zatem badaniem ruchu, ale bez uwzględnienia sił, przez działanie których ruch ten został wywołany. Ponieważ niniejsza praca traktuje o kinematyce odwrotnej, wypadałoby zatem już w tym miejscu wyjaśnić, w stosunku do czego jest ona odwrotna. Otóż jest ona odwrotna do \texttt{kinematyki prostej}. Za tym niezwykle banalnym pojęciem kryje się bardzo prosta koncepcja. Polega ona na poddawaniu sukcesywnym przekształceniom kolejnych części łańcucha kinematycznego, aż do osiągnięcia pozycji docelowej, bądź do niej możliwie najbliższej, jeśli pozycja docelowa miałaby okazać się nieosiągalna. Dla przykładu, jeśli chcemy aby animowana postać podniosła rękę, należy odpowiednio ustawić staw barkowy, aby przedramię osiągnęło właściwą pozycję, a następni tę samą czynność trzeba wykonać dla stawu łokciowego. Kinematyka prosta została zilustrowana na rys. \ref{img:fk} Wynika z niego, że w tym przypadku mamy do czynienia z bezpośrednim sterowaniem każdej części ruchomego systemu, takiego jak dla przykładu szkielet ludzki.
 
-\section{Kinematyka odwrotna}
+  \begin{figure}
+  \centering
+    \includegraphics[keepaspectratio=true,width=\linewidth]{./img/fk.png}
+  % fk.png: 298x271 pixel, 90dpi, 8.41x7.65 cm, bb=0 0 238 217
+  \caption{Kinematyka prosta}
+  \label{img:fk}
+  \end{figure}
 
- Kinematyka odwrotna, jak łatwo się domyślić, polega na odwróceniu procedury opisanej w punkcie poprzednim. Dzięki temu została wyeliminowana konieczność każdorazowej manipulacji elementami składowymi ruchomego układu. Bardziej wnikliwe studium rzeczonej metody animacji zostanie przedstawione w dalszej części niniejszej pracy.
+  \section{Kinematyka odwrotna}
+
+  Kinematyka odwrotna, jak łatwo się domyślić, polega na odwróceniu procedury opisanej w punkcie poprzednim. Taki zabieg sprawia, że konieczność każdorazowej manipulacji elementami składowymi ruchomego układu, zostaje wyeliminowana. Bardziej wnikliwe studium rzeczonej metody animacji zostanie przedstawione w dalszej części niniejszej pracy.
 
   \section{animacja szkieletowa}
   \section{animacja klatkowa}
@@ -98,33 +108,79 @@ co to jest kinematyka
   
 \chapter{Kinematyka odwrotna}
 
- Kinematyka odwrotna jest metodą używaną od dawna w dziedzinie automatyki i robotyki do sterowania różnego rodzaju manipulatorami i kończynami robotów, w tym robotów autonomicznych. W następnej kolejności kinematyką odwrotną zainteresował się przemysł filmowy. Ze względu na minimalizację czynności koniecznych do osiągnięcia zamierzonego efektu, przyczynia się ona do przyspieszenia procesu animowania postaci wygenerowanej komputerowo. Obecnie kinematyka odwrotna jest stosowana na bardzo szeroką skalę w różnych dziedzinach życia, w tym w przemyśle gier komputerowych do animacji modeli w czasie rzeczywistym.
+Kinematyka odwrotna jest metodą, którą od dawna stosuje się w dziedzinie automatyki i robotyki, do sterowania różnego rodzaju manipulatorami i kończynami robotów, w tym robotów autonomicznych. Nieco później, z dużym powodzeniem tej metody, kinematyką odwrotną zainteresował się przemysł filmowy. Ze względu na niewielką ilość czynności koniecznych do osiągnięcia zamierzonego przez grafików efektu, przyczynia się ona do przyspieszenia procesu animowania komputerowo wygenerowanej postaci. Obecnie kinematyka odwrotna stosowana jest na bardzo szeroką skalę w różnych dziedzinach naukowo-rozrywkowych, w tym w przemyśle gier komputerowych, na przykład do animacji modeli w czasie rzeczywistym.
+
+W rozdziale tym dokonano bliższego niż w poprzednich częściach tej pracy przedstawienia istotnego zagadnienia, za jakie uznaliśmy kinematykę odwrotną. Opisano w nim pokrótce historię powstania tejże techniki, dokonano jej formalnej definicji oraz nieco bliżej przedstawiono kilka wybranych, dotyczących jej algorytmów.
+
+%  Kinematyka odwrotna jest metodą używaną od dawna w dziedzinie automatyki i robotyki do sterowania różnego rodzaju manipulatorami i kończynami robotów, w tym robotów autonomicznych. W następnej kolejności kinematyką odwrotną zainteresował się przemysł filmowy. Ze względu na minimalizację czynności koniecznych do osiągnięcia zamierzonego efektu, przyczynia się ona do przyspieszenia procesu animowania postaci wygenerowanej komputerowo. Obecnie kinematyka odwrotna jest stosowana na bardzo szeroką skalę w różnych dziedzinach życia, w tym w przemyśle gier komputerowych do animacji modeli w czasie rzeczywistym.
  
- W rozdziale tym dokonano bliższego niż w poprzednich częściach niniejszej pracy przedstawienia istotnego zagadnienia jakim jest kinematyka odwrotna. Opisano pokrótce historię powstania tejże techniki, dokonano jej formalnej definicji oraz przedstawiono nieco bliżej kilka wybranych algorytmów.
+
+%  W rozdziale tym dokonano bliższego niż w poprzednich częściach niniejszej pracy przedstawienia istotnego zagadnienia jakim jest kinematyka odwrotna. Opisano pokrótce historię powstania tejże techniki, dokonano jej formalnej definicji oraz przedstawiono nieco bliżej kilka wybranych algorytmów.
 
 %  Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zastosowań i paru algorytmów, ze szczególnym uwzględnieniem implementowanego CCD.
 
   \section{Geneza i zastosowania}
-    
-TODO
 
-  
+  Kiedy zaczęto projektować pierwsze na świecie roboty z ruchomymi ramionami, pojawił się także problem sterowania konstrukcjami tego typu. Tak powstała teoria sterowania, będąca poddziedziną robotyki i automatyki. Ze względu na stosowanie mikrokontrolerów, które to są taktowane znacznie niższymi częstotliwościami, niż klasyczne komputery i charakteryzują się ograniczoną mocą obliczeniową. Mając to na uwadze, oczywistym staje się fakt, że problem sterowania robotów stał się niezwykle istotnym polem badań. Starania miały na celu opracowanie rozwiązania o jak najniższej złożoności obliczeniowej oraz zachowującego możliwie wysoką precyzję w odwzorowaniu naturalnych ruchów
+
+  \textit{Li-Chun Tommy Wang} wraz z \textit{Chih Cheng Chenem} w \cite{ikrobot} zaproponowali koncepcję rozwiązania problemu sterowania robotem, którą rozwinął \textit{Chris Welman} w \cite{welman}. 
+
+  aplikacje blender itp, nowe algorytmy, scopus
 \section{Formalna definicja problemu}
 
  Niech zadany będzie łańcuch kinematyczny długości $n$ zakończony manipulatorem \textbf{N} (ostatni z $n$ elementów składowych łańcucha). Przyjmując, że $\bf\vec{v}$ jest to wektor określający docelową pozycję manipulatora \textbf{N} w trójwymiarowej przestrzeni kartezjańskiej, natomiast $\bf\vec{s}$ definiując jako wektor stanu rozważanego układu, kinematykę prostą można sformułować jako funkcję $f$:
 $$
 \bf\vec{v} = f(\bf\vec{s})
 $$
-Dodatkowo określając $P_i$ jako macierz przekształceń składowej $a_i$ zadanego łańcucha kinematycznego, funkcję $f$ można rozwinąć do:
+Dodatkowo, jeżeli określimy $P_i$ jako macierz przekształceń składowej $a_i$ zadanego łańcucha kinematycznego, funkcja $f$ może zostać rozwinięta do:
+% Dodatkowo określając $P_i$ jako macierz przekształceń składowej $a_i$ zadanego łańcucha kinematycznego, funkcję $f$ można rozwinąć do:
 $$
 {\vec{v}} = P_1a_1({s_1})P_2a_2({s_2}) \dots P_na_n({s_n})
 $$
-
-Łatwiejszym do rozwiązania problemem może być znalezienie funkcji odwrotnej do $f$, którą to określono jako kinematyka odwrotna:
+Problemem, który okazuje się łatwiejszym do rozwiązania, może być po prostu znalezienie funkcji odwrotnej do $f$, którą to określono jako kinematyka odwrotna:
+% Łatwiejszym do rozwiązania problemem może być znalezienie funkcji odwrotnej do $f$, którą to określono jako kinematyka odwrotna:
 $$
 f^{-1} (\vec{v})  = \vec{s}
 $$
+  \section{Przegląd publikacji}
 
+Mój tzw. Systematic literature review i notatki po ang. do przetłumaczenia, ogarnięcia i uzupełnienia.
+
+
+    Your query:   TITLE-ABS-KEY((inverse kinematics OR reverse kinematics) AND 3d) AND SUBJAREA(comp OR phys) AND (LIMIT-TO(SUBJAREA, "COMP") OR LIMIT-TO(SUBJAREA, "MULT")) Document results: 153 
+
+many non related publications:
+
+(e.g. Synthetic echocardiographic image sequences for cardiac inverse electro-kinematic learning     Prakosa, A., Sermesant, M., Delingette, H., Saloux, E., Allain, P., Cathier, P., Etyngier, P., (...), Ayache, N.     2011     Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics) 6891 LNCS (PART 1), pp. 505-507,
+
+Protein loop closure using orientational restraints from NMR data     Tripathy, C., Zeng, J., Zhou, P., Donald, B.R.     2011     Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics) 6577 LNBI, pp. 483-498     0  )
+
+        Heuristic solution for constrained 7-DOF motion planning in 3D scanning application
+        Intuitive interactive human-character posing with millions of example poses
+
+
+    Your query:   TITLE-ABS-KEY(((inverse kinematics OR reverse kinematics) AND animation) OR ((inverse kinematics OR reverse kinematics) AND motion)) AND SUBJAREA(comp) AND (LIMIT-TO(EXACTKEYWORD, "Three dimensional")) AND (LIMIT-TO(DOCTYPE, "ar"))      Document results: 16
+        Natural character posing from a large motion database - novel IK solution NAT-IK (2011)
+        Wearable sensors for 3D upper limb motion modeling and ubiquitous estimation - not closely related
+        Ambulatory estimation of muscle forces of lower limbs in a Rehabilitation robot system - not closely related
+        Evaluation of a geometry-based knee joint compared to a planar knee joint - not closely related
+        Adding image constraints to inverse kinematics for human motion capture - inverse kinematics applied to markerless motion capture process. Related, but not so much.
+        A biomimetic approach to inverse kinematics for a redundant robot arm - consider evaluating proposed IK algorithm for 3d animation (2010)
+        An interactive motion-editing method for human animation - Focused on motion-editing.
+        An off-line robot simulation toolbox - not closely related
+        Automatic reconstruction of 3D human motion pose from uncalibrated monocular video sequences based on markerless human motion tracking - yet another markerless human motion tracking involving IK.
+        Hand modeling and motion controlling based on lay figure in virtual assembly - hand animation
+        Research on kinematics simulation of maintenance and inspection robot in nuclear power plants - robot simulation
+        Full-body performance animation with Sequential Inverse Kinematics - Sequential IK, algorithms comparsion study
+        Evaluating the influence of induced passive torques in the simulation of time-varying human poses
+        A scalable model-based hand posture analysis system
+        A cell decomposition-based collision avoidance algorithm for robot manipulators
+        Algebraic methods for image processing and computer vision
+
+
+
+remark- use exact IK keyword in scopus - prev results include I and K not as a one phrase
+consider looking for IK algorithms
 
   \section{Metody kinematyki odwrotnej}
 
@@ -136,31 +192,43 @@ $$
      TODO
  
     \subsection{Cyclic-Coordinate Descent}
+  Metoda ta, w skrócie nazywana \texttt{CCD}, należy do klasy metod zwanych metodami heurystycznymi. Idea kryjąca się za tym sposobem rozwiązywania zadania kinematyki odwrotnej polega na analitycznym podejściu do szeregu znacznie prostszych problemów. W pierwszej i w każdej kolejnej iteracji poszukiwane są parametry, dla których zadana funkcja przyjmuje wartość minimalną przy spełnieniu określonych kryteriów. Wspomniana funkcja jest znacznie mniej złożona i cechuje się o wiele niższym stopniem komplikacji obliczeniowej w porównaniu z podejściem w pełni analitycznym.
 
-  Metoda ta w skrócie nazywana \texttt{CCD} należy do klasy metod heurystycznych. Idea kryjąca się za tym sposobem rozwiązywania zadania kinematyki odwrotnej polega na analitycznym rozwiązaniu szeregu prostszych problemów. W pierwszej i każdej kolejnej iteracji poszukiwane są parametry dla których zadana funkcja przyjmuje wartość minimalną przy spełnieniu określonych kryteriów. Wspomniana funkcja jest znacznie mniej złożona i cechuje się o wiele niższym stopniem komplikacji obliczeniowej w porównaniu z podejściem w pełni analitycznym.
+%   Metoda ta w skrócie nazywana \texttt{CCD} należy do klasy metod heurystycznych. Idea kryjąca się za tym sposobem rozwiązywania zadania kinematyki odwrotnej polega na analitycznym rozwiązaniu szeregu prostszych problemów. W pierwszej i każdej kolejnej iteracji poszukiwane są parametry dla których zadana funkcja przyjmuje wartość minimalną przy spełnieniu określonych kryteriów. Wspomniana funkcja jest znacznie mniej złożona i cechuje się o wiele niższym stopniem komplikacji obliczeniowej w porównaniu z podejściem w pełni analitycznym.
 
 \chapter{Projekt}
 
   \section{Założenia}
 
   \section{Przegląd i wybór technologii}
-
-    Przed przystąpieniem do realizacji jakiegokolwiek projektu wysoce wskazane jest aby rozważyć możliwość i zasadność zastosowania różnego typu narzędzi oraz technologii. Dzięki takiemu podejściu możliwe jest zminimalizowanie czasu potrzebnego na ukończenie owego projektu. Inną istotną zaletą przeprowadzania wstępnej analizy dostępnych rozwiązań jest również dalece wyższe prawdopodobieństwo, że ukończony projekt będzie o wiele wyższej jakości.
+    Przed przystąpieniem do realizacji jakiegokolwiek projektu wysoce wskazane jest, aby rozważyć możliwość i zasadność zastosowania różnego typu narzędzi oraz technologii. Dzięki takiemu podejściu możliwe jest zminimalizowanie czasu potrzebnego na ukończenie danego projektu. Inną istotną zaletą przeprowadzania wstępnej analizy dostępnych rozwiązań, jest również znacznie wyższe prawdopodobieństwo, że jakość ukończonego z ich pomocą projektu, będzie o wiele wyższa i lepsza.
+%     Przed przystąpieniem do realizacji jakiegokolwiek projektu wysoce wskazane jest aby rozważyć możliwość i zasadność zastosowania różnego typu narzędzi oraz technologii. Dzięki takiemu podejściu możliwe jest zminimalizowanie czasu potrzebnego na ukończenie owego projektu. Inną istotną zaletą przeprowadzania wstępnej analizy dostępnych rozwiązań jest również dalece wyższe prawdopodobieństwo, że ukończony projekt będzie o wiele wyższej jakości.
   
-    W tym podrozdziale dokonano przeglądu istniejących narzędzi i technologii pod kątem wykorzystania ich w niniejszym projekcie. Na początku znajduje się wprowadzenie w tematykę niezwykle przydatnych narzędzi, jakimi są silniki graficzne. W dalszej kolejności przedstawiono kryteria, jakimi się kierowano przy wyborze oraz opisano trzy rozważane rozwiązania. Ta część kończy się krótkim podsumowaniem i uzasadnieniem takiego, a nie innego wyboru. Na zakończenie tego podrozdziału przybliżono bez zbytniego zagłębiania się w szczegóły dwa popularne interfejsy programowe dla sprzętu graficznego.
+    W niniejszym podrozdziale dokonano przeglądu istniejących narzędzi i technologii pod kątem wykorzystania ich w tym projekcie. Na początku znajduje się wprowadzenie w tematykę najbardziej przydatnych i koniecznych narzędzi, jakimi są silniki graficzne. W dalszej kolejności przedstawiono kryteria, jakimi kierowano się przy podejmowaniu wyboru oraz opisano trzy rozważane przez autora rozwiązania. Część ta kończy się krótkim podsumowaniem i uzasadnieniem, dlaczego wybrane zostały takie, a nie inne rozwiązanie. Na zakończenie tego podrozdziału przybliżono, bez zbytniego zagłębiania się w szczegóły, dwa popularne dla sprzętu graficznego interfejsy programowe.
+
+%     W tym podrozdziale dokonano przeglądu istniejących narzędzi i technologii pod kątem wykorzystania ich w niniejszym projekcie. Na początku znajduje się wprowadzenie w tematykę niezwykle przydatnych narzędzi, jakimi są silniki graficzne. W dalszej kolejności przedstawiono kryteria, jakimi się kierowano przy wyborze oraz opisano trzy rozważane rozwiązania. Ta część kończy się krótkim podsumowaniem i uzasadnieniem takiego, a nie innego wyboru. Na zakończenie tego podrozdziału przybliżono bez zbytniego zagłębiania się w szczegóły dwa popularne interfejsy programowe dla sprzętu graficznego.
 
     \subsection{Silnik Graficzny}
 
-    Bez wykorzystania silników graficznych prawdopodobnie nie powstałyby wielkie, wy\-so\-ko\-bud\-że\-to\-we produkcje, jakie ukazują się obecnie na rynku gier komputerowych	. Wiąże się to ze stale rosnącym, wysokim stopniem skomplikowania układów graficznych, coraz większym poziomem realizmu oraz wykorzystaniem zaawansowanych efektów wizualnych, takich jak \texttt{HDR}, czy efekty cząsteczkowe. 
+    Bez wykorzystania mocnych silników graficznych, prawdopodobnie nie powstałyby wielkie, wy\-so\-ko\-bud\-że\-to\-we produkcje, jakie obecnie i od lat ukazują się na rynku gier komputerowych . Wiąże się to ze stale rosnącym, wysokim stopniem skomplikowania układów graficznych, coraz większym poziomem realizmu oraz wykorzystaniem bardziej zaawansowanych efektów wizualnych, takich jak \texttt{HDR}, czy efekty cząsteczkowe.
 
-    Obecnie dostępnych jest wiele zróżnicowanych silników graficznych, odmiennych pod wieloma względami i prezentujących dużą liczbę indywidualnych cech oraz funkcjonalności. Dzięki ich zastosowaniu programiści mogą się skupić na implementacji innych, unikalnych dla danej gry elementów, takich jak choćby logika. Wiąże się to z oszczędnością czasu pracy i optymalizacją zasobów. Ponadto powszechnym zjawiskiem jest, że firmy na bazie jednego silnika wydają kilka różnych produkcji w dość krótkim czasie, co nie byłoby możliwe, gdyby dla każdej z nich należało od podstaw obsłużyć renderowanie grafiki. Co więcej, częstokroć bywa, że producent nie posiada silnika graficznego, ani nie zamierza go rozwijać samemu od podstaw, lecz używa już dostępnego. Zazwyczaj dzieje się tak w projektach amatorskich, hobbystycznych, niskobudżetowych, lub badawczych, acz nie jest to regułą. W tych wymienionych wybór przeważnie pada na rozwiązania otwartoźródłowe.
+%     Bez wykorzystania silników graficznych prawdopodobnie nie powstałyby wielkie, wy\-so\-ko\-bud\-że\-to\-we produkcje, jakie ukazują się obecnie na rynku gier komputerowych	. Wiąże się to ze stale rosnącym, wysokim stopniem skomplikowania układów graficznych, coraz większym poziomem realizmu oraz wykorzystaniem zaawansowanych efektów wizualnych, takich jak \texttt{HDR}, czy efekty cząsteczkowe. 
 
-    Przykładem komercyjnego silnika wykorzystywanego w licznych, uznanych, dużych i popularnych produkcjach niezależnych firm może być \texttt{RenderWare}. Jest to produkt studia \textit{Criterion}, które było częścią firmy \textit{Canon}. Został on użyty w takich tytułach jak \textit{Tony Hawk's Pro Skater 3}, \textit{Battlefield 2: Modern Combat}, czy choćby w słynnej serii \textit{Grand Theft Auto} oraz wiele innych -- obszerna lista wykorzystujących go produktów jest dostępna na \cite{renderware:list}. Wymienione gry wydane zostały przez kolejno  \textit{Neversoft/Activision}, \textit{DICE}, \textit{Rockstar Games}. Można zauważyć, że są to światowej sławy firmy, co świadczy o prestiżu RenderWare, o którym więcej można się dowiedzieć na \cite{renderware}. Niestety po wykupieniu przez \textit{Electronic Arts} dystrybucja licencji oraz rozwój silnika zostały wstrzymane.
+    Obecnie na rynku dostępnych jest wiele zróżnicowanych silników graficznych, urozmaiconych pod wieloma względami i prezentujących ogromną liczbę indywidualnych cech oraz funkcjonalności. Dzięki ich zastosowaniu, programiści mogą się skupić na implementacji innych, unikalnych dla danej gry elementów, takich jak choćby logika czy system rozwoju postaci. Wiąże się to z oszczędnością czasu pracy i optymalizacją wykorzystywanych zasobów. Ponadto powszechnym zjawiskiem jest, że firmy na bazie jednego silnika wydają kilka różnych produkcji w dość krótkim czasie. Takie zjawisko nie byłoby możliwe, gdyby przy tworzeniu każdej, pojedynczej gry, konieczna była obsługa programowego interfejsu dla sprzętu graficznego od podstaw. Co więcej, częstokroć bywa tak, że producent nie posiada silnika graficznego, ani nie zamierza rozwijać jego bazy od samego początku, lecz zwyczajnie używa już dostępnego. Zazwyczaj dzieje się tak w przedsięwzięciach amatorskich, hobbystycznych, niskobudżetowych, lub badawczych, jakkolwiek nie jest to regułą. W wymienionych wyżej projektach, głównie ze względów finansowych wybór przeważnie pada na darmowe rozwiązania otwartoźródłowe.
 
+%     Obecnie dostępnych jest wiele zróżnicowanych silników graficznych, odmiennych pod wieloma względami i prezentujących dużą liczbę indywidualnych cech oraz funkcjonalności. Dzięki ich zastosowaniu programiści mogą się skupić na implementacji innych, unikalnych dla danej gry elementów, takich jak choćby logika. Wiąże się to z oszczędnością czasu pracy i optymalizacją zasobów. Ponadto powszechnym zjawiskiem jest, że firmy na bazie jednego silnika wydają kilka różnych produkcji w dość krótkim czasie, co nie byłoby możliwe, gdyby dla każdej z nich należało od podstaw obsłużyć renderowanie grafiki. Co więcej, częstokroć bywa, że producent nie posiada silnika graficznego, ani nie zamierza go rozwijać samemu od podstaw, lecz używa już dostępnego. Zazwyczaj dzieje się tak w projektach amatorskich, hobbystycznych, niskobudżetowych, lub badawczych, acz nie jest to regułą. W tych wymienionych wybór przeważnie pada na rozwiązania otwartoźródłowe.
 
-    W związku z faktem, iż nawet najwięksi wydawcy gier stosują w swoich produktach zewnętrzne rozwiązania oraz ze względu na zakres i czas ograniczony terminem złożenia pracy dyplomowej, postanowiono również w projekcie użyć istniejącego już silnika graficznego. W dalszej części rozdziału przedstawione zostaną kryteria i wymogi jakie postawiono przed poszukiwanym silnikiem oraz pokrótce opisano rozważane rozwiązania. Na koniec znajdzie się uzasadnienie ostatecznego wyboru silnika graficznego.
+    Przykładem komercyjnego silnika, wykorzystywanego w licznych uznanych, dużych i popularnych produkcjach niezależnych firm, może być \texttt{RenderWare}. Jest to produkt studia \textit{Criterion}, które było częścią firmy \textit{Canon}. Został on użyty przy tworzeniu takich tytułów jak \textit{Tony Hawk's Pro Skater 3}, \textit{Battlefield 2: Modern Combat}, czy choćby słynnej serii \textit{Grand Theft Auto} oraz wielu, wielu innych -- obszerna lista wykorzystujących go produktów jest dostępna na \cite{renderware:list}. Wymienione gry wydane zostały kolejno przez firmy \textit{Neversoft/Activision}, \textit{DICE}, \textit{Rockstar Games}. Można zauważyć, że są to światowej sławy spółki, co świadczy o prestiżu silnika RenderWare, o którym więcej można się dowiedzieć na \cite{renderware}. Niestety po wykupieniu praw do niego przez \textit{Electronic Arts} dystrybucja licencji oraz rozwój silnika zostały wstrzymane.
 
-    Głównym kryterium przy wyborze była licencja, na której opublikowany został dany silnik graficzny. Ze względu na naukowy i niedochodowy charakter projektu poszukiwano rozwiązania o otwartych źródłach, a co za tym idzie, licencji zgodniej z \texttt{GPL}/\texttt{BSD}, bądź zbliżonej. Kolejnym istotnym wymogiem były obsługiwane platformy sprzętowo-sys\-te\-mo\-we, jako że projekt rozwijano przy wykorzystaniu systemu operacyjnego \texttt{GNU/Linux} i mikrokomputera o architekturze \texttt{x86}.  Kluczowa była także możliwości użycia danego silnika graficznego w aplikacji pisanej w języku programowania \texttt{C/C++}. Ponadto ze względu na presję czasu poszukiwano rozwiązania o stosunkowo łagodnej krzywej uczenia. W związku z tym za duży atut uważano również popularność silnika, a także ilość oraz jakoś dokumentacji i materiałów dydaktycznych. Z tego samego powodu za istotną uznano dużą dostępność materiałów gotowych i dozwolonych do użycia, takich jak sceny i modele postaci. To z kolei przekłada się na ilość i rodzaj obsługiwanych formatów wejściowych. Biorąc pod uwagę stawiany cel, implementację algorytmu kinematyk odwrotnej, wykorzystanie systemu szkieletowego przyjęto za bardzo ważne kryterium. Zwracano również uwagę, aby silnik graficzny nie posiadał jeszcze metod kinematyki odwrotnej. Za drugorzędne, bądź nieistotne uznano takie cechy jak jakość renderowanej grafiki i możliwość użycia shaderów oraz zaawansowanych efektów specjalnych czy oświetleniowych.
+%     Przykładem komercyjnego silnika wykorzystywanego w licznych, uznanych, dużych i popularnych produkcjach niezależnych firm może być \texttt{RenderWare}. Jest to produkt studia \textit{Criterion}, które było częścią firmy \textit{Canon}. Został on użyty w takich tytułach jak \textit{Tony Hawk's Pro Skater 3}, \textit{Battlefield 2: Modern Combat}, czy choćby w słynnej serii \textit{Grand Theft Auto} oraz wiele innych -- obszerna lista wykorzystujących go produktów jest dostępna na \cite{renderware:list}. Wymienione gry wydane zostały przez kolejno  \textit{Neversoft/Activision}, \textit{DICE}, \textit{Rockstar Games}. Można zauważyć, że są to światowej sławy firmy, co świadczy o prestiżu RenderWare, o którym więcej można się dowiedzieć na \cite{renderware}. Niestety po wykupieniu przez \textit{Electronic Arts} dystrybucja licencji oraz rozwój silnika zostały wstrzymane.
+
+    W związku z faktem, iż nawet najwięksi wydawcy gier stosują w swoich produktach zewnętrzne rozwiązania oraz biorąc pod uwagę zakres i czas ograniczony terminem złożenia pracy dyplomowej, również w tym projekcie postanowiono użyć już istniejącego silnika graficznego. W dalszej części rozdziału przedstawione zostaną kryteria i wymogi jakie autor postawił przed poszukiwanym silnikiem oraz pokrótce opisano inne, także rozważane możliwości. Na koniec znajdzie się uzasadnienie ostatecznej decyzji, która została podjęta przy wyborze silnika graficznego.
+
+%     W związku z faktem, iż nawet najwięksi wydawcy gier stosują w swoich produktach zewnętrzne rozwiązania oraz ze względu na zakres i czas ograniczony terminem złożenia pracy dyplomowej, postanowiono również w projekcie użyć istniejącego już silnika graficznego. W dalszej części rozdziału przedstawione zostaną kryteria i wymogi jakie postawiono przed poszukiwanym silnikiem oraz pokrótce opisano rozważane rozwiązania. Na koniec znajdzie się uzasadnienie ostatecznego wyboru silnika graficznego.
+
+Głównym kryterium, którym kierowano się przy wyborze, była licencja, na której opublikowany został dany silnik graficzny. Ze względu na naukowy i niedochodowy charakter projektu, rozwiązanie, którego poszukiwano, powinno być o otwartych źródłach, a co za tym idzie, o licencji zgodniej z \texttt{GPL}/\texttt{BSD}, bądź do niej zbliżonej. Kolejnym istotnym wymogiem były obsługiwane platformy sprzętowo-sys\-te\-mo\-we, jako że projekt rozwijany był przy wykorzystaniu systemu operacyjnego \texttt{GNU/Linux} i mikrokomputera o architekturze \texttt{x86}. Kluczowa była także możliwość użycia danego silnika graficznego w aplikacji pisanej w języku programowania \texttt{C/C++}. Ponadto ze względu na presję, jaką wywierał termin złożenia pracy, poszukiwano rozwiązania o stosunkowo łagodnej krzywej uczenia. W związku z tym, za duży atut uważano również popularność silnika, a także ilość oraz jakość dostępnej dokumentacji i materiałów dydaktycznych. Z tego samego powodu za istotną uznano dużą osiągalność materiałów gotowych i dozwolonych do użycia, takich jak sceny i modele postaci. To z kolei przekłada się na ilość i rodzaj obsługiwanych przez dany silnik graficzny formatów wejściowych. Biorąc pod uwagę postawiony cel, implementację algorytmu kinematyki odwrotnej, wykorzystanie systemu szkieletowego przyjęto za bardzo ważne kryterium. Zwrócono również uwagę na to, aby silnik graficzny nie posiadał jeszcze metod kinematyki odwrotnej. Za drugorzędne, bądź dużo mniej istotne uznano takie cechy jak jakość renderowanej grafiki i możliwość użycia shaderów oraz zaawansowanych efektów specjalnych czy oświetleniowych.
+
+%     Głównym kryterium przy wyborze była licencja, na której opublikowany został dany silnik graficzny. Ze względu na naukowy i niedochodowy charakter projektu poszukiwano rozwiązania o otwartych źródłach, a co za tym idzie, licencji zgodniej z \texttt{GPL}/\texttt{BSD}, bądź zbliżonej. Kolejnym istotnym wymogiem były obsługiwane platformy sprzętowo-sys\-te\-mo\-we, jako że projekt rozwijano przy wykorzystaniu systemu operacyjnego \texttt{GNU/Linux} i mikrokomputera o architekturze \texttt{x86}.  Kluczowa była także możliwości użycia danego silnika graficznego w aplikacji pisanej w języku programowania \texttt{C/C++}. Ponadto ze względu na presję czasu poszukiwano rozwiązania o stosunkowo łagodnej krzywej uczenia. W związku z tym za duży atut uważano również popularność silnika, a także ilość oraz jakoś dokumentacji i materiałów dydaktycznych. Z tego samego powodu za istotną uznano dużą dostępność materiałów gotowych i dozwolonych do użycia, takich jak sceny i modele postaci. To z kolei przekłada się na ilość i rodzaj obsługiwanych formatów wejściowych. Biorąc pod uwagę stawiany cel, implementację algorytmu kinematyk odwrotnej, wykorzystanie systemu szkieletowego przyjęto za bardzo ważne kryterium. Zwracano również uwagę, aby silnik graficzny nie posiadał jeszcze metod kinematyki odwrotnej. Za drugorzędne, bądź nieistotne uznano takie cechy jak jakość renderowanej grafiki i możliwość użycia shaderów oraz zaawansowanych efektów specjalnych czy oświetleniowych.
 
  
       \subsubsection{OGRE}
