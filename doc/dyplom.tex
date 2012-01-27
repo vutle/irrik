@@ -20,6 +20,7 @@
 \usepackage{pwrdtyt}
 \usepackage{url}
 \usepackage{graphicx}
+\usepackage{lineno}
 \usepackage{array}
 \usepackage[dvips, pdfborder={0}, bookmarks, colorlinks=false, pdftitle={Animacja 3D z wykorzystaniem kinematyki odwrotnej}, pdfauthor={Marcin Załuski}, pdfsubject={Animacja 3D z wykorzystaniem kinematyki odwrotnej}, pdfkeywords={Animacja, 3D, kinematyka odwrotna, Irrlicht}]{hyperref}
 \renewcommand{\baselinestretch}{1.5}
@@ -34,7 +35,7 @@
 \begin{document}
 \maketitle
 \tableofcontents
-
+\linenumbers
 \chapter{Wprowadzenie}
 
 Parę słów po co, gdzie i do czego jest animacja stosowana, jak to mamy coraz lepszy sprzęt itp
@@ -112,11 +113,6 @@ Kinematyka odwrotna jest metodą, którą od dawna stosuje się w dziedzinie aut
 
 W rozdziale tym dokonano bliższego niż w poprzednich częściach tej pracy przedstawienia istotnego zagadnienia, za jakie uznaliśmy kinematykę odwrotną. Opisano w nim pokrótce historię powstania tejże techniki, dokonano jej formalnej definicji oraz nieco bliżej przedstawiono kilka wybranych, dotyczących jej algorytmów.
 
-%  Kinematyka odwrotna jest metodą używaną od dawna w dziedzinie automatyki i robotyki do sterowania różnego rodzaju manipulatorami i kończynami robotów, w tym robotów autonomicznych. W następnej kolejności kinematyką odwrotną zainteresował się przemysł filmowy. Ze względu na minimalizację czynności koniecznych do osiągnięcia zamierzonego efektu, przyczynia się ona do przyspieszenia procesu animowania postaci wygenerowanej komputerowo. Obecnie kinematyka odwrotna jest stosowana na bardzo szeroką skalę w różnych dziedzinach życia, w tym w przemyśle gier komputerowych do animacji modeli w czasie rzeczywistym.
- 
-
-%  W rozdziale tym dokonano bliższego niż w poprzednich częściach niniejszej pracy przedstawienia istotnego zagadnienia jakim jest kinematyka odwrotna. Opisano pokrótce historię powstania tejże techniki, dokonano jej formalnej definicji oraz przedstawiono nieco bliżej kilka wybranych algorytmów.
-
 %  Konkretniejszy opis IK niż w poprzednim rozdziale. Historia i geneza, opis zastosowań i paru algorytmów, ze szczególnym uwzględnieniem implementowanego CCD.
 
   \section{Geneza i zastosowania}
@@ -133,18 +129,23 @@ $$
 \bf\vec{v} = f(\bf\vec{s})
 $$
 Dodatkowo, jeżeli określimy $P_i$ jako macierz przekształceń składowej $a_i$ zadanego łańcucha kinematycznego, funkcja $f$ może zostać rozwinięta do:
-% Dodatkowo określając $P_i$ jako macierz przekształceń składowej $a_i$ zadanego łańcucha kinematycznego, funkcję $f$ można rozwinąć do:
+
 $$
 {\vec{v}} = P_1a_1({s_1})P_2a_2({s_2}) \dots P_na_n({s_n})
 $$
 Problemem, który okazuje się łatwiejszym do rozwiązania, może być po prostu znalezienie funkcji odwrotnej do $f$, którą to określono jako kinematyka odwrotna:
-% Łatwiejszym do rozwiązania problemem może być znalezienie funkcji odwrotnej do $f$, którą to określono jako kinematyka odwrotna:
+
 $$
 f^{-1} (\vec{v})  = \vec{s}
 $$
+
+
   \section{Przegląd publikacji}
 
+W tym podrozdziale zawarto krótki opis poszukiwań przeprowadzonych, których celem było rozeznanie się w aktualnym stanie wiedzy, jak i zbadanie popularności tematu kinematyki odwrotnej.
+
 Mój tzw. Systematic literature review i notatki po ang. do przetłumaczenia, ogarnięcia i uzupełnienia.
+
 
 
     Your query:   TITLE-ABS-KEY((inverse kinematics OR reverse kinematics) AND 3d) AND SUBJAREA(comp OR phys) AND (LIMIT-TO(SUBJAREA, "COMP") OR LIMIT-TO(SUBJAREA, "MULT")) Document results: 153 
@@ -159,24 +160,27 @@ Protein loop closure using orientational restraints from NMR data     Tripathy, 
         Intuitive interactive human-character posing with millions of example poses
 
 
-    Your query:   TITLE-ABS-KEY(((inverse kinematics OR reverse kinematics) AND animation) OR ((inverse kinematics OR reverse kinematics) AND motion)) AND SUBJAREA(comp) AND (LIMIT-TO(EXACTKEYWORD, "Three dimensional")) AND (LIMIT-TO(DOCTYPE, "ar"))      Document results: 16
-        Natural character posing from a large motion database - novel IK solution NAT-IK (2011)
-        Wearable sensors for 3D upper limb motion modeling and ubiquitous estimation - not closely related
-        Ambulatory estimation of muscle forces of lower limbs in a Rehabilitation robot system - not closely related
-        Evaluation of a geometry-based knee joint compared to a planar knee joint - not closely related
-        Adding image constraints to inverse kinematics for human motion capture - inverse kinematics applied to markerless motion capture process. Related, but not so much.
-        A biomimetic approach to inverse kinematics for a redundant robot arm - consider evaluating proposed IK algorithm for 3d animation (2010)
-        An interactive motion-editing method for human animation - Focused on motion-editing.
-        An off-line robot simulation toolbox - not closely related
-        Automatic reconstruction of 3D human motion pose from uncalibrated monocular video sequences based on markerless human motion tracking - yet another markerless human motion tracking involving IK.
-        Hand modeling and motion controlling based on lay figure in virtual assembly - hand animation
-        Research on kinematics simulation of maintenance and inspection robot in nuclear power plants - robot simulation
-        Full-body performance animation with Sequential Inverse Kinematics - Sequential IK, algorithms comparsion study
-        Evaluating the influence of induced passive torques in the simulation of time-varying human poses
-        A scalable model-based hand posture analysis system
-        A cell decomposition-based collision avoidance algorithm for robot manipulators
-        Algebraic methods for image processing and computer vision
+    Your query:   TITLE-ABS-KEY(((inverse kinematics OR reverse kinematics) AND animation) OR ((inverse kinematics OR reverse kinematics) AND motion)) AND SUBJAREA(comp) AND (LIMIT-TO(EXACTKEYWORD, "Three dimensional")) AND (LIMIT-TO(DOCTYPE, "ar"))
+      Document results: 16
 
+\begin{enumerate}
+ \item Natural character posing from a large motion database - novel IK solution NAT-IK (2011)
+ \item Wearable sensors for 3D upper limb motion modeling and ubiquitous estimation - not closely related
+ \item      Ambulatory estimation of muscle forces of lower limbs in a Rehabilitation robot system - not closely related
+\item        Evaluation of a geometry-based knee joint compared to a planar knee joint - not closely related
+\item        Adding image constraints to inverse kinematics for human motion capture - inverse kinematics applied to markerless motion capture process. Related, but not so much.
+\item        A biomimetic approach to inverse kinematics for a redundant robot arm - consider evaluating proposed IK algorithm for 3d animation (2010)
+\item         An interactive motion-editing method for human animation - Focused on motion-editing.
+\item         An off-line robot simulation toolbox - not closely related
+        \item Automatic reconstruction of 3D human motion pose from uncalibrated monocular video sequences based on markerless human motion tracking - yet another markerless human motion tracking involving IK.
+\item         Hand modeling and motion controlling based on lay figure in virtual assembly - hand animation
+\item         Research on kinematics simulation of maintenance and inspection robot in nuclear power plants	 - robot simulation
+\item         Full-body performance animation with Sequential Inverse Kinematics - Sequential IK, algorithms comparsion study
+\item         Evaluating the influence of induced passive torques in the simulation of time-varying human poses
+\item         A scalable model-based hand posture analysis system
+\item         A cell decomposition-based collision avoidance algorithm for robot manipulators
+\item         Algebraic methods for image processing and computer vision
+\end{enumerate}
 
 
 remark- use exact IK keyword in scopus - prev results include I and K not as a one phrase
@@ -194,86 +198,74 @@ consider looking for IK algorithms
     \subsection{Cyclic-Coordinate Descent}
   Metoda ta, w skrócie nazywana \texttt{CCD}, należy do klasy metod zwanych metodami heurystycznymi. Idea kryjąca się za tym sposobem rozwiązywania zadania kinematyki odwrotnej polega na analitycznym podejściu do szeregu znacznie prostszych problemów. W pierwszej i w każdej kolejnej iteracji poszukiwane są parametry, dla których zadana funkcja przyjmuje wartość minimalną przy spełnieniu określonych kryteriów. Wspomniana funkcja jest znacznie mniej złożona i cechuje się o wiele niższym stopniem komplikacji obliczeniowej w porównaniu z podejściem w pełni analitycznym.
 
-%   Metoda ta w skrócie nazywana \texttt{CCD} należy do klasy metod heurystycznych. Idea kryjąca się za tym sposobem rozwiązywania zadania kinematyki odwrotnej polega na analitycznym rozwiązaniu szeregu prostszych problemów. W pierwszej i każdej kolejnej iteracji poszukiwane są parametry dla których zadana funkcja przyjmuje wartość minimalną przy spełnieniu określonych kryteriów. Wspomniana funkcja jest znacznie mniej złożona i cechuje się o wiele niższym stopniem komplikacji obliczeniowej w porównaniu z podejściem w pełni analitycznym.
-
 \chapter{Projekt}
 
   \section{Założenia}
 
   \section{Przegląd i wybór technologii}
     Przed przystąpieniem do realizacji jakiegokolwiek projektu wysoce wskazane jest, aby rozważyć możliwość i zasadność zastosowania różnego typu narzędzi oraz technologii. Dzięki takiemu podejściu możliwe jest zminimalizowanie czasu potrzebnego na ukończenie danego projektu. Inną istotną zaletą przeprowadzania wstępnej analizy dostępnych rozwiązań, jest również znacznie wyższe prawdopodobieństwo, że jakość ukończonego z ich pomocą projektu, będzie o wiele wyższa i lepsza.
-%     Przed przystąpieniem do realizacji jakiegokolwiek projektu wysoce wskazane jest aby rozważyć możliwość i zasadność zastosowania różnego typu narzędzi oraz technologii. Dzięki takiemu podejściu możliwe jest zminimalizowanie czasu potrzebnego na ukończenie owego projektu. Inną istotną zaletą przeprowadzania wstępnej analizy dostępnych rozwiązań jest również dalece wyższe prawdopodobieństwo, że ukończony projekt będzie o wiele wyższej jakości.
-  
+
     W niniejszym podrozdziale dokonano przeglądu istniejących narzędzi i technologii pod kątem wykorzystania ich w tym projekcie. Na początku znajduje się wprowadzenie w tematykę najbardziej przydatnych i koniecznych narzędzi, jakimi są silniki graficzne. W dalszej kolejności przedstawiono kryteria, jakimi kierowano się przy podejmowaniu wyboru oraz opisano trzy rozważane przez autora rozwiązania. Część ta kończy się krótkim podsumowaniem i uzasadnieniem, dlaczego wybrane zostały takie, a nie inne rozwiązanie. Na zakończenie tego podrozdziału przybliżono, bez zbytniego zagłębiania się w szczegóły, dwa popularne dla sprzętu graficznego interfejsy programowe.
 
-%     W tym podrozdziale dokonano przeglądu istniejących narzędzi i technologii pod kątem wykorzystania ich w niniejszym projekcie. Na początku znajduje się wprowadzenie w tematykę niezwykle przydatnych narzędzi, jakimi są silniki graficzne. W dalszej kolejności przedstawiono kryteria, jakimi się kierowano przy wyborze oraz opisano trzy rozważane rozwiązania. Ta część kończy się krótkim podsumowaniem i uzasadnieniem takiego, a nie innego wyboru. Na zakończenie tego podrozdziału przybliżono bez zbytniego zagłębiania się w szczegóły dwa popularne interfejsy programowe dla sprzętu graficznego.
 
     \subsection{Silnik Graficzny}
 
     Bez wykorzystania mocnych silników graficznych, prawdopodobnie nie powstałyby wielkie, wy\-so\-ko\-bud\-że\-to\-we produkcje, jakie obecnie i od lat ukazują się na rynku gier komputerowych . Wiąże się to ze stale rosnącym, wysokim stopniem skomplikowania układów graficznych, coraz większym poziomem realizmu oraz wykorzystaniem bardziej zaawansowanych efektów wizualnych, takich jak \texttt{HDR}, czy efekty cząsteczkowe.
 
-%     Bez wykorzystania silników graficznych prawdopodobnie nie powstałyby wielkie, wy\-so\-ko\-bud\-że\-to\-we produkcje, jakie ukazują się obecnie na rynku gier komputerowych	. Wiąże się to ze stale rosnącym, wysokim stopniem skomplikowania układów graficznych, coraz większym poziomem realizmu oraz wykorzystaniem zaawansowanych efektów wizualnych, takich jak \texttt{HDR}, czy efekty cząsteczkowe. 
-
     Obecnie na rynku dostępnych jest wiele zróżnicowanych silników graficznych, urozmaiconych pod wieloma względami i prezentujących ogromną liczbę indywidualnych cech oraz funkcjonalności. Dzięki ich zastosowaniu, programiści mogą się skupić na implementacji innych, unikalnych dla danej gry elementów, takich jak choćby logika czy system rozwoju postaci. Wiąże się to z oszczędnością czasu pracy i optymalizacją wykorzystywanych zasobów. Ponadto powszechnym zjawiskiem jest, że firmy na bazie jednego silnika wydają kilka różnych produkcji w dość krótkim czasie. Takie zjawisko nie byłoby możliwe, gdyby przy tworzeniu każdej, pojedynczej gry, konieczna była obsługa programowego interfejsu dla sprzętu graficznego od podstaw. Co więcej, częstokroć bywa tak, że producent nie posiada silnika graficznego, ani nie zamierza rozwijać jego bazy od samego początku, lecz zwyczajnie używa już dostępnego. Zazwyczaj dzieje się tak w przedsięwzięciach amatorskich, hobbystycznych, niskobudżetowych, lub badawczych, jakkolwiek nie jest to regułą. W wymienionych wyżej projektach, głównie ze względów finansowych wybór przeważnie pada na darmowe rozwiązania otwartoźródłowe.
 
-%     Obecnie dostępnych jest wiele zróżnicowanych silników graficznych, odmiennych pod wieloma względami i prezentujących dużą liczbę indywidualnych cech oraz funkcjonalności. Dzięki ich zastosowaniu programiści mogą się skupić na implementacji innych, unikalnych dla danej gry elementów, takich jak choćby logika. Wiąże się to z oszczędnością czasu pracy i optymalizacją zasobów. Ponadto powszechnym zjawiskiem jest, że firmy na bazie jednego silnika wydają kilka różnych produkcji w dość krótkim czasie, co nie byłoby możliwe, gdyby dla każdej z nich należało od podstaw obsłużyć renderowanie grafiki. Co więcej, częstokroć bywa, że producent nie posiada silnika graficznego, ani nie zamierza go rozwijać samemu od podstaw, lecz używa już dostępnego. Zazwyczaj dzieje się tak w projektach amatorskich, hobbystycznych, niskobudżetowych, lub badawczych, acz nie jest to regułą. W tych wymienionych wybór przeważnie pada na rozwiązania otwartoźródłowe.
 
     Przykładem komercyjnego silnika, wykorzystywanego w licznych uznanych, dużych i popularnych produkcjach niezależnych firm, może być \texttt{RenderWare}. Jest to produkt studia \textit{Criterion}, które było częścią firmy \textit{Canon}. Został on użyty przy tworzeniu takich tytułów jak \textit{Tony Hawk's Pro Skater 3}, \textit{Battlefield 2: Modern Combat}, czy choćby słynnej serii \textit{Grand Theft Auto} oraz wielu, wielu innych -- obszerna lista wykorzystujących go produktów jest dostępna na \cite{renderware:list}. Wymienione gry wydane zostały kolejno przez firmy \textit{Neversoft/Activision}, \textit{DICE}, \textit{Rockstar Games}. Można zauważyć, że są to światowej sławy spółki, co świadczy o prestiżu silnika RenderWare, o którym więcej można się dowiedzieć na \cite{renderware}. Niestety po wykupieniu praw do niego przez \textit{Electronic Arts} dystrybucja licencji oraz rozwój silnika zostały wstrzymane.
 
-%     Przykładem komercyjnego silnika wykorzystywanego w licznych, uznanych, dużych i popularnych produkcjach niezależnych firm może być \texttt{RenderWare}. Jest to produkt studia \textit{Criterion}, które było częścią firmy \textit{Canon}. Został on użyty w takich tytułach jak \textit{Tony Hawk's Pro Skater 3}, \textit{Battlefield 2: Modern Combat}, czy choćby w słynnej serii \textit{Grand Theft Auto} oraz wiele innych -- obszerna lista wykorzystujących go produktów jest dostępna na \cite{renderware:list}. Wymienione gry wydane zostały przez kolejno  \textit{Neversoft/Activision}, \textit{DICE}, \textit{Rockstar Games}. Można zauważyć, że są to światowej sławy firmy, co świadczy o prestiżu RenderWare, o którym więcej można się dowiedzieć na \cite{renderware}. Niestety po wykupieniu przez \textit{Electronic Arts} dystrybucja licencji oraz rozwój silnika zostały wstrzymane.
 
     W związku z faktem, iż nawet najwięksi wydawcy gier stosują w swoich produktach zewnętrzne rozwiązania oraz biorąc pod uwagę zakres i czas ograniczony terminem złożenia pracy dyplomowej, również w tym projekcie postanowiono użyć już istniejącego silnika graficznego. W dalszej części rozdziału przedstawione zostaną kryteria i wymogi jakie autor postawił przed poszukiwanym silnikiem oraz pokrótce opisano inne, także rozważane możliwości. Na koniec znajdzie się uzasadnienie ostatecznej decyzji, która została podjęta przy wyborze silnika graficznego.
 
-%     W związku z faktem, iż nawet najwięksi wydawcy gier stosują w swoich produktach zewnętrzne rozwiązania oraz ze względu na zakres i czas ograniczony terminem złożenia pracy dyplomowej, postanowiono również w projekcie użyć istniejącego już silnika graficznego. W dalszej części rozdziału przedstawione zostaną kryteria i wymogi jakie postawiono przed poszukiwanym silnikiem oraz pokrótce opisano rozważane rozwiązania. Na koniec znajdzie się uzasadnienie ostatecznego wyboru silnika graficznego.
 
-Głównym kryterium, którym kierowano się przy wyborze, była licencja, na której opublikowany został dany silnik graficzny. Ze względu na naukowy i niedochodowy charakter projektu, rozwiązanie, którego poszukiwano, powinno być o otwartych źródłach, a co za tym idzie, o licencji zgodniej z \texttt{GPL}/\texttt{BSD}, bądź do niej zbliżonej. Kolejnym istotnym wymogiem były obsługiwane platformy sprzętowo-sys\-te\-mo\-we, jako że projekt rozwijany był przy wykorzystaniu systemu operacyjnego \texttt{GNU/Linux} i mikrokomputera o architekturze \texttt{x86}. Kluczowa była także możliwość użycia danego silnika graficznego w aplikacji pisanej w języku programowania \texttt{C/C++}. Ponadto ze względu na presję, jaką wywierał termin złożenia pracy, poszukiwano rozwiązania o stosunkowo łagodnej krzywej uczenia. W związku z tym, za duży atut uważano również popularność silnika, a także ilość oraz jakość dostępnej dokumentacji i materiałów dydaktycznych. Z tego samego powodu za istotną uznano dużą osiągalność materiałów gotowych i dozwolonych do użycia, takich jak sceny i modele postaci. To z kolei przekłada się na ilość i rodzaj obsługiwanych przez dany silnik graficzny formatów wejściowych. Biorąc pod uwagę postawiony cel, implementację algorytmu kinematyki odwrotnej, wykorzystanie systemu szkieletowego przyjęto za bardzo ważne kryterium. Zwrócono również uwagę na to, aby silnik graficzny nie posiadał jeszcze metod kinematyki odwrotnej. Za drugorzędne, bądź dużo mniej istotne uznano takie cechy jak jakość renderowanej grafiki i możliwość użycia shaderów oraz zaawansowanych efektów specjalnych czy oświetleniowych.
-
-%     Głównym kryterium przy wyborze była licencja, na której opublikowany został dany silnik graficzny. Ze względu na naukowy i niedochodowy charakter projektu poszukiwano rozwiązania o otwartych źródłach, a co za tym idzie, licencji zgodniej z \texttt{GPL}/\texttt{BSD}, bądź zbliżonej. Kolejnym istotnym wymogiem były obsługiwane platformy sprzętowo-sys\-te\-mo\-we, jako że projekt rozwijano przy wykorzystaniu systemu operacyjnego \texttt{GNU/Linux} i mikrokomputera o architekturze \texttt{x86}.  Kluczowa była także możliwości użycia danego silnika graficznego w aplikacji pisanej w języku programowania \texttt{C/C++}. Ponadto ze względu na presję czasu poszukiwano rozwiązania o stosunkowo łagodnej krzywej uczenia. W związku z tym za duży atut uważano również popularność silnika, a także ilość oraz jakoś dokumentacji i materiałów dydaktycznych. Z tego samego powodu za istotną uznano dużą dostępność materiałów gotowych i dozwolonych do użycia, takich jak sceny i modele postaci. To z kolei przekłada się na ilość i rodzaj obsługiwanych formatów wejściowych. Biorąc pod uwagę stawiany cel, implementację algorytmu kinematyk odwrotnej, wykorzystanie systemu szkieletowego przyjęto za bardzo ważne kryterium. Zwracano również uwagę, aby silnik graficzny nie posiadał jeszcze metod kinematyki odwrotnej. Za drugorzędne, bądź nieistotne uznano takie cechy jak jakość renderowanej grafiki i możliwość użycia shaderów oraz zaawansowanych efektów specjalnych czy oświetleniowych.
+    Głównym kryterium, którym kierowano się przy wyborze, była licencja, na której opublikowany został dany silnik graficzny. Ze względu na naukowy i niedochodowy charakter projektu, rozwiązanie, którego poszukiwano, powinno być o otwartych źródłach, a co za tym idzie, o licencji zgodniej z \texttt{GPL}/\texttt{BSD}, bądź do niej zbliżonej. Kolejnym istotnym wymogiem były obsługiwane platformy sprzętowo-sys\-te\-mo\-we, jako że projekt rozwijany był przy wykorzystaniu systemu operacyjnego \texttt{GNU/Linux} i mikrokomputera o architekturze \texttt{x86}. Kluczowa była także możliwość użycia danego silnika graficznego w aplikacji pisanej w języku programowania \texttt{C/C++}. Ponadto ze względu na presję, jaką wywierał termin złożenia pracy, poszukiwano rozwiązania o stosunkowo łagodnej krzywej uczenia. W związku z tym, za duży atut uważano również popularność silnika, a także ilość oraz jakość dostępnej dokumentacji i materiałów dydaktycznych. Z tego samego powodu za istotną uznano dużą osiągalność materiałów gotowych i dozwolonych do użycia, takich jak sceny i modele postaci. To z kolei przekłada się na ilość i rodzaj obsługiwanych przez dany silnik graficzny formatów wejściowych. Biorąc pod uwagę postawiony cel, implementację algorytmu kinematyki odwrotnej, wykorzystanie systemu szkieletowego przyjęto za bardzo ważne kryterium. Zwrócono również uwagę na to, aby silnik graficzny nie posiadał jeszcze metod kinematyki odwrotnej. Za drugorzędne, bądź dużo mniej istotne uznano takie cechy jak jakość renderowanej grafiki i możliwość użycia shaderów oraz zaawansowanych efektów specjalnych czy oświetleniowych.
 
  
       \subsubsection{OGRE}
+ 
+      OGRE to popularny silnik graficzny, oparty na wolnej licencji \texttt{MIT}, która to jest kompatybilna z licencją \texttt{GPL}. Nazwa silnika jest skrótem od angielskiego \textit{Object-Oriented Graphics Rendering Engine}, co w języku polskim oznacza Zorientowany Obiektowo Silnik Renderujący Grafikę.
 
-      OGRE jest popularnym silnikiem graficznym na wolnej licencji \texttt{MIT}, która to jest kompatybilna z licencją \texttt{GPL}. Nazwa jest skrótem od angielskiego \textit{Object-Oriented Graphics Rendering Engine}, czyli Zorientowany Obiektowo Silnik Renderujący Grafikę.
+      OGRE, jak większość szeroko stosowanych silników graficznych, został napisany w języku \texttt{C++}. Wszelkie szczegóły dotyczące implementacji niższych warstw, takich jak wywołania API \texttt{OpenGL} lub \texttt{Direct3D}, podlegają hermetyzacji dzięki użyciu klas. Daje to możliwość szybkiego osiągnięcia zamierzonych rezultatów bez konieczności szczegółowego zapoznawania się ze specyfiką konkretnej biblioteki graficznej oraz ułatwia przenoszenie aplikacji między platformami systemowymi. OGRE, jak już wcześniej wspomniano, wspiera zarówno OpenGL, jak i Direct3D a także główne systemy operacyjne, to jest texttt{Windows}, \texttt{Linux} oraz \texttt{Mac OS X}. Silnik ten oferuje także możliwość użycia programów cieniujących, animacji szkieletowej, skórowania i wiele innych, ciekawych technik.
 
-      OGRE, jak większość szeroko stosowanych silników graficznych, został napisany w języku \texttt{C++}. Wszelkie szczegóły dotyczące implementacji niższych warstw, takich jak wywołania API \texttt{OpenGL} lub \texttt{Direct3D}, podlegając hermetyzacji dzięki użyciu klas. Daje to możliwość szybkiego osiągnięcia zamierzonych rezultatów bez konieczności zapoznawania się ze specyfiką konkretnej biblioteki graficznej oraz ułatwia przenoszenie aplikacji między platformami systemowymi. OGRE, jak już wcześniej wspomniano, wspiera zarówno OpenGL, jak i Direct3D oraz główne systemy operacyjne -- \texttt{Windows}, \texttt{Linux} oraz \texttt{Mac OS X}. Oferuje także możliwość użycia programów cieniujących, animacji szkieletowej, skórowania i wiele innych technik. 
+      Ze względu na dużą popularność tego silnika graficznego, istnieje naprawdę mnóstwo materiałów dydaktycznych dotyczących jego obsługi. Na uwagę zasługują publikacje w formie drukowanych książek. Dobrym przykładem są takie pozycje jak \cite{ogreb1}, czy też najnowsza publikacja dostępna w chwili pisania niniejszej pracy, cechująca się nieco innym podejściem do tematu. Mowa tutaj o \cite{ogreb2}. Na początku pracy z OGRE warto jednak zapoznać się przede wszystkim z materiałami dostępnymi na \cite{ogre}.
 
-      Ze względu na popularność tego silnika graficznego, istnieje bardzo dużo materiałów dydaktycznych dotyczących go. Na uwagę zasługują publikacje w formie książki. Dobrym przykładem są takie pozycje jak \cite{ogreb1}, czy też najnowsza publikacja dostępna w chwili pisania niniejszej pracy, cechująca się nieco innym podejściem do tematu \cite{ogreb2}. Na początku warto jednak zapoznać się przede wszystkim z materiałami dostępnymi na \cite{ogre}.
-
-      OGRE niestety nie jest szczególnie łatwym w użyciu silnikiem graficznym. Aby zrozumieć filozofię jego działania i programowania aplikacji, należy poświęcić sporo czasu. Wynikowy kod dla prostej sceny również zdaje się być dość rozwlekły. Głównym mankamentem w kontekście niniejszej pracy jest fakt, iż co prawda sam silnik nie oferuje metod animacji opartych o kinematykę odwrotną, ale istnieją poboczne implementacje algorytmów IK z użyciem OGRE, które jak dotąd nie zostały włączone do głównego projektu.
+      OGRE niestety nie jest szczególnie łatwym w użyciu silnikiem graficznym. Aby zrozumieć filozofię jego działania i programowania aplikacji, należy poświęcić sporo czasu. Wynikowy kod dla prostej sceny również zdaje się być dość rozwlekły. Co prawda, sam silnik nie oferuje metod animacji opartych o kinematykę odwrotną, ale istnieją poboczne implementacje algorytmów IK z użyciem OGRE, które jak dotąd nie zostały włączone do głównego projektu.
 
       \subsubsection{Panda3D}
 
-      W odróżnieniu od pozostałych rozpatrywanych rozwiązań \texttt{Panda3D} jest projektem dalece bardziej złożonym. Takiego stanu rzeczy należy upatrywać w tym, że nie jest to jedynie silnik graficzny, a kompletny silnik gry. W związku z powyższym \texttt{Panda3D} posiada skomplikowaną strukturę oraz podsystemy odpowiedzialne za renderowanie grafiki, animacje, odtwarzanie dźwięku, sterowanie, detekcję kolizji, obsługę sieci, symulacje fizyczne, sztuczną inteligencję i inne.
+      W odróżnieniu od pozostałych rozpatrywanych rozwiązań \texttt{Panda3D} jest projektem dalece bardziej złożonym. Przyczyny takiego stanu rzeczy należy upatrywać w tym, że nie jest to jedynie silnik graficzny, a kompletny silnik gry. W związku z powyższym \texttt{Panda3D} posiada skomplikowaną strukturę oraz podsystemy odpowiedzialne za renderowanie grafiki, animacje, odtwarzanie dźwięku, sterowanie, detekcję kolizji, obsługę sieci, symulacje fizyczne, sztuczną inteligencję i inne.
 
       Zdecydowanie warto zaznaczyć, że projekt ten powstał jako zamknięte oprogramowanie rozwijane na własne potrzeby przez studio \texttt{Disney VR} będące częścią dobrze wszystkim znanej korporacji \texttt{The Walt Disney Company}. W roku 2002 silnik został opublikowany jako wolne oprogramowanie. Obecnie jego rozwój jest kontynuowany na licencji \texttt{BSD} przez \texttt{Entertainment Technology Center} przy uniwersytecie \texttt{Carnegie Mellon} we współpracy z \texttt{Disneyem}.
 
-      Panda3D jest napisana w języku \texttt{C++} i pozwala na programowanie aplikacji zarówno z użyciem \texttt{Pythona}, jak i \texttt{C++}. Niestety przekłada się to na skomplikowany proces budowania silnika ze źródeł. Dostępne są dwa systemy -- \texttt{ppremake} i \texttt{makepanda}. Pierwszy jest rozbudowany i dostarcza szereg rozmaitych opcji konfiguracyjnych, lecz trudniejszy w obsłudze. Drugi natomiast jest rozwiązaniem prostym i pozwalającym szybko zbudować niezbędne moduły bez zagłębiania się w szczegółowe niuanse tegoż procesu.
+      Panda3D jest napisana w języku \texttt{C++} i pozwala na programowanie aplikacji zarówno z użyciem \texttt{Pythona}, jak i \texttt{C++}. Niestety przekłada się to na skomplikowany proces budowania silnika ze źródeł. Dostępne są dwa systemy -- \texttt{ppremake} i \texttt{makepanda}. Pierwszy jest rozbudowany i dostarcza szereg rozmaitych opcji konfiguracyjnych, lecz jest trudniejszy w obsłudze. Drugi natomiast jest rozwiązaniem prostym i pozwalającym szybko zbudować niezbędne moduły bez zagłębiania się w szczegółowe niuanse tegoż procesu.
 
       Opisywany silnik ma możliwość korzystania z dwóch interfejsów programowych dla sprzętu graficznego -- \texttt{OpenGL} i \texttt{Direct3D}. Pozwala także na używanie programów cieniujących i animacji szkieletowej.
 
-      Dokumentacja projektu jest bardzo dobra. Za pewien mankament można uznać fakt, iż podstawowym i głównie wspieranym językiem jest w tym przypadku \texttt{Python}. Wiąże się to z ukierunkowaniem dokumentacji właśnie na ten język, co można zauważyć na \cite{panda}. Obecnie dostępne są dwie pozycje książkowe w całości poświęcone programowaniu z wykorzystaniem silnika graficznego \texttt{Panda3D}. Podczas gdy \cite{pandab1}, pomimo skupienia na podstawowym języku programowania, zawiera także fragmenty przeznaczone dla programistów C++, tak \cite{pandab2} jest przeznaczona dla osób początkujących w dziedzinie projektowania oraz rozwijania gier i w pełni została napisana pod kątem Pythona.
+      Dokumentacja projektu jest bardzo dobra. Za pewien mankament można uznać fakt, iż podstawowym i głównie wspieranym językiem jest w tym przypadku \texttt{Python}. Wiąże się to z ukierunkowaniem dokumentacji właśnie na ten język, co można zauważyć na \cite{panda}. Obecnie dostępne są dwie pozycje książkowe w całości poświęcone programowaniu z wykorzystaniem silnika graficznego \texttt{Panda3D}. Podczas gdy \cite{pandab1}, pomimo skupienia na podstawowym języku programowania, zawiera także fragmenty przeznaczone dla programistów C++, tak \cite{pandab2} jest przeznaczona dla osób początkujących w dziedzinie projektowania oraz rozwijania gier i w pełni została napisana została pod kątem Pythona.
 
-      Niestety podczas kompilacji Pandy w stabilnej wersji \textit{1.7.2} napotkano szereg problemów, a proces budowania wielokrotnie kończył się komunikatem błędu. Poszukiwania na \cite{pandaf} zakończyły się znalezieniem sugestii aby skorzystać z wersji rozwojowej silnika dostępnej przez repozytorium. Kompilacja tym razem powiodła się, ale problematyczne okazało się uruchomienie dostarczonych przykładów.
+      Niestety podczas kompilacji Pandy w stabilnej wersji \textit{1.7.2} napotkano szereg problemów, a proces budowania wielokrotnie kończył się komunikatem błędu. Poszukiwania rozwiązań dla tych problemów na \cite{pandaf} zakończyły się znalezieniem sugestii, aby skorzystać z wersji rozwojowej silnika dostępnej przez repozytorium. Kompilacja tym razem powiodła się, ale problematyczne okazało się uruchomienie dostarczonych przykładów.
 
       \subsubsection{Irrlicht}
 
       Silnik ten jest dystrybuowany na licencji \texttt{ZLib}, która to jest zgodna z licencją GPL. Nazwa jest złożeniem niemieckich słów \textit{Irre}, co oznacza zwariowany i \textit{Licht}, czyli światło, co w połączeniu daje błędny ognik. Początki projektu sięgają roku 2002, kiedy Nikolaus Gebhardt rozpoczął prace nad nowym silnikiem graficznym.
 
-      Irrlicht charakteryzuje się łagodną krzywą uczenia i wysoką elastycznością. Silnik został napisany w przejrzysty oraz czytelny sposób w języku \texttt{C++} z użyciem przestrzeni nazw i wzorców projektowych \texttt{GRASP}. Dzięki temu łatwo można zorientować się w jego kodzie źródłowym. Ponadto obok tych wymienionych już zalet, Irrlicht jest wieloplatformowy, stabilny, nie wymaga instalacji w systemie dodatkowych bibliotek oraz działa bardzo szybko. 
+      Irrlicht charakteryzuje się łagodną krzywą uczenia i wysoką elastycznością. Silnik został napisany w przejrzysty oraz czytelny sposób w języku \texttt{C++} z użyciem przestrzeni nazw i wzorców projektowych \texttt{GRASP}. Dzięki temu łatwo można zorientować się w jego kodzie źródłowym. Ponadto obok tych wymienionych już zalet, Irrlicht jest wieloplatformowy, stabilny, nie wymaga instalacji dodatkowych bibliotek w systemie oraz działa bardzo szybko.
 
-      Silnik pozwala na użycie zarówno \texttt{OpenGL}, jak i \texttt{Direct3D} oraz własnego programowego mechanizmu renderowania. Na uwagę zasługuje duża ilość standardowo obsługiwanych formatów wejściowych. Dzięki temu można bez problemu użyć animowanych modeli z gry Quake w wersji 2 i 3 oraz zapisanych w formacie B3D, DirectX, czy Milkshape. Lista obsługiwanych obiektów statycznych jest jeszcze dłuższa i znajduje się na niej m.in. natywny format OGRE, 3d Studio, Alias Wavefront Maya i Lightwave. Dzięki temu możliwe jest skorzystanie z bogatej biblioteki modeli i użycie ich jako obiektów zastępczych do czasu przygotowania własnych. Zwiększa też liczbę możliwych do użycia programów służących do modelowania trójwymiarowego. Irrlicht pozwala na zastosowanie animacji szkieletowej, efektów cząsteczkowych, dynamicznego oświetlenia i programów cieniujących. Można z niego korzystać w wielu językach, n.p. C++ C$\sharp$, VisualBasic, Delphi, Java.
+      Silnik pozwala na użycie zarówno \texttt{OpenGL}, jak i \texttt{Direct3D} oraz własnego programowego mechanizmu renderowania. Na uwagę zasługuje duża ilość standardowo obsługiwanych formatów wejściowych. Otwiera to możliwości, aby bez problemu używać animowanych modeli z gry Quake w wersji 2 i 3 oraz zapisanych w formacie B3D, DirectX, czy Milkshape. Lista obsługiwanych obiektów statycznych jest jeszcze dłuższa i znajduje się na niej m.in. natywny format OGRE, 3d Studio, Alias Wavefront Maya i Lightwave. Dzięki temu możliwe jest skorzystanie z bogatej biblioteki modeli i użycie ich jako obiektów zastępczych do czasu przygotowania własnych. Zwiększa to też liczbę dostępnych do użycia programów służących do modelowania trójwymiarowego. Irrlicht pozwala na zastosowanie animacji szkieletowej, efektów cząsteczkowych, dynamicznego oświetlenia i programów cieniujących. Można z niego korzystać w wielu językach, n.p. C++ C$\sharp$, VisualBasic, Delphi, Java.
 
        Obecnie na rynku znaleźć można dwie publikacje książkowe traktujące wyłącznie o opisywanym silniku graficznym. Są to \cite{irrlichtb1} i \cite{irrlichtb2}. Obie są pozycjami skierowanymi do początkujących programistów. Dokumentacja dostępna na \cite{irrlichtw} jest przejrzysta i pomocna. Jej wysoką jakość można zawdzięczać faktowi, iż została przygotowana za pomocą popularnego narzędzia \texttt{Doxygen}.
 
       \subsubsection{Podsumowanie}
 
-      W powyższych trzech punktach przedstawiono pokrótce trzy silniki graficzne, których użycie rozważano w niniejszym projekcie. Podstawowe dane oraz wady i zalety zostały zebrane i przedstawione w stabelaryzowanej formie (tab. \ref{tab:silniki}). Wszystkie projekty są dojrzałe i godne uwagi oraz oferują możliwość wykorzystania animacji szkieletowej. Dodatkowo są one dostępne na licencjach zgodnych z licencją GPL i cechują się wieloplatformowością, co pozawala na przenoszenie aplikacji między różnymi systemami operacyjnymi. Można w nich korzystać zarówno z OpenGL, jak i Direct3D. Warto zauważyć, że są one cały czas rozwijane, o czym świadczą daty wydań ich najnowszych wersji stabilnych. Po analizie powyższych silników, ostatecznie zdecydowano się na użycie Irrlicht. Na taki, a nie inny wybór znaczny wpływ miała prostota użycia i duża liczba obsługiwanych formatów wejściowych oraz bezproblemowa kompilacja. Dzięki użyciu tego silnika graficznego można szybko uzyskać zadowalające efekty. Atutem jest także jego spójność, czytelność kodu źródłowego oraz bardzo dobra dokumentacja i dostępne w pakiecie praktyczne przykłady z obszernymi komentarzami.
+      W powyższych trzech punktach pokrótce zostały przedstawione trzy silniki graficzne, których użycie rozważano przy powstawaniu niniejszego projektu. Zebrane zostały podstawowe dane oraz wady i zalety, a następnie przedstawiono je w stabelaryzowanej formie (tab. \ref{tab:silniki}). Wszystkie te koncepty są dojrzałe i godne uwagi oraz oferują możliwość wykorzystania animacji szkieletowej. Dodatkowo są one dostępne na licencjach zgodnych z licencją GPL i cechują się wieloplatformowością, co pozawala na przenoszenie aplikacji między różnymi systemami operacyjnymi. Można w nich korzystać zarówno z OpenGL, jak i Direct3D. Warte uwagi jest to, że są to silniki graficzne cały czas rozwijane, o czym świadczą daty wydań ich najnowszych wersji stabilnych. Po ich analizie i rozważeniu wszystkich za i przeciw, ostatecznie zdecydowano się na użycie trzeciego omawianego tu silnika, to jest Irrlicht. Na taki, a nie inny wybór znaczny wpływ miała prostota użycia i duża liczba obsługiwanych formatów wejściowych oraz bezproblemowa kompilacja. Dzięki użyciu tego silnika graficznego można było szybko uzyskać efekty zadowalające autora pracy. Atutem jest także jego spójność, czytelność kodu źródłowego oraz bardzo dobra dokumentacja i dostępne w pakiecie praktyczne przykłady wraz z obszernymi komentarzami.
 
 \begin{table}[p]
 
 \begin{center}
 \footnotesize
-%   \begin{tabular}{| x{3.6cm} || x{3cm} | x{3cm} | x{3cm} |}
 \begin{tabular}{|p{3.6cm}||>{\centering}p{3cm}|>{\centering}p{3cm}|>{\centering}p{3cm}|c} 
 \cline{2-4}
   \multicolumn{1}{l|}{} & \textbf{OGRE} & \textbf{Panda3D} & \textbf{Irrlicht} & \\ \cline{2-4} \noalign{\smallskip} \cline{1-4}
@@ -297,19 +289,19 @@ Klasyfikacja użycia & trudne & średnie & proste &\\ \cline{1-4}
 
      \subsection{Interfejs programowy dla sprzętu graficznego}
 
-      Wykorzystywany silnik graficzny pozwala na wykorzystanie do renderowania zarówno interfejsu Direct3D, jak i OpenGL. Co prawda założenia projektowe ograniczają wybór do tego drugiego, jednak dla pełnego obrazu postanowiono przedstawić w niniejszej pracy opis obu konkurencyjnych rozwiązań.
+      Wykorzystany przez autora do projektu, nad którym pracował, silnik graficzny pozwala na użycie do renderowania zarówno interfejsu Direct3D, jak i OpenGL. Co prawda założenia projektowe ograniczają wybór do tego drugiego, jednak dla pełnego obrazu, w niniejszej pracy postanowiono przedstawić opis obu konkurencyjnych rozwiązań.
 
       \subsubsection{Direct3D}
 
-      Direct3D jest częścią opracowanej przez firmę \texttt{Microsoft} biblioteki DirectX -- zbioru API służącego do programowania gier. Powszechnie stosuje się go w produktach przeznaczonych dla rodziny systemów operacyjnych Windows, konsolach Windows i urządzeniach mobilnych opartych o rozwiązania Microsoftu.
+      Direct3D jest częścią opracowanej przez firmę \texttt{Microsoft} biblioteki DirectX -- zbioru API służącego do programowania gier. Powszechnie stosuje się go w produktach przeznaczonych dla rodziny systemów operacyjnych Windows, konsolach tejże firmy, a także urządzeniach mobilnych opartych o rozwiązania Microsoftu.
  
-      Omawiane API oparte zostało na tak zwanych interfejsach \texttt{COM} (ang. Component Object Model), które są standardem, jaki firma Microsoft wprowadziła w swoim oprogramowaniu. Zwiększa to trudność użycia i zmniejsza czytelność kodu. DirectX jest zamkniętym rozwiązaniem kontrolowanym w całości przez Microsoft. Dokumentacja dostępna jest na \cite{dx}.
+      Omawiane API oparte zostało na tak zwanych interfejsach \texttt{COM} (ang. Component Object Model). Interfejsy te są standardem, jaki firma Microsoft wprowadziła w swoim oprogramowaniu. Zwiększa to trudność użycia i zmniejsza czytelność kodu. DirectX jest zamkniętym rozwiązaniem,  w całości kontrolowanym przez Microsoft. Dokumentacja dostępna jest na \cite{dx}.
 
       \subsubsection{OpenGL}
 
-      Biblioteka powstała na bazie \texttt{IRIS GL} rozwijanej przez firmę \texttt{Silicon Graphics}, która była światowym potentatem w dziedzinie grafiki i animacji komputerowej. OpenGL jest standardem otwartym, a pieczę nad jego rozwojem sprawuje \texttt{Khronos Group}. Jest to związek przedsiębiorstw zajmujący się rozwojem otwartych standardów.
+      Biblioteka ta powstała na bazie \texttt{IRIS GL} rozwijanej przez firmę \texttt{Silicon Graphics}, która swojego czasu była światowym potentatem w dziedzinie grafiki i animacji komputerowej. OpenGL jest standardem otwartym, a pieczę nad jego rozwojem sprawuje \texttt{Khronos Group}. Jest to związek przedsiębiorstw zajmujący się rozwojem otwartych standardów.
 
-      OpenGL jest dostępne na wielu platformach, takich jak Windows, Mac OS X, iPhone, Nintendo, Android i systemy z rodziny Unix, w tym Linux. Jest szeroko wykorzystywana w zaawansowanych narzędziach do tworzenia grafiki i wizualizacji naukowych. Dokumentacja dostępna jest na \cite{opengl}.
+      OpenGL jest dostępne na wielu platformach, takich jak Windows, Mac OS X, iPhone, Nintendo, Android, a także systemach operacyjnych z rodziny Unix, w tym Linux. Jest szeroko wykorzystywane w zaawansowanych narzędziach do tworzenia grafiki komputerowej i wizualizacji naukowych. Z dokumentacją biblioteki można zapoznać się na \cite{opengl}.
 
   \section{Implementacja}
 

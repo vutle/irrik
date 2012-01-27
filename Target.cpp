@@ -7,6 +7,7 @@
 
 #include "Target.h"
 #include <iostream>
+
 void Target::show() {
 	// Add the billboard.
 	if (isVisible) {
@@ -29,13 +30,11 @@ void Target::show() {
 	}
 
 }
-core::vector3df Target::getPosition()
-{
+core::vector3df Target::getPosition() {
 	return position;
 }
 
-core::vector3df Target::getAbsolutePosition()
-{
+core::vector3df Target::getAbsolutePosition() {
 	return marker->getAbsolutePosition();
 }
 
@@ -44,8 +43,8 @@ Target::~Target() {
 }
 void Target::setPosition(const core::vector3df &nposition) {
 	position = nposition;
-	std::cout << "MZ " << __FILE__<<" : " << __LINE__ << " target "
-			<< this->position.X << ", " << position.Y << ", " << position.Z
-			<< std::endl;
+//	std::cout << "MZ " << __FILE__<<" : " << __LINE__ << " target "
+//			<< this->position.X << ", " << position.Y << ", " << position.Z
+//			<< std::endl;
 	marker->setPosition(position);
 }
