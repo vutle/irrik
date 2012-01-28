@@ -31,6 +31,29 @@ void limitDOF(core::vector3df &eulers, scene::IBoneSceneNode &bone) {
 	}
 }
 
+float ccd_angle(core::vector3df vecE, core::vector3df vecT) {
+	float angle = 0;
+	core::vector3df tmp;
+
+	vecE.X = 0;
+	vecT.X = 0;
+
+	angle = vecE.dotProduct(vecT); //normalized, no need for dividing
+
+	if (angle < 1) {
+		tmp = vecT.crossProduct(vecE);
+		angle = core::RADTODEG * acos(angle);
+		if (angle > 50)
+			angle = 30; //one iteration limit
+		if (tmp.X > 0) {
+
+			angle = -1 * angle;
+		}
+	}
+	return angle;
+
+}
+
 void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
 		scene::IBoneSceneNode &bone, // bone to adjust
 		core::vector3df target, // target to reach
@@ -59,6 +82,55 @@ void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
 	vecE.normalize();
 	vecT.normalize();
 
+	eulers.X = ccd_angle(vecE, vecT);
+
+	if ((bone.getBoneName()[5]) == '2' && (bone.getBoneName()[6] == '2')
+			&& (eulers.X > 15)) {
+		eulers.X = 0;
+	}
+
+	eulers.Y = 0;
+	eulers.Z = 0;
+	std::cout << eulers.X << " " << tmp.X << std::endl;
+
+	bone.setRotation(eulers);
+	parent = (scene::IBoneSceneNode*) bone.getParent();
+	parent->updateAbsolutePositionOfAllChildren();
+	if (steps > 0 && !inner) {
+		anim_ccd(effector, *parent, target, steps - 1, drv, true);
+	} else
+		return;
+
+}
+
+void anim_ccd1(scene::IBoneSceneNode &effector, // k-chain end-effector node
+		scene::IBoneSceneNode &bone, // bone to adjust
+		core::vector3df target, // target to reach
+		int steps, // how many parent bones adjust
+		video::IVideoDriver *drv, // drv for debug lines
+		bool inner = false) {
+
+	core::vector3df vecE, vecT, tmp, eulers;
+	float angle;
+	scene::IBoneSceneNode *parent;
+	drv->setTransform(video::ETS_WORLD, core::IdentityMatrix);
+
+//get proper vectors
+	tmp = bone.getAbsolutePosition(); //get abs pos to calculate vector to target
+	vecE = effector.getAbsolutePosition() - tmp; //get effector pos relative to the bone
+	vecT = target - tmp; //get target pos relative to the bone
+
+	vecE.X = 0;
+	vecT.X = 0;
+
+	printvec(tmp, "bone");
+	printvec(vecE, "vecE");
+	printvec(vecE + tmp, "Effector");
+	printvec(vecT, "vecT");
+	printvec(vecT + tmp, "Target");
+	vecE.normalize();
+	vecT.normalize();
+
 	angle = vecE.dotProduct(vecT); //normalized, no need for dividing
 
 	if (angle < 1) {
@@ -69,10 +141,9 @@ void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
 			eulers.X = -1 * angle;
 		} else {
 			if ((bone.getBoneName()[5]) == '2' && (bone.getBoneName()[6] == '2')
-			&& (angle > 15)){
+					&& (angle > 15)) {
 				eulers.X = 0;
-			}
-			else
+			} else
 				eulers.X = angle;
 		}
 
@@ -209,7 +280,7 @@ void boneLabels(scene::ISceneManager *scene, gui::IGUIFont* font,
 int main() {
 
 	Input input;
-	//create irrlicht opengl device
+//create irrlicht opengl device
 	IrrlichtDevice *dev = createDevice(video::EDT_OPENGL,
 			core::dimension2d<u32>(800, 600), 32, false, false, false, &input);
 
@@ -219,11 +290,11 @@ int main() {
 	scene::ISceneManager *scene = dev->getSceneManager();
 	video::IVideoDriver *drv = dev->getVideoDriver();
 
-	//get maya like camera
+//get maya like camera
 	scene::ICameraSceneNode* camera = scene->addCameraSceneNodeMaya(NULL, 150,
 			500, 150, 1, 1);
 	camera->setTarget(core::vector3df(50, 50, -30));
-	//load an q3 map
+//load an q3 map
 	dev->getFileSystem()->addZipFileArchive("media/map-20kdm2.pk3");
 	scene::IAnimatedMesh* q3map = scene->getMesh("20kdm2.bsp");
 	scene::IMeshSceneNode* q3mapNode = scene->addOctreeSceneNode(
@@ -242,78 +313,43 @@ int main() {
 
 	scene::ISceneNodeAnimator* anim = NULL;
 
-//	// Load a dwarf model
-//	node = scene->addAnimatedMeshSceneNode(
-//			scene->getMesh("media/dwarf/dwarf1.x"));
-//	node->setPosition(core::vector3df(0, -86, 50));
-//	node->setRotation(core::vector3df(0, -90, 0));
-//	node->setAnimationSpeed(10.f);
-//	node->setScale(core::vector3df(12, 12, 12));
-//	node->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
-//	node->setDebugDataVisible(
-//			(scene::E_DEBUG_SCENE_TYPE) (node->isDebugDataVisible()
-//					^ scene::EDS_SKELETON));
-//
-//	// Load a dwarf model
-//	node = scene->addAnimatedMeshSceneNode(
-//			scene->getMesh("media/dwarf/dwarf2.x"));
-//	node->setPosition(core::vector3df(-200, -86, 50));
-//	node->setRotation(core::vector3df(0, 90, 0));
-//	node->setAnimationSpeed(10.f);
-//	node->setScale(core::vector3df(12, 12, 12));
-//	node->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
-//	node->setDebugDataVisible(
-//			(scene::E_DEBUG_SCENE_TYPE) (node->isDebugDataVisible()
-//					^ scene::EDS_SKELETON));
-//
-//	// Load a ninja model
-//	node = scene->addAnimatedMeshSceneNode(
-//			scene->getMesh("media/ninja/ninja.b3d"));
-//
-//	node->setScale(core::vector3df(10, 10, 10));
-//	node->setPosition(core::vector3df(-200, -86, 150));
-//	node->setRotation(core::vector3df(0, 90, 0));
-//	node->setAnimationSpeed(20.f);
-//	node->getMaterial(0).NormalizeNormals = true;
-//	node->setDebugDataVisible(
-//			(scene::E_DEBUG_SCENE_TYPE) (node->isDebugDataVisible()
-//					^ scene::EDS_SKELETON));
-//	node->setFrameLoop(32, 83);
+// Load a zobie model
+	scene::IAnimatedMeshSceneNode* node1 = 0;
 
-	// Load a zobie model
-//	scene::IAnimatedMeshSceneNode* node1 = 0;
-//
-//	node1 = scene->addAnimatedMeshSceneNode(
-//			scene->getMesh("media/zombie/zombie.b3d"));
-//	node1->setScale(core::vector3df(5, 5, 5));
-//	node1->setPosition(core::vector3df(-200, 0, 150));
-//	node1->setRotation(core::vector3df(0, -0, 0));
-//	node1->setAnimationSpeed(10.f);
-//	node1->getMaterial(0).NormalizeNormals = true;
+	node1 = scene->addAnimatedMeshSceneNode(
+			scene->getMesh("media/zombie/zombie.b3d"));
+	node1->setScale(core::vector3df(7, 7, 7));
+	node1->setPosition(core::vector3df(0, 90, -150));
+	node1->setRotation(core::vector3df(0, -0, 0));
+	node1->setAnimationSpeed(10.f);
+	node1->getMaterial(0).NormalizeNormals = true;
+	node1->setFrameLoop(2, 18);
+//	node1->setJointMode(scene::EJUOR_CONTROL);
 //	node1->setDebugDataVisible(
 //			(scene::E_DEBUG_SCENE_TYPE) (node1->isDebugDataVisible()
 //					^ scene::EDS_SKELETON));
-//	node1->setAnimationSpeed(5);
-//    anim = scene->createFlyStraightAnimator(core::vector3df(100,0,60),
-//    core::vector3df(-100,0,60), 3500, true);
-//if (anim)
-//{
-//    node1->addAnimator(anim);
-//    anim->drop();
-//}
-//	const core::aabbox3d<f32>& box = node1->getBoundingBox();
-//	core::vector3df radius = box.MaxEdge - box.getCenter();
-//	anim = scene->createCollisionResponseAnimator(selector, node1, radius,
-//			core::vector3df(0, -10, 0), core::vector3df(0, -9, 0));
-//	node1->addAnimator(anim);
-//
-//	anim->drop();
+	node1->setMaterialFlag(video::EMF_LIGHTING, false);
+	node1->setAnimationSpeed(10);
+	const core::aabbox3d<f32>& box = node1->getBoundingBox();
+	core::vector3df radius = box.MaxEdge - box.getCenter();
+	anim = scene->createCollisionResponseAnimator(selector, node1, radius,
+			core::vector3df(0, -10, 0), core::vector3df(0, -9, 5));
+	node1->addAnimator(anim);
 
-	// Load a zobie model
+	anim->drop();
+
+//	anim = scene->createFlyStraightAnimator(core::vector3df(0, 0, -150),
+//			core::vector3df(0, 0, -350), 4000, true);
+//	if (anim) {
+//		node1->addAnimator(anim);
+//		anim->drop();
+//	}
+
+// Load a zobie model`
 	node = scene->addAnimatedMeshSceneNode(
 			scene->getMesh("media/zombie/zombie.b3d"));
 	node->setScale(core::vector3df(5, 5, 5));
-	//node->setPosition(core::vector3df(0, 50, 150));
+//node->setPosition(core::vector3df(0, 50, 150));
 //	node->setRotation(core::vector3df(0, 90, 0));
 	node->setAnimationSpeed(10.f);
 	node->getMaterial(0).NormalizeNormals = true;
@@ -323,7 +359,7 @@ int main() {
 
 	node->setAnimationSpeed(5);
 	node->setJointMode(scene::EJUOR_CONTROL);
-	node->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
+//	node->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
 	node->setMaterialFlag(video::EMF_LIGHTING, false);
 
 	anim = scene->createCollisionResponseAnimator(selector, node,
@@ -333,9 +369,9 @@ int main() {
 	node->addAnimator(anim);
 	anim->drop();
 
-	// material.Lighting = false;
+// material.Lighting = false;
 
-	//let there be light
+//let there be light
 	scene::ILightSceneNode * light = scene->addLightSceneNode(0,
 			core::vector3df(0, 80, 100), video::SColorf(1.0f, 1.0f, 1.0f, 1.0f),
 			800.0f);
@@ -343,7 +379,7 @@ int main() {
 			video::SColorf(1.0f, 1.0f, 1.0f, 1.0f), 800.0f);
 	light->render();
 
-	//light position indicator
+//light position indicator
 	scene::IBillboardSceneNode * bill = scene->addBillboardSceneNode();
 	bill->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
 	bill->setMaterialTexture(0, drv->getTexture("media/particle.bmp"));
@@ -351,7 +387,7 @@ int main() {
 	bill->setMaterialFlag(video::EMF_ZBUFFER, false);
 	bill->setSize(core::dimension2d<f32>(20.0f, 20.0f));
 	bill->setPosition(core::vector3df(-100, 80, 0));
-	//light position indicator
+//light position indicator
 	bill = scene->addBillboardSceneNode();
 	bill->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
 	bill->setMaterialTexture(0, drv->getTexture("media/particle.bmp"));
@@ -360,7 +396,7 @@ int main() {
 	bill->setSize(core::dimension2d<f32>(20.0f, 20.0f));
 	bill->setPosition(core::vector3df(0, 80, 100));
 
-	//text
+//text
 	gui::IGUIEnvironment* guienv = dev->getGUIEnvironment();
 	gui::IGUIFont* font = guienv->getFont("media/bigfont.png");
 	gui::IGUIStaticText* textinfo = guienv->addStaticText(L"",
@@ -375,20 +411,21 @@ int main() {
 	scene::IBoneSceneNode *bone, *rootbone = node->getJointNode((u32) 0);
 	bone = node->getJointNode("Joint23");
 
-	//boneLabels(scene, font, rootbone);
+//boneLabels(scene, font, rootbone);
 
 	Target target(dev, 0, 0, 0);
 	target.show();
 
-	core::vector3df vec, normal;
-
-	//main loop
+	core::vector3df vec, normal, old = node1->getAbsolutePosition();
+	;
+	float delta = 2;
+//main loop
 	while (dev->run()) {
 
 		drv->beginScene(true, true, video::SColor(1));
-		//starting the scene =====================
+//starting the scene =====================
 
-		//		node->updateAbsolutePosition();
+//		node->updateAbsolutePosition();
 
 		material.setFlag(video::EMF_LIGHTING, false);
 		drv->setMaterial(material);
@@ -460,11 +497,27 @@ int main() {
 			camera->setTarget(vec);
 		}
 
-		//drawing scene =====================
+//drawing scene =====================
 		scene->drawAll();
 		guienv->drawAll();
-		//ending scene =====================
+//ending scene =====================
 		drv->endScene();
+		//frame animation stairs climbing
+
+		vec = node1->getAbsolutePosition();
+		delta = old.Z - vec.Z;
+		old = node1->getAbsolutePosition();
+		if ((-540 < vec.Z) && (vec.Z < -265) && (delta==0)) {
+			vec.Y += 5;
+		}
+		if( -600 > vec.Z)
+			vec.Z = -150;
+		std::cout << delta << std::endl;
+
+		vec.Z -= 0.4;
+		node1->setPosition(vec);
+		printvec(vec);
+		node1->updateAbsolutePosition();
 	}
 
 	dev->drop();
