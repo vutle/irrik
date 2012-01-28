@@ -15,6 +15,10 @@
 #define BLUE video::SColor(205, 50, 50, 255)
 #define VEC0 core::vector3df(0, 0, 0)
 
+void printvec(core::vector3df const &vec, std::string str = "Vec") {
+	std::cout << str.c_str() << " X: " << vec.X << " Y: " << vec.Y << " Z: "
+			<< vec.Z << std::endl;
+}
 void limitDOF(core::vector3df &eulers, scene::IBoneSceneNode &bone) {
 	if ((bone.getBoneName()[5]) == '2' && (bone.getBoneName()[6] == '2')) {
 		eulers.Z = 0;
@@ -26,7 +30,68 @@ void limitDOF(core::vector3df &eulers, scene::IBoneSceneNode &bone) {
 			eulers.X = -160;
 	}
 }
+
 void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
+		scene::IBoneSceneNode &bone, // bone to adjust
+		core::vector3df target, // target to reach
+		int steps, // how many parent bones adjust
+		video::IVideoDriver *drv, // drv for debug lines
+		bool inner = false) {
+
+	core::vector3df vecE, vecT, tmp, eulers;
+	float angle;
+	scene::IBoneSceneNode *parent;
+	drv->setTransform(video::ETS_WORLD, core::IdentityMatrix);
+
+	//get proper vectors
+	tmp = bone.getAbsolutePosition(); //get abs pos to calculate vector to target
+	vecE = effector.getAbsolutePosition() - tmp; //get effector pos relative to the bone
+	vecT = target - tmp; //get target pos relative to the bone
+
+	vecE.X = 0;
+	vecT.X = 0;
+
+	printvec(tmp, "bone");
+	printvec(vecE, "vecE");
+	printvec(vecE + tmp, "Effector");
+	printvec(vecT, "vecT");
+	printvec(vecT + tmp, "Target");
+	vecE.normalize();
+	vecT.normalize();
+
+	angle = vecE.dotProduct(vecT); //normalized, no need for dividing
+
+	if (angle < 1) {
+		tmp = vecT.crossProduct(vecE);
+		angle = core::RADTODEG * acos(angle);
+		if (tmp.X > 0) {
+
+			eulers.X = -1 * angle;
+		} else {
+			if ((bone.getBoneName()[5]) == '2' && (bone.getBoneName()[6] == '2')
+			&& (angle > 15)){
+				eulers.X = 0;
+			}
+			else
+				eulers.X = angle;
+		}
+
+	}
+	eulers.Y = 0;
+	eulers.Z = 0;
+	std::cout << eulers.X << " " << tmp.X << std::endl;
+
+	bone.setRotation(eulers);
+	parent = (scene::IBoneSceneNode*) bone.getParent();
+	parent->updateAbsolutePositionOfAllChildren();
+	if (steps > 0 && !inner) {
+		anim_ccd(effector, *parent, target, steps - 1, drv, true);
+	} else
+		return;
+
+}
+
+void anim_ccdd(scene::IBoneSceneNode &effector, // k-chain end-effector node
 		scene::IBoneSceneNode &bone, // bone to adjust
 		core::vector3df target, // target to reach
 		int steps, // how many parent bones adjust
@@ -35,6 +100,7 @@ void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
 
 	core::vector3df vec1, vec2, vec3, test, eulers;
 	scene::IBoneSceneNode *parent;
+//	float angle;
 
 	vec3 = bone.getAbsolutePosition(); //get abs pos to calculate vector to target
 	vec2 = target - vec3;
@@ -44,7 +110,8 @@ void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
 	vec2.normalize();
 	vec1.normalize();
 
-	for (int i = 0; i < 15; ++i) {
+	for (int i = 0; i < 1; ++i) {
+
 		if ((bone.getBoneName()[5]) == '2' && (bone.getBoneName()[6] == '2')) {
 			// 1DOF for a knee
 			vec1.X = 0;
@@ -64,14 +131,17 @@ void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
 					video::SColor(205, 250, 250, 255));
 			eulers.Y = 0;
 			eulers.Z = 0;
+			std::cout << i << " step " << vec2.Y << " " << bone.getBoneName()
+					<< " euler X: " << eulers.X << std::endl;
+
 		} else {
-
-			core::quaternion quat;
-			quat.rotationFromTo(vec1, vec2);
-			quat.toEuler(eulers);
-
-			eulers *= core::RADTODEG;
-
+//
+//			core::quaternion quat;
+//			quat.rotationFromTo(vec1, vec2);
+//			quat.toEuler(eulers);
+//
+//			eulers *= core::RADTODEG;
+//
 			vec1.X = 0;
 			vec2.X = 0;
 
@@ -84,10 +154,8 @@ void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
 				eulers.X *= -1;
 			eulers.Y = 0;
 			eulers.Z = 0;
-		}
 
-		std::cout << i << " step " << steps << " " << bone.getBoneName()
-				<< " euler X: " << eulers.X << std::endl;
+		}
 		test = vec1;
 
 		bone.setRotation(eulers);
@@ -245,7 +313,7 @@ int main() {
 	node = scene->addAnimatedMeshSceneNode(
 			scene->getMesh("media/zombie/zombie.b3d"));
 	node->setScale(core::vector3df(5, 5, 5));
-//	node->setPosition(core::vector3df(0, -50, 150));
+	//node->setPosition(core::vector3df(0, 50, 150));
 //	node->setRotation(core::vector3df(0, 90, 0));
 	node->setAnimationSpeed(10.f);
 	node->getMaterial(0).NormalizeNormals = true;
@@ -318,10 +386,14 @@ int main() {
 	while (dev->run()) {
 
 		drv->beginScene(true, true, video::SColor(1));
+		//starting the scene =====================
+
+		//		node->updateAbsolutePosition();
+
 		material.setFlag(video::EMF_LIGHTING, false);
 		drv->setMaterial(material);
-		node->updateAbsolutePosition();
-		drv->setTransform(video::ETS_WORLD, core::IdentityMatrix);
+
+//		drv->setTransform(video::ETS_WORLD, core::IdentityMatrix);
 		drv->draw3DLine(core::vector3df(0, 0, 0), core::vector3df(10, 0, 0),
 				video::SColor(55, 255, 0, 0));
 		drv->draw3DLine(core::vector3df(0, 0, 0), core::vector3df(0, 10, 0),
@@ -340,6 +412,7 @@ int main() {
 			dev->setWindowCaption(str.c_str());
 			lastFPS = fps;
 		}
+
 		float scalefactor = 1;
 
 		vec = target.getPosition();
@@ -368,12 +441,16 @@ int main() {
 			vec.Y += 1 * scalefactor;
 		}
 		if (vec != target.getPosition() || input.isPressed(irr::KEY_SPACE)) {
+
 			target.setPosition(vec);
-			rootbone->updateAbsolutePositionOfAllChildren();
+
+//			rootbone->updateAbsolutePositionOfAllChildren();
+
 			anim_ccd(*bone, (scene::IBoneSceneNode &) *(bone->getParent()),
 					target.getAbsolutePosition(), 2, drv);
 
 		}
+
 		wheel = input.getWheel();
 		if (wheel != 0) {
 			vec = camera->getTarget();
@@ -381,13 +458,13 @@ int main() {
 			normal.normalize();
 			vec += normal * wheel * 10;
 			camera->setTarget(vec);
-			//std::cout<<"vec( "<<vec.X<<", "<<vec.Y<<", "<<vec.Z<<" )"<<std::endl;
 		}
+
+		//drawing scene =====================
 		scene->drawAll();
 		guienv->drawAll();
-
+		//ending scene =====================
 		drv->endScene();
-
 	}
 
 	dev->drop();
