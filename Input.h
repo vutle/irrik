@@ -19,6 +19,7 @@ public:
 	bool OnEvent(const irr::SEvent &event);
 	bool isPressed(irr::EKEY_CODE key) const;
 	float getWheel();
+	void unpress(irr::EKEY_CODE key);
 };
 
 #endif /* Input_H_ */

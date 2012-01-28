@@ -32,6 +32,9 @@ bool Input::OnEvent(const irr::SEvent & event)
 bool Input::isPressed(irr::EKEY_CODE key) const{
 	return pressed[key];
 }
+void Input::unpress(irr::EKEY_CODE key){
+	pressed[key] = false;
+}
 float Input::getWheel(){
 	float ret = wheel;
 	wheel = 0;
