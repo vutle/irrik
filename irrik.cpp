@@ -10,9 +10,9 @@
 #include "Input.h"
 #include <iostream>
 
-#define RED video::SColor(205, 255, 50, 50)
-#define GREEN video::SColor(205, 50, 255, 50)
-#define BLUE video::SColor(205, 50, 50, 255)
+#define RED video::SColor(255, 255, 50, 50)
+#define GREEN video::SColor(255, 50, 255, 50)
+#define BLUE video::SColor(255, 50, 50, 255)
 #define VEC0 core::vector3df(0, 0, 0)
 #define BONELABEL 1234
 void printvec(core::vector3df const &vec, std::string str = "Vec") {
@@ -62,7 +62,7 @@ void anim_ccd3(scene::IBoneSceneNode &effector, // k-chain end-effector node
 		bool inner = false) {
 
 	core::vector3df vecE, vecT, tmp, eulers;
-	float angle;
+//	float angle;
 	scene::IBoneSceneNode *parent;
 	drv->setTransform(video::ETS_WORLD, core::IdentityMatrix);
 
@@ -165,68 +165,52 @@ void anim_ccd1(scene::IBoneSceneNode &effector, // k-chain end-effector node
 void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
 		scene::IBoneSceneNode &bone, // bone to adjust
 		core::vector3df target, // target to reach
-		int steps, // how many parent bones adjust
+		int steps, // how many bones to involve
 		video::IVideoDriver *drv, // drv for debug lines
 		bool inner = false) {
+	drv->setTransform(video::ETS_WORLD, core::IdentityMatrix);
 
-	core::vector3df vec1, vec2, vec3, test, eulers;
+	core::vector3df vecE, vecT, vec3, test, eulers;
 	scene::IBoneSceneNode *parent;
 //	float angle;
 
 	vec3 = bone.getAbsolutePosition(); //get abs pos to calculate vector to target
-	vec2 = target - vec3;
-	vec1 = effector.getAbsolutePosition() - vec3;
+	vecT = target - vec3;
+	vecE = effector.getAbsolutePosition() - vec3;
 
-	vec3.normalize();
-	vec2.normalize();
-	vec1.normalize();
+//	vec3.normalize();
+	vecT.normalize();
+	vecE.normalize();
 
-	for (int i = 0; i < 5; ++i) {
 
 		if ((bone.getBoneName()[5]) == '2' && (bone.getBoneName()[6] == '2')) {
 			// 1DOF for a knee
-			vec1.X = 0;
-			vec2.X = 0;
+			vecE.X = 0;
+			vecT.X = 0;
 
-			eulers.X = core::RADTODEG
-					* acos(
-							vec1.dotProduct(vec2)
-									/ (vec1.getLength() * vec2.getLength()));
+			eulers.X = core::RADTODEG * acos(vecE.dotProduct(vecT));
 
-			if (vec1.crossProduct(vec2).X > 0 && eulers.X > 15)
+			if (vecE.crossProduct(vecT).X > 0 && eulers.X > 15)
 				eulers.X = 15;
 			else
 				eulers.X *= -1;
 
-			drv->draw3DLine(VEC0, vec1.crossProduct(vec2) * 50,
+			drv->draw3DLine(VEC0, vecT.crossProduct(vecE) * 50,
 					video::SColor(205, 250, 250, 255));
 			eulers.Y = 0;
 			eulers.Z = 0;
-			std::cout << i << " step " << vec2.Y << " " << bone.getBoneName()
-					<< " euler X: " << eulers.X << std::endl;
 
 		} else {
 
 			core::quaternion quat;
-			quat.rotationFromTo(vec1, vec2);
+			quat.rotationFromTo(vecE, vecT);
 			quat.toEuler(eulers);
 
 			eulers *= core::RADTODEG;
-//
-//			vec1.X = 0;
-//			vec2.X = 0;
-//
-//			eulers.X = core::RADTODEG
-//					* acos(
-//							vec1.dotProduct(vec2)
-//									/ (vec1.getLength() * vec2.getLength()));
-//
-//			if (vec1.crossProduct(vec2).X < 0)
-//				eulers.X *= -1;
-//			eulers.Y = 0;
-//			eulers.Z = 0;
-//
+
 		}
+//		std::cout << i << " step " << steps << " " << bone.getBoneName()
+//				<< " euler X: " << eulers.X << std::endl;
 
 		bone.setRotation(eulers);
 		parent = (scene::IBoneSceneNode*) bone.getParent();
@@ -237,24 +221,25 @@ void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
 		drv->setMaterial(material);
 		drv->setTransform(video::ETS_WORLD, core::IdentityMatrix);
 
-		drv->draw3DLine(vec3, vec1 * 50, RED);
+		drv->draw3DLine(vec3, vecE , RED);
+		drv->draw3DLine(vec3, vecE, RED);
 		drv->draw3DLine(vec3, effector.getAbsolutePosition(), GREEN);
 		drv->draw3DLine(vec3, target, BLUE);
 		drv->draw3DLine(vec3, bone.getAbsolutePosition(),
 				video::SColor(205, 150, 150, 255));
 
-		drv->draw3DLine(VEC0, vec1 * 50, RED);
-		drv->draw3DLine(VEC0, vec2 * 50, GREEN);
-		drv->draw3DLine(VEC0, target, BLUE);
-		drv->draw3DLine(VEC0, vec3 * 50, video::SColor(205, 150, 150, 255));
-		drv->draw3DLine(VEC0, eulers.rotationToDirection(test),
-				video::SColor(255, 250, 250, 255));
+		drv->draw3DLine(VEC0, vecE, RED);
+		drv->draw3DLine(VEC0, vecT, BLUE);
+		drv->draw3DLine(VEC0, effector.getAbsolutePosition(), GREEN);
 
-		if (steps > 0 && !inner) {
+		drv->draw3DLine(VEC0, target, BLUE);
+		drv->draw3DLine(VEC0, vec3 , video::SColor(255, 255, 255, 255));
+
+
+		if (steps > 0) {
 			anim_ccd(effector, *parent, target, steps - 1, drv, true);
 		} else
 			return;
-	}
 
 }
 void boneLabels(scene::ISceneManager *scene, gui::IGUIFont* font,
@@ -279,7 +264,7 @@ void boneLabels(scene::ISceneManager *scene, gui::IGUIFont* font,
 int main() {
 
 	Input input;
-//create irrlicht opengl device
+	//create irrlicht opengl device
 	IrrlichtDevice *dev = createDevice(video::EDT_OPENGL,
 			core::dimension2d<u32>(800, 600), 32, false, false, false, &input);
 
@@ -289,11 +274,11 @@ int main() {
 	scene::ISceneManager *scene = dev->getSceneManager();
 	video::IVideoDriver *drv = dev->getVideoDriver();
 
-//get maya like camera
+	//get maya like camera
 	scene::ICameraSceneNode* camera = scene->addCameraSceneNodeMaya(NULL, 150,
 			500, 150, 1, 1);
 	camera->setTarget(core::vector3df(50, 50, -30));
-//load an q3 map
+	//load an q3 map
 	dev->getFileSystem()->addZipFileArchive("media/map-20kdm2.pk3");
 	scene::IAnimatedMesh* q3map = scene->getMesh("20kdm2.bsp");
 	scene::IMeshSceneNode* q3mapNode = scene->addOctreeSceneNode(
@@ -320,7 +305,6 @@ int main() {
 	node1->setScale(core::vector3df(7, 7, 7));
 	node1->setPosition(core::vector3df(0, 90, -150));
 	node1->setRotation(core::vector3df(0, -0, 0));
-	node1->setAnimationSpeed(10.f);
 	node1->getMaterial(0).NormalizeNormals = true;
 	node1->setFrameLoop(2, 18);
 //	node1->setJointMode(scene::EJUOR_CONTROL);
@@ -347,20 +331,16 @@ int main() {
 // Load a zobie model`
 	node = scene->addAnimatedMeshSceneNode(
 			scene->getMesh("media/zombie/zombie.b3d"));
-	node->setScale(core::vector3df(5, 5, 5));
-//node->setPosition(core::vector3df(0, 50, 150));
-//	node->setRotation(core::vector3df(0, 90, 0));
-	node->setAnimationSpeed(10.f);
+	node->setScale(core::vector3df(7, 7, 7));
+	node->setPosition(core::vector3df(0, 50, 0));
 	node->getMaterial(0).NormalizeNormals = true;
-	node->setAnimationSpeed(5);
 	node->setJointMode(scene::EJUOR_CONTROL);
-//	node->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
 	node->setMaterialFlag(video::EMF_LIGHTING, false);
 
-	anim = scene->createCollisionResponseAnimator(selector, node,
-			core::vector3df(30, 50, 30), core::vector3df(0, -10, 0),
-			core::vector3df(0, 30, 0));
-	selector->drop();
+	const core::aabbox3d<f32>& box1 = node->getBoundingBox();
+	radius = box1.MaxEdge - box1.getCenter();
+	anim = scene->createCollisionResponseAnimator(selector, node, radius,
+			core::vector3df(0, -10, 0), core::vector3df(0, -9, 5));
 	node->addAnimator(anim);
 	anim->drop();
 
@@ -383,26 +363,16 @@ int main() {
 	target.show();
 
 	core::vector3df vec, normal, old = node1->getAbsolutePosition();
-	;
 	float delta = 2;
+
 //main loop
+
 	while (dev->run()) {
 
 		drv->beginScene(true, true, video::SColor(1));
 //starting the scene =====================
 
 		node->updateAbsolutePosition();
-
-		material.setFlag(video::EMF_LIGHTING, false);
-		drv->setMaterial(material);
-
-		drv->setTransform(video::ETS_WORLD, core::IdentityMatrix);
-		drv->draw3DLine(core::vector3df(0, 0, 0), core::vector3df(10, 0, 0),
-				video::SColor(55, 255, 0, 0));
-		drv->draw3DLine(core::vector3df(0, 0, 0), core::vector3df(0, 10, 0),
-				video::SColor(55, 0, 255, 0));
-		drv->draw3DLine(core::vector3df(0, 0, 0), core::vector3df(0, 0, 10),
-				video::SColor(55, 0, 0, 255));
 
 		int fps = drv->getFPS();
 
@@ -416,24 +386,19 @@ int main() {
 			lastFPS = fps;
 		}
 
-		float scalefactor = 1;
-
-		vec = target.getPosition();
-
-		// keys ===============
-
+// keys ===============
+//q3mapNode->setVisible(false);
 		if (input.isPressed(irr::KEY_TAB)) {
 
 			scene::IBillboardTextSceneNode *tsn;
 			if (scene->getSceneNodeFromId(BONELABEL) == NULL) {
 				boneLabels(scene, font, rootbone);
 				node->setDebugDataVisible(
-						(scene::E_DEBUG_SCENE_TYPE) (node->isDebugDataVisible()
-								^ scene::EDS_HALF_TRANSPARENCY));
+						(scene::E_DEBUG_SCENE_TYPE) (scene::EDS_MESH_WIRE_OVERLAY | scene::EDS_HALF_TRANSPARENCY | scene::EDS_SKELETON));
 			} else {
-				while (tsn =
+				while ((tsn =
 						(scene::IBillboardTextSceneNode *) scene->getSceneNodeFromId(
-								BONELABEL)) {
+								BONELABEL))) {
 
 					tsn->remove();
 					std::cout << tsn << std::endl;
@@ -446,21 +411,30 @@ int main() {
 			input.unpress(irr::KEY_TAB);
 		}
 		if (input.isPressed(irr::KEY_F1)) {
-			bone = node->getJointNode("Joint13");
+			//bone = node->getJointNode("Joint13");
+			//target.setPosition(bone->getAbsolutePosition());
+			node->setDebugDataVisible(
+								(scene::E_DEBUG_SCENE_TYPE) (scene::EDS_MESH_WIRE_OVERLAY | scene::EDS_HALF_TRANSPARENCY | scene::EDS_SKELETON));
 
 		}
 		if (input.isPressed(irr::KEY_F2)) {
-			bone = node->getJointNode("Joint16");
+			//bone = node->getJointNode("Joint16");
+			//target.setPosition(bone->getAbsolutePosition());
+			node->setDebugDataVisible(
+					(scene::E_DEBUG_SCENE_TYPE) ( scene::EDS_HALF_TRANSPARENCY | scene::EDS_SKELETON));
 
 		}
 		if (input.isPressed(irr::KEY_F3)) {
 			bone = node->getJointNode("Joint23");
-
+			target.setPosition(bone->getAbsolutePosition());
 		}
 		if (input.isPressed(irr::KEY_F4)) {
 			bone = node->getJointNode("Joint19");
-
+			target.setPosition(bone->getAbsolutePosition());
 		}
+		float scalefactor = 1;
+		vec = target.getPosition();
+
 		if (input.isPressed(irr::KEY_ESCAPE)) {
 			dev->drop();
 			return EXIT_SUCCESS;
@@ -487,12 +461,12 @@ int main() {
 		if (vec != target.getPosition() || input.isPressed(irr::KEY_SPACE)) {
 
 			target.setPosition(vec);
-
-			rootbone->updateAbsolutePositionOfAllChildren();
-
-			anim_ccd(*bone, (scene::IBoneSceneNode &) *(bone->getParent()),
-					target.getAbsolutePosition(), 3, drv);
-
+			for (int i = 0; i < 10; ++i) {
+				anim_ccd(*bone, (scene::IBoneSceneNode &) *(bone->getParent()),
+						target.getAbsolutePosition(), 1, drv);
+				rootbone->updateAbsolutePositionOfAllChildren();
+				node->updateAbsolutePosition();
+			}
 		}
 
 		wheel = input.getWheel();
@@ -507,10 +481,11 @@ int main() {
 //drawing scene =====================
 		scene->drawAll();
 		guienv->drawAll();
+
 //ending scene =====================
 		drv->endScene();
-		//frame animation stairs climbing
 
+		//frame animation stairs climbing
 		vec = node1->getAbsolutePosition();
 		delta = old.Z - vec.Z;
 		old = vec;
@@ -519,13 +494,12 @@ int main() {
 		}
 		if (-600 > vec.Z)
 			vec.Z = -150;
-		std::cout << delta << std::endl;
 
 		vec.Z -= 0.4;
 		node1->setPosition(vec);
-		printvec(vec);
 		node1->updateAbsolutePosition();
-	}
+
+	} //mainloop end
 
 	dev->drop();
 
