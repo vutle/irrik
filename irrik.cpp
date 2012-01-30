@@ -495,7 +495,7 @@ int main() {
 		if (-600 > vec.Z)
 			vec.Z = -150;
 
-		vec.Z -= 0.4;
+		vec.Z -= 0.3;
 		node1->setPosition(vec);
 		node1->updateAbsolutePosition();
 

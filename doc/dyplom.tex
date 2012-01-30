@@ -14,13 +14,14 @@
 
 \newcommand{\cmnt}[1]{}
 \documentclass[11pt]{mwrep}
+\usepackage{amssymb}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[polish]{babel}
 \usepackage{pwrdtyt}
 \usepackage{url}
 \usepackage{graphicx}
-\usepackage{listings}	
+\usepackage{listings}
 \usepackage{lineno}
 \usepackage{array}
 \usepackage[dvips, pdfborder={0}, bookmarks, colorlinks=false, pdftitle={Animacja 3D z wykorzystaniem kinematyki odwrotnej}, pdfauthor={Marcin Załuski}, pdfsubject={Animacja 3D z wykorzystaniem kinematyki odwrotnej}, pdfkeywords={Animacja, 3D, kinematyka odwrotna, Irrlicht}]{hyperref}
@@ -122,7 +123,6 @@ Modele wykorzystywane w grafice trójwymiarowej przeważnie zbudowane są z siat
     \begin{figure}
   \centering
     \includegraphics[keepaspectratio=true,width=\linewidth]{./img/zbrush.jpg}
-  % fk.png: 298x271 pixel, 90dpi, 8.41x7.65 cm, bb=0 0 238 217
   \caption{Model neandertalczyka wykonany w programie ZBrush \cite{zbrush}}
   \label{img:zbrush}
   \end{figure}
@@ -136,7 +136,6 @@ Remedium na opisany powyżej problem stanowi właśnie animacja szkieletowa. Ide
     \begin{figure}
   \centering
     \includegraphics[keepaspectratio=true,width=\linewidth]{./img/skeleton.png}
-  % fk.png: 298x271 pixel, 90dpi, 8.41x7.65 cm, bb=0 0 238 217
   \caption{Animacja szkieletowa: A) szkielet postaci, B) model ze szkieletem złożony z siatki trójkątów}
   \label{img:skeleton}
   \end{figure}
@@ -154,7 +153,6 @@ W odniesieniu do animacji komputerowej technikę tę można rozumieć jako manip
   \begin{figure}
   \centering
     \includegraphics[keepaspectratio=true,width=\linewidth]{./img/fk.png}
-  % fk.png: 298x271 pixel, 90dpi, 8.41x7.65 cm, bb=0 0 238 217
   \caption{Kinematyka prosta}
   \label{img:fk}
   \end{figure}
@@ -245,17 +243,32 @@ $$
 
   \section{Metody kinematyki odwrotnej}
 
-    TODO
+    Jak wspomniano na początku tego rozdziału, kinematyka odwrotna jest niezwykle rozległym obszarem do badań naukowych. Znamienny jest choćby sam fakt, że w ciągu miesiąca ukazało się trzydzieści publikacji, co średnio daje jedną publikację dziennie. Cały czas zatem opracowywane i ewaluowane są nowe metody wykorzystujące kinematykę odwrotną. W tej części postanowiono opisać dwie najbardziej ugruntowane z nich, ponieważ śledzenie na bieżąco tak prężnie rozwijającej się gałęzi nauki i raportowanie najnowszych osiągnięć z jej zakresu wykracza dalece poza ramy tej pracy.
 
 
-    \subsection{Transpozycja Jakobianu}
+    \subsection{Metody macierzy Jacobiego}
 
-     TODO
- 
+Ponieważ rozważana funkcja $f$ cechuje się nieliniowością, jednym z pomysłów na rozwiązanie problemu jest znalezienie jej liniowego przybliżenia. Z idei tej korzystają metody rozwiązywania zadania kinematyki odwrotnej oparte o macierz Jacobiego.
+
+Elementarna dla opisywanej w tym punkcie grupy metod jest macierz Jacobiego, którą można zdefiniować następująco:
+$$J_f(x) = \left[\frac{\partial f_i}{\partial x_j}(\mathrm x)\right]_{i, j} ,$$
+
+przy założeniu, że wszystkie pochodne funkcji $f$  znajdują się w punkcie $x\in U$, a $U$ jest podzbiorem otwartym przestrzeni euklidesowej. Dodatkowo funkcja $ f = (f_1, \dots, f_m)$ zbioru $U\;$ w przestrzeń $ \mathbb{R}^m,$ powinna posiadać $m\;$ składowych będących funkcjami $f_i\;$ zbioru $U\;$ o wartościach rzeczywistych.
+
+Przy znajdowaniu rozwiązania dla problemu kinematyki odwrotnej z użyciem macierzy Jacobiego skorzystać można z metody polegającej na odwróceniu tej macierzy, bądź jej transponowaniu. Implikuje to niestety dość złożone obliczenia.
+
     \subsection{Cyclic-Coordinate Descent}
 
   Metoda ta, w skrócie nazywana \texttt{CCD}, należy do klasy metod zwanych metodami heurystycznymi. Idea kryjąca się za tym sposobem rozwiązywania zadania kinematyki odwrotnej polega na analitycznym podejściu do szeregu znacznie prostszych problemów. W pierwszej i w każdej kolejnej iteracji poszukiwane są parametry, dla których zadana funkcja przyjmuje wartość minimalną przy spełnieniu określonych kryteriów. Wspomniana funkcja jest znacznie mniej złożona i cechuje się o wiele niższym stopniem komplikacji obliczeniowej w porównaniu z podejściem w pełni analitycznym.
 
+  Przykład wykorzystania CCD został przedstawiony na rys. \ref{img:ccd}. Ukazane na nim jest ramię zakończone manipulatorem \texttt{E} oraz punkt docelowy \texttt{D}, w którym powinno się ono znaleźć. Jako \texttt{R} oznaczono aktualnie rozważany węzeł (staw) łańcucha kinematycznego. W pierwszym kroku obliczono wektory $\vec{RE}$ i $\vec{RD}$ oraz na ich podstawie przy pomocy funkcji trygonometrycznych uzyskano kąt, o jaki należy obrócić węzeł, aby przybliżyć go do celu. Ramię po tym przekształceniu zostało ukazane na rys. \ref{img:ccd}B. W kolejnym kroku analogicznemu przekształceniu podlega staw dalszy od manipulatora w hierarchii łańcucha kinematycznego. Efekt tej operacji zilustrowano na rys. \ref{img:ccd}D Manipulator osiągnął cel, więc można w tym momencie zakończyć operacje. Gdyby jednak tak się nie stało, należałoby powtórzyć sekwencję od początku, zbliżając w każdej iteracji, minimalizując tym samym długość wektora $\vec{ED}$. W metodzie tej ważny jest warunek stopu, zapobiegający nieskończonemu powtarzaniu tych operacji. Na ogół przyjmowana jest konkretna liczba powtórzeń, po której należy zakończyć działanie.
+
+  \begin{figure}
+  \centering
+    \includegraphics[keepaspectratio=true,width=\linewidth]{./img/ccd.png}
+  \caption{Kinematyka odwrotna -- kolejne kroki z użyciem metody CCD \cite{lander}}
+  \label{img:ccd}
+  \end{figure}
 
 
 \chapter{Projekt}
@@ -468,6 +481,9 @@ TODO
 
 \chapter{Podsumowanie}
 TODO
+
+
+
 \lstlistoflistings
 % \section*{Spis listingów}
 % \addcontentsline{toc}{section}{Spis listingów}
