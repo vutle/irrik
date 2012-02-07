@@ -37,10 +37,10 @@
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
 
 
-\lstnewenvironment{listing}[3][C++]{ \vspace{1ex}\noindent
+\lstnewenvironment{listing}[3][C++]{ \vspace{0ex}\noindent
   \lstset{caption=#2,label=#3,
 frame=b,numbers=left,language=#1,numberstyle=\tiny,
-breaklines=true,breakautoindent=true,basicstyle=\small,escapechar=¶, tabsize=2,showspaces=false,showstringspaces=false
+breaklines=true,breakautoindent=true,basicstyle=\footnotesize,escapechar=¶, tabsize=2,showspaces=false,showstringspaces=false
           } 
 \renewcommand{\baselinestretch}{1}
 }{ }
@@ -58,10 +58,8 @@ breaklines=true,breakautoindent=true,basicstyle=\small,escapechar=¶, tabsize=2,
 \maketitle
 \pdfbookmark[1]{Spis treści}{table}
 \tableofcontents
-\linenumbers
+% \linenumbers
 \chapter{Wprowadzenie}
-
-% Parę słów po co, gdzie i do czego jest animacja stosowana, jak to mamy coraz lepszy sprzęt itp
 
 Od czasu kiedy po raz pierwszy podłączono wyświetlacz do komputera i wykorzystano go w celach rozrywkowych, gry komputerowe stały się ważną kategorią oprogramowania. Nieustanny rozwój technologii i dostarczanie przez producentów coraz bardziej zaawansowanych rozwiązań sprzętowych, pozwalają z dnia na dzień przesuwać granice jakości animacji generowanych w czasie rzeczywistym. Nowoczesne procesory graficzne są bardzo złożone i pozwalają oprócz standardowego zastosowania, jakim jest wspieranie procesu wyświetlania obrazu, sprawdzają się także przy łamaniu szyfrów, obliczeniach naukowych i symulacjach fizycznych. Dziś nikogo już nie dziwią złożone animacje trójwymiarowe dostępne w grach komputerowych. Co więcej, osiągnięcie komercyjnego sukcesu przez grę nieużywającą sprzętowej akceleracji do renderowania grafiki wydaje się być niemożliwe. 
 
@@ -197,7 +195,7 @@ $$
 {\vec{v}} = P_1a_1({s_1})P_2a_2({s_2}) \dots P_na_n({s_n})
 $$
 Problemem, który okazuje się łatwiejszym do rozwiązania, może być po prostu znalezienie funkcji odwrotnej do $f$, którą to określono jako kinematyka odwrotna:
-
+\nopagebreak
 $$
 f^{-1} (\vec{v})  = \vec{s}
 $$
@@ -259,7 +257,6 @@ Ponieważ rozważana funkcja $f$ cechuje się nieliniowością, jednym z pomysł
 
 Elementarna dla opisywanej w tym punkcie grupy metod jest macierz Jacobiego, którą można zdefiniować następująco:
 $$J_f(x) = \left[\frac{\partial f_i}{\partial x_j}(\mathrm x)\right]_{i, j} ,$$
-
 przy założeniu, że wszystkie pochodne funkcji $f$  znajdują się w punkcie $x\in U$, a $U$ jest podzbiorem otwartym przestrzeni euklidesowej. Dodatkowo funkcja $ f = (f_1, \dots, f_m)$ zbioru $U\;$ w przestrzeń $ \mathbb{R}^m,$ powinna posiadać $m\;$ składowych będących funkcjami $f_i\;$ zbioru $U\;$ o wartościach rzeczywistych.
 
 Przy znajdowaniu rozwiązania dla problemu kinematyki odwrotnej z użyciem macierzy Jacobiego skorzystać można z metody polegającej na odwróceniu tej macierzy, bądź jej transponowaniu. Implikuje to niestety dość złożone obliczenia.
@@ -351,7 +348,7 @@ Ważnym aspektem każdego projektu jest przyjęcie odpowiednich założeń i wyt
      Dokumentacja projektu jest bardzo dobra. Za pewien mankament można uznać fakt, że podstawowym i głównie wspieranym językiem jest w tym przypadku \texttt{Python}. Wiąże się to z ukierunkowaniem dokumentacji właśnie na ten język, co można zauważyć na \cite{panda}. Obecnie dostępne są dwie pozycje książkowe w całości poświęcone programowaniu z wykorzystaniem silnika graficznego \texttt{Panda3D}. Podczas gdy \cite{pandab1}, pomimo skupienia na podstawowym języku programowania, zawiera także fragmenty przeznaczone dla programistów C++, tak \cite{pandab2} jest przeznaczona dla osób początkujących w dziedzinie projektowania oraz rozwijania gier i napisana została w pełni pod kątem Pythona.
 
       Niestety podczas kompilacji Pandy w stabilnej wersji \textit{1.7.2} napotkano szereg problemów, a proces budowania wielokrotnie kończył się komunikatem błędu. Poszukiwania rozwiązań dla tych problemów na \cite{pandaf} zakończyły się znalezieniem sugestii, aby skorzystać z wersji rozwojowej silnika dostępnej przez repozytorium. Kompilacja tym razem powiodła się, ale problematyczne okazało się uruchomienie dostarczonych przykładów. 
-
+\pagebreak
       \subsubsection{Irrlicht}
 
       Silnik ten jest dystrybuowany na licencji \texttt{ZLib}, która to jest zgodna z licencją GPL. Nazwa jest złożeniem niemieckich słów \textit{Irre}, co oznacza zwariowany i \textit{Licht}, czyli światło, co w połączeniu daje błędny ognik. Początki projektu sięgają roku 2002, kiedy Nikolaus Gebhardt rozpoczął prace nad nowym silnikiem graficznym.
@@ -413,13 +410,19 @@ Przy implementacji aplikacji będącej środowiskiem testowym posłużono się d
 
 Podstawową kwestią przy wykorzystaniu Irrlicht jest tworzenie wirtualnego urządzenia, które jest główny i elementarnym obiektem. Dzięki temu biblioteka zostanie zainicjowana i będzie gotowa do użytku. Jako parametr do odpowiadającej za to funkcji należy podać wybrany mechanizm renderujący. W tym wypadku jest to mechanizm oparty o API OpenGL. Kolejnymi parametrami są wymiary tworzonego okna, głębia kolorów, szereg przełączników, w tym decydujący o zastosowaniu trybu pełnoekranowego i na końcu referencja do obiektu klasy implementującej interfejs obsługi zdarzeń. Po tej czynności można uzyskać dostęp do menadżera sceny oraz sterownika wideo. Czynności te zostały przedstawione na list. \ref{list:irrstart}.
 
+Kolejnym etapem jest dodanie węzła kamery oraz wczytanie z pliku modelu sceny. W tym wypadku dodano kamerę wzorowaną na tej z programu Maya. Pozwala ona na zmianę obserwowanego punktu i pozycji obserwatora poprzez ruch myszą z przytrzymanym lewym, bądź prawym przyciskiem. W projekcie użyto modelu sceny, który został dostarczony razem ze źródłami wykorzystywanego silnika graficznego. Jest to model pochodzący z popularnej gry Quake. Omawiane kroki zostały przedstawione na list. \ref{list:irrsq3l}.
+
+W dalszej kolejności umieszczono wywołania funkcji, które na celu miały wczytanie i zainicjalizowanie modelu postaci. Kod odpowiedzialny za te czynności został zaprezentowany na list. \ref{list:irrzombie}. Posłużono się tu modelem dostarczonym w pakiecie z wykorzystywanym silnikiem graficznym. 
+
+
 
 \begin{figure}
 \begin{listing}{Inicjalizacja biblioteki Irrlicht}{list:irrstart}
 	Input input;
-	//create irrlicht opengl device
+	
 	IrrlichtDevice *dev = createDevice(video::EDT_OPENGL,
-			core::dimension2d<u32>(800, 600), 32, false, false, false, &input);
+			core::dimension2d<u32>(800, 600),
+			32, false, false, false, &input);
 
 	if (!dev)
 		return EXIT_FAILURE;
@@ -430,25 +433,25 @@ Podstawową kwestią przy wykorzystaniu Irrlicht jest tworzenie wirtualnego urz�
 \end{listing}
 \end{figure}
 
-Kolejnym etapem jest dodanie węzła kamery oraz wczytanie z pliku modelu sceny. W tym wypadku dodano kamerę wzorowaną na tej z programu Maya. Pozwala ona na zmianę obserwowanego punktu i pozycji obserwatora poprzez ruch myszą z przytrzymanym lewym, bądź prawym przyciskiem. W projekcie użyto modelu sceny, który został dostarczony razem ze źródłami wykorzystywanego silnika graficznego. Jest to model pochodzący z popularnej gry Quake. Omawiane kroki zostały przedstawione na list. \ref{list:irrsq3l}.
 
-\begin{figure}
+Kiedy już wczytano i zainicjalizowano wszelkie modele, dodano kamerę i zakończono wszelkie czynności konieczne do wykonania przed wyświetleniem na ekranie sceny, można uruchomić główną pętlę programu. W niej testowane są wszelkie warunki mające wpływ na rysowane elementy oraz wyświetlana jest kompletna scena ze wszelkimi animacjami. Szablon pętli wraz z wywołaniem funkcji odpowiedzialnych za przerysowanie sceny przedstawia list. \ref{list:irrloop}.
+
+\begin{figure}[p]
 \begin{listing}{Dodanie kamery i inicjalizacja sceny}{list:irrsq3l}
-	//get maya like camera
-	scene::ICameraSceneNode* camera = scene->addCameraSceneNodeMaya(NULL, 150,
-			500, 150, 1, 1);
+	scene::ICameraSceneNode* camera = scene->addCameraSceneNodeMaya(
+			NULL, 150, 500, 150, 1, 1);
+
 	camera->setTarget(core::vector3df(50, 50, -30));
-	//load an q3 map
 	dev->getFileSystem()->addZipFileArchive("media/map-20kdm2.pk3");
 	scene::IAnimatedMesh* q3map = scene->getMesh("20kdm2.bsp");
 	scene::IMeshSceneNode* q3mapNode = scene->addOctreeSceneNode(
 			q3map->getMesh(0));
+
 	q3mapNode->setPosition(core::vector3df(-1400, -70, -1400));
 \end{listing}
 \end{figure}
 
-W dalszej kolejności umieszczono wywołania funkcji, które na celu miały wczytanie i zainicjalizowanie modelu postaci. Kod odpowiedzialny za te czynności został zaprezentowany na list. \ref{list:irrzombie}. Posłużono się tu modelem dostarczonym w pakiecie z wykorzystywanym silnikiem graficznym. 
-\begin{figure}
+\begin{figure}[p]
 \begin{listing}{Wczytanie i inicjalizacja modelu postaci}{list:irrzombie}
 	scene::IAnimatedMeshSceneNode* node = NULL;
 	node = scene->addAnimatedMeshSceneNode(
@@ -461,9 +464,7 @@ W dalszej kolejności umieszczono wywołania funkcji, które na celu miały wczy
 \end{listing}
 \end{figure}
 
-Kiedy już wczytano i zainicjalizowano wszelkie modele, dodano kamerę i zakończono wszelkie czynności konieczne do wykonania przed wyświetleniem na ekranie sceny, można uruchomić główną pętlę programu. W niej testowane są wszelkie warunki mające wpływ na rysowane elementy oraz wyświetlana jest kompletna scena ze wszelkimi animacjami. Szablon pętli wraz z wywołaniem funkcji odpowiedzialnych za przerysowanie sceny przedstawia list. \ref{list:irrloop}.
-
-\begin{figure}
+\begin{figure}[p]
 \begin{listing}{Schemat głównej pętli programu}{list:irrloop}
 	while (dev->run()) {
 		drv->beginScene(true, true, video::SColor(1));
@@ -473,27 +474,41 @@ Kiedy już wczytano i zainicjalizowano wszelkie modele, dodano kamerę i zakońc
 		scene->drawAll();
 		guienv->drawAll();
 		drv->endScene();
-	} //mainloop end
-
+	}
 	dev->drop();
-
 \end{listing}
 \end{figure}
 
-Wykonanie animacji przedstawiającej postać chodzącą po schodach z wykorzystaniem klatek zapisanych w modelu było kolejnym krokiem. Przede wszystkim należało wybrać zakres wyświetlanych kolejno klatek, które najbardziej odpowiadałyby docelowemu ruchowi. W tym celu użyto metody \texttt{setFrameLoop} z klasy \textit{IAnimatedMeshSceneNode}. Wykorzystywany model dostarczony został z sekwencjami klatek przedstawiającymi postać idącą a dwa sposoby, atakowaną na dwa sposoby przez oponenta, upadającą, leżącą, zabijaną, wykonującą wykop, uderzającą przeciwnika, atakującą głową i stojącą. Wybrano pierwszy sposób chodu zawierający się w przedziale klatek 2-20. Poruszanie się postaci jest składową tejże animacji oraz translacji o wektor. Przy zbliżeniu się do stopni wektor odpowiadający za przesunięcie w kierunku marszu poddawany jest rotacji. Dzięki temu postać oprócz przemieszczaniu się w poziomie, ulega również uniesieniu. Zastosowanie wbudowanego w wykorzystywany silnik graficzny mechanizmu detekcji kolizji pozwoliło na wykrycie zbliżającego się stopnia oraz na opadnięcie postaci na kolejny stopień, po uprzedniej translacji o wektor odpowiednio odchylony od poziomu.
-
-Animacja z wykorzystaniem kinematyki odwrotnej, a konkretniej metody heurystycznej CCD odbywa się przy użyciu zaimplementowanej na potrzeby pracy funkcji \texttt{anim\_ccd}. Jej deklaracja przedstawiona została na list. \ref{list:anim_ccd}. Funkcja wywoływana jest rekurencyjnie, a warunkiem zatrzymania jest osiągnięcie odpowiedniej głębokości wywołań, zadanej parametrem \textit{steps}. Funkcja wylicza na podstawie absolutnych (względem punktu o współrzędnych [0,0,0]) wektorów położenia, wektory względne dla celu, kości i manipulatora. Następnie przy użyciu kwaternionów i funkcji trygonometrycznych wyznaczane są kąty, o jakie należy obrócić kość, aby manipulator zbliżył się do celu. Dalej na podstawie nazwy aktualnie rozpatrywanej kości ograniczane są stopnie swobody i zakresy kątów. Ostatecznie przekształcenie jest aplikowane i w zależności od warunku stopu funkcja wywoływana jest dla kości położonej wyżej w hierarchii, bądź następuje wyjście z funkcji.
-
-\begin{figure}
+\begin{figure}[p]
 \begin{listing}{Deklaracja funkcji implementującej metodę kinematyki odwrotnej}{list:anim_ccd}
-void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
-		scene::IBoneSceneNode &bone, // bone to adjust
-		core::vector3df target, // target to reach
-		int steps, // how many bones to involve
-		video::IVideoDriver *drv, // drv for debug lines
-		bool inner = false)
+void anim_ccd( scene::IBoneSceneNode &effector,
+		  scene::IBoneSceneNode &bone,
+		  core::vector3df target,
+		  int steps,
+		  video::IVideoDriver *drv,
+		  bool inner = false  )
 \end{listing}
 \end{figure}
+Wykonanie animacji przedstawiającej postać chodzącą po schodach z wykorzystaniem klatek zapisanych w modelu było kolejnym krokiem. Przede wszystkim należało wybrać zakres wyświetlanych kolejno klatek, które najbardziej odpowiadałyby docelowemu ruchowi. W tym celu użyto metody \texttt{setFrameLoop} z klasy \textit{IAnimatedMeshSceneNode}. Wykorzystywany model dostarczony został z sekwencjami klatek przedstawiającymi postać idącą a dwa sposoby, atakowaną na dwa sposoby przez oponenta, upadającą, leżącą, zabijaną, wykonującą wykop, uderzającą przeciwnika, atakującą głową i stojącą. Wybrano pierwszy sposób chodu zawierający się w przedziale klatek 2-20. Poruszanie się postaci jest składową tejże animacji oraz translacji o wektor. Przy zbliżeniu się do stopni wektor odpowiadający za przesunięcie w kierunku marszu poddawany jest rotacji. Dzięki temu postać oprócz przemieszczaniu się w poziomie, ulega również uniesieniu. Zastosowanie wbudowanego w wykorzystywany silnik graficzny mechanizmu detekcji kolizji pozwoliło na wykrycie zbliżającego się stopnia oraz na opadnięcie postaci na kolejny stopień, po uprzedniej translacji o wektor odpowiednio odchylony od poziomu. Opisana powyżej technika została zilustrowana na rys. \ref{img:irrikwalking}.
+
+  \begin{figure}
+  \centering
+    \includegraphics[keepaspectratio=true,height=0.8\textheight]{./img/walking.png}
+  \caption{Aplikacja testowa: efekt wchodzenia po schodach powstały dzięki złożenia dwóch animacji. Fioletowa linia wskazuje miejsce kolizji aktora ze sceną.}
+  \label{img:irrikwalking}
+  \end{figure}
+
+
+
+Animacja z wykorzystaniem kinematyki odwrotnej, a konkretniej metody heurystycznej CCD odbywa się przy użyciu zaimplementowanej na potrzeby pracy funkcji \texttt{anim\_ccd}. Jej deklaracja przedstawiona została na list. \ref{list:anim_ccd}. Funkcja wywoływana jest rekurencyjnie, a warunkiem zatrzymania jest osiągnięcie odpowiedniej głębokości wywołań, zadanej parametrem \textit{steps}. Funkcja wylicza na podstawie absolutnych (względem punktu o współrzędnych [0,0,0]) wektorów położenia, wektory względne dla celu, kości i manipulatora. Następnie przy użyciu kwaternionów i funkcji trygonometrycznych wyznaczane są kąty, o jakie należy obrócić kość, aby manipulator zbliżył się do celu. Dalej na podstawie nazwy aktualnie rozpatrywanej kości ograniczane są stopnie swobody i zakresy kątów. Ostatecznie przekształcenie jest aplikowane i w zależności od warunku stopu funkcja wywoływana jest dla kości położonej wyżej w hierarchii, bądź następuje wyjście z funkcji. Powyższy ciąg operacji wywoływany jest wielokrotnie, dzięki czemu z każdą iteracją osiągany jest lepszy rezultat. Efekt działania w środowisku testowym opisanej powyżej implementacji metody CCD został przedstawiony na rys. \ref{img:irrikccd}. Świetlisty punkt określa cel, natomiast zielone i czerwone linie są wektorami pomocniczymi, wyznaczonymi na potrzeby tej funkcji.
+
+
+  \begin{figure}
+  \centering
+    \includegraphics[keepaspectratio=true,height=0.8\textheight]{./img/irrik-ik.png}
+  \caption{Aplikacja testowa: postać animowana z użyciem kinematyki odwrotnej. Widoczne obiekty pomocnicze.}
+  \label{img:irrikccd}
+  \end{figure}
 
 
 \chapter{Uzyskane efekty}
@@ -521,8 +536,9 @@ W pracy dokonano przeglądu różnych technik animacji. Opisano także szereg za
 % \let\addtocontents\stdaddtocontents
 
 \begin{thebibliography}{99}
- \addcontentsline{toc}{section}{Bibliografia}
 
+ \addcontentsline{toc}{section}{Bibliografia}
+\footnotesize
 \bibitem{zbrush} \url{http://www.zbrushcentral.com/showthread.php?164247}
 \bibitem{avatar} \url{http://www.3dworldmag.com/2010/11/16/the-making-of-avatar/}
 \bibitem{ikrobot} Li-Chun Tommy Wang, Chih Cheng Chen, \textit{A Combined Optimization Method for Solving the Inverse Kinematics Problem of Mechanical Manipulators}, IEEE Transactions on Robotics and Automation, Vol 7 No 4, August 1991

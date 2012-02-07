@@ -228,16 +228,16 @@ void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
 
 	drv->draw3DLine(vec3, vecE, RED);
 	drv->draw3DLine(vec3, effector.getAbsolutePosition(), GREEN);
-	drv->draw3DLine(vec3, target, BLUE);
+	drv->draw3DLine(vec3, target, GREEN);
 	drv->draw3DLine(vec3, bone.getAbsolutePosition(),
 			video::SColor(205, 150, 150, 255));
 
 	drv->draw3DLine(VEC0, vecE, RED);
-	drv->draw3DLine(VEC0, vecT, BLUE);
+	drv->draw3DLine(VEC0, vecT, GREEN);
 	drv->draw3DLine(VEC0, effector.getAbsolutePosition(), GREEN);
 
-	drv->draw3DLine(VEC0, target, BLUE);
-	drv->draw3DLine(VEC0, vec3, video::SColor(255, 255, 255, 255));
+	drv->draw3DLine(VEC0, target, GREEN);
+//	drv->draw3DLine(VEC0, vec3, video::SColor(255, 255, 255, 255));
 
 	if (steps > 0) {
 		anim_ccd(effector, *parent, target, steps - 1, drv, true);
@@ -271,7 +271,6 @@ int main() {
 	//create irrlicht opengl device
 	IrrlichtDevice *dev = createDevice(video::EDT_OPENGL,
 			core::dimension2d<u32>(800, 450), 32, false, false, false, &input);
-
 	if (!dev)
 		return EXIT_FAILURE;
 
@@ -345,7 +344,7 @@ int main() {
 	radius = box1.MaxEdge - box1.getCenter();
 	anim = scene->createCollisionResponseAnimator(selector, node, radius,
 			core::vector3df(0, -10, 0), core::vector3df(0, -9, 5));
-//	node->addAnimator(anim);
+	node->addAnimator(anim);
 	anim->drop();
 
 //text
@@ -468,7 +467,7 @@ r.X=30;
 
 			target.setPosition(vec);
 			for (int i = 0; i < 5; ++i) {
-				anim_ccd1(*bone, (scene::IBoneSceneNode &) *(bone->getParent()),
+				anim_ccd(*bone, (scene::IBoneSceneNode &) *(bone->getParent()),
 						target.getAbsolutePosition(), 1, drv);
 				rootbone->updateAbsolutePositionOfAllChildren();
 				node->updateAbsolutePosition();
@@ -501,7 +500,7 @@ r.X=30;
 		delta = old.Z - vec.Z;
 		old = vec;
 		if ((-540 < vec.Z) && (vec.Z < -265) && (delta == 0)) {
-			vec.Y += 3;
+			vec.Y += 5;
 		}
 		if (-600 > vec.Z)
 			vec.Z = -150;
