@@ -60,15 +60,22 @@ breaklines=true,breakautoindent=true,basicstyle=\small,escapechar=¶, tabsize=2,
 \tableofcontents
 \linenumbers
 \chapter{Wprowadzenie}
-TODO
+
 % Parę słów po co, gdzie i do czego jest animacja stosowana, jak to mamy coraz lepszy sprzęt itp
 
+Od czasu kiedy po raz pierwszy podłączono wyświetlacz do komputera i wykorzystano go w celach rozrywkowych, gry komputerowe stały się ważną kategorią oprogramowania. Nieustanny rozwój technologii i dostarczanie przez producentów coraz bardziej zaawansowanych rozwiązań sprzętowych, pozwalają z dnia na dzień przesuwać granice jakości animacji generowanych w czasie rzeczywistym. Nowoczesne procesory graficzne są bardzo złożone i pozwalają oprócz standardowego zastosowania, jakim jest wspieranie procesu wyświetlania obrazu, sprawdzają się także przy łamaniu szyfrów, obliczeniach naukowych i symulacjach fizycznych. Dziś nikogo już nie dziwią złożone animacje trójwymiarowe dostępne w grach komputerowych. Co więcej, osiągnięcie komercyjnego sukcesu przez grę nieużywającą sprzętowej akceleracji do renderowania grafiki wydaje się być niemożliwe. 
+
+Rynek gier komputerowych jest bardzo dochodowy i napędza sprzedaż oraz rozwój nowych procesorów graficznych. Istnieje także sprzężenie zwrotne -- lepszy sprzęt pozwala na stosowanie bardziej wyrafinowanych i efektownych technik, w tym również z zakresu trójwymiarowej animacji komputerowej. Ma to na celu zwiększenie poziomu realizmu oraz satysfakcji użytkownika, co z kolei przekłada się na wymierny zysk finansowy dla wydawcy. Przykładem może być kinematyka odwrotna, której poświęcono niniejszą pracę. Algorytmy i metody stosowane w grach komputerowych są nieustannie rozwijane i udoskonalane. Na potrzeby gier często powstają również nowe techniki opisywane w poważnych pracach naukowych, a uczelnie wyższe kształcą specjalistów z zakresu programowania gier komputerowych.
+
   \section{Charakterystyka problemu}
-TODO
-%     Nieco bliższe przedstawienie problemu animacji i kinematyki odwrotnej
+
+Pierwsze obiekty w grach komputerowych były złożone z podstawowych kształtów geometrycznych takich jak punkty i proste. Obecnie wysokobudżetowe produkcje na wzór filmów fabularnych charakteryzują się profesjonalną ścieżką dźwiękową oraz niemal fotorealistyczną oprawą graficzną. Animacja postaci o wysokim stopniu złożoności jest dalece bardziej kłopotliwa od animacji obiektów składających się z kilku odcinków prostych.
+
+Kinematyka odwrotna jest jedną z metod przeznaczonych do animacji złożonych struktur obiektów. Na pole grafiki komputerowej zaadaptowana została z automatyki i robotyki, gdzie wykorzystywana jest do sterowania ramionami robotów. Dzięki zastosowaniu systemu szkieletowego i kinematyki odwrotnej, tak złożone zagadnienie, jakim jest niewątpliwie animacja skomplikowanych modeli trójwymiarowych, zostało znacznie uproszczone.
 
   \section{Cel pracy}
-  Aby ukierunkować rozwój pracy i określić charakter badań, które zostaną przeprowadzone w trakcie jej tworzenia, konieczne jest ustalenie celu, który student ma poprzez nią osiągnąć. Celem niniejszego dzieła jest analiza porównawcza metod animacji trójwymiarowej, ze szczególnym uwzględnieniem metod z zakresu kinematyki odwrotnej. Efektem tego ukierunkowania była możliwość wybrania oraz zastosowania odpowiedniej metodologii badawczej.
+
+  Aby ukierunkować rozwój pracy i określić charakter badań, które zostaną przeprowadzone w trakcie jej tworzenia, konieczne było ustalenie celu. Efektem tego ukierunkowania była możliwość wybrania oraz zastosowania odpowiedniej metodologii badawczej. Celem niniejszego dzieła jest zastosowanie kinematyki odwrotnej do trójwymiarowej animacji postaci humanoidalnej oraz porównanie tej metody animacji z inną techniką.
 
   \section{Etapy oraz zakres pracy}
 
@@ -118,7 +125,7 @@ Zauważalnym trendem jest dążenie do maksymalizacji poziomu realizmu, jakim ce
   \section{Model}
 Trójwymiarowe modele w praktyce wyparły dwuwymiarowe rysunki przy produkcji filmów animowanych i stosowane są na szeroką skalę w architekturze, przemyśle, czy grach komputerowych. Artyści do ich wykonania posługują się zaawansowanymi narzędziami, zróżnicowanymi pod względem ceny, zastosowania, obsługi, czy możliwości. Jednymi z najpopularniejszych są takie produkty jak \texttt{3ds Max}, \texttt{Maya}, \texttt{Blender} i \texttt{ZBrush}. Przykładowy model przygotowany za pomocą ostatniego z wymienionych programów przedstawia rys. \ref{img:zbrush}.
 
-Modele wykorzystywane w grafice trójwymiarowej przeważnie zbudowane są z siatki trójkątów, ze względu na specyficzne cechy tego najprostszego wielokąta. Najważniejszą zaletą takiego rozwiązania jest niska złożoność możliwego do zastosowania algorytmu rasteryzacji. Dzieje się tak ze względu na fakt, iż trójkąt nigdy nie jest figurą wklęsłą, co ułatwia rysowanie jego wypełnienia. Niestety z drugiej strony, aby model był wystarczająco dokładny i dość wiernie odzwierciedlał obiekt rzeczywisty, musi składać się z bardzo dużej ilości trójkątów. W wysokobudżetowych produkcjach filmowych liczbę wielokątów liczy się obecnie w milionach. Przykładowo w filmie \texttt{Avatar} wykorzystano model złożony z dwudziestu milionów wielokątów \cite{avatar}. Nastręcza to pewne problemy przy animacji tak złożonej siatki trójkątów.
+Modele wykorzystywane w grafice trójwymiarowej przeważnie zbudowane są z siatki trójkątów, ze względu na specyficzne cechy tego najprostszego wielokąta. Najważniejszą zaletą takiego rozwiązania jest niska złożoność możliwego do zastosowania algorytmu rasteryzacji. Dzieje się tak ze względu na fakt, iż trójkąt nigdy nie jest figurą wklęsłą, co ułatwia rysowanie jego wypełnienia. Niestety z drugiej strony, aby model był wystarczająco dokładny i dość wiernie odzwierciedlał obiekt rzeczywisty, musi składać się z bardzo dużej liczby trójkątów. W wysokobudżetowych produkcjach filmowych liczbę wielokątów liczy się obecnie w milionach. Przykładowo w filmie \texttt{Avatar} wykorzystano model złożony z dwudziestu milionów wielokątów \cite{avatar}. Nastręcza to pewne problemy przy animacji tak złożonej siatki trójkątów.
 
     \begin{figure}
   \centering
@@ -152,7 +159,7 @@ W odniesieniu do animacji komputerowej technikę tę można rozumieć jako manip
 
   \begin{figure}
   \centering
-    \includegraphics[keepaspectratio=true,width=\linewidth]{./img/fk.png}
+    \includegraphics[keepaspectratio=true,width=0.68\linewidth]{./img/fk.png}
   \caption{Kinematyka prosta}
   \label{img:fk}
   \end{figure}
@@ -473,16 +480,31 @@ Kiedy już wczytano i zainicjalizowano wszelkie modele, dodano kamerę i zakońc
 \end{listing}
 \end{figure}
 
-\chapter{Analiza porównawcza}
-TODO
-  \section{Metodologia}
-  \section{Eksperymenty}
-  \section{Wyniki}
+Wykonanie animacji przedstawiającej postać chodzącą po schodach z wykorzystaniem klatek zapisanych w modelu było kolejnym krokiem. Przede wszystkim należało wybrać zakres wyświetlanych kolejno klatek, które najbardziej odpowiadałyby docelowemu ruchowi. W tym celu użyto metody \texttt{setFrameLoop} z klasy \textit{IAnimatedMeshSceneNode}. Wykorzystywany model dostarczony został z sekwencjami klatek przedstawiającymi postać idącą a dwa sposoby, atakowaną na dwa sposoby przez oponenta, upadającą, leżącą, zabijaną, wykonującą wykop, uderzającą przeciwnika, atakującą głową i stojącą. Wybrano pierwszy sposób chodu zawierający się w przedziale klatek 2-20. Poruszanie się postaci jest składową tejże animacji oraz translacji o wektor. Przy zbliżeniu się do stopni wektor odpowiadający za przesunięcie w kierunku marszu poddawany jest rotacji. Dzięki temu postać oprócz przemieszczaniu się w poziomie, ulega również uniesieniu. Zastosowanie wbudowanego w wykorzystywany silnik graficzny mechanizmu detekcji kolizji pozwoliło na wykrycie zbliżającego się stopnia oraz na opadnięcie postaci na kolejny stopień, po uprzedniej translacji o wektor odpowiednio odchylony od poziomu.
+
+Animacja z wykorzystaniem kinematyki odwrotnej, a konkretniej metody heurystycznej CCD odbywa się przy użyciu zaimplementowanej na potrzeby pracy funkcji \texttt{anim\_ccd}. Jej deklaracja przedstawiona została na list. \ref{list:anim_ccd}. Funkcja wywoływana jest rekurencyjnie, a warunkiem zatrzymania jest osiągnięcie odpowiedniej głębokości wywołań, zadanej parametrem \textit{steps}. Funkcja wylicza na podstawie absolutnych (względem punktu o współrzędnych [0,0,0]) wektorów położenia, wektory względne dla celu, kości i manipulatora. Następnie przy użyciu kwaternionów i funkcji trygonometrycznych wyznaczane są kąty, o jakie należy obrócić kość, aby manipulator zbliżył się do celu. Dalej na podstawie nazwy aktualnie rozpatrywanej kości ograniczane są stopnie swobody i zakresy kątów. Ostatecznie przekształcenie jest aplikowane i w zależności od warunku stopu funkcja wywoływana jest dla kości położonej wyżej w hierarchii, bądź następuje wyjście z funkcji.
+
+\begin{figure}
+\begin{listing}{Deklaracja funkcji implementującej metodę kinematyki odwrotnej}{list:anim_ccd}
+void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
+		scene::IBoneSceneNode &bone, // bone to adjust
+		core::vector3df target, // target to reach
+		int steps, // how many bones to involve
+		video::IVideoDriver *drv, // drv for debug lines
+		bool inner = false)
+\end{listing}
+\end{figure}
+
+
+\chapter{Uzyskane efekty}
+
+W rozdziale tym skupiono się na sprawdzeniu i zbadaniu efektów działania dwóch wykorzystanych sposobów animacji oraz ich porównaniu.
+
+Przy użyciu animacji zapisanej w modelu postaci, dało się zauważyć szereg problemów. Przede wszystkim tak, jak mogłoby się wydawać, stosunkowo prosta czynność, jaką jest wchodzenie po schodach jest trudna do osiągnięcia przy zastosowaniu animacji chodzenia po płaszczyźnie. Uwydatnia się zatem tutaj główna wada tej techniki animacji, jaką jest brak elastyczności i możliwości dopasowania ruchu do zmiennych uwarunkowań terenu. Głównym mankamentem było tutaj nieunoszenie dostatecznie wysoko przez postać stopy, a co za tym idzie wnikanie w stopnie schodów.
 
 \chapter{Podsumowanie}
-TODO
 
-
+W pracy dokonano przeglądu różnych technik animacji. Opisano także szereg zagadnień związanych z procesem animacji w grach komputerowych. Następnie w sposób bardziej szczegółowy dokonano opisu kinematyki odwrotnej. Przedstawiono rys historyczny i opisano popularne techniki z zakresu tej metody animacji. W dalszej części zawarto przegląd technologii, wraz z wyborem konkretnych rozwiązań. Kolejno opisano przyjęte założenia i implementację.
 
 \lstlistoflistings
 % \section*{Spis listingów}
@@ -501,8 +523,11 @@ TODO
 \begin{thebibliography}{99}
  \addcontentsline{toc}{section}{Bibliografia}
 
-\bibitem{zbrush} http://www.zbrushcentral.com/showthread.php?164247
-\bibitem{avatar} http://www.3dworldmag.com/2010/11/16/the-making-of-avatar/
+\bibitem{zbrush} \url{http://www.zbrushcentral.com/showthread.php?164247}
+\bibitem{avatar} \url{http://www.3dworldmag.com/2010/11/16/the-making-of-avatar/}
+\bibitem{ikrobot} Li-Chun Tommy Wang, Chih Cheng Chen, \textit{A Combined Optimization Method for Solving the Inverse Kinematics Problem of Mechanical Manipulators}, IEEE Transactions on Robotics and Automation, Vol 7 No 4, August 1991
+\bibitem{lander} Jeff Lander, \textit{Graphic Content: Oh My God, I Inverted Kine!}, Game Developer, 1998
+\bibitem{welman} Chris Welman, \textit{Inverse Kinematics and Geometric Constraints for Articulated Figure Manipulation}, Simon Frasier University, 1993
 \bibitem{renderware:list} MobyGames, \textit{Graphics Engine: RenderWare}, \url{http://www.advancedlinuxprogramming.com/alp-folder}
 \bibitem{renderware} Criterion Software, \textit{RENDERWARE GRAPHICS}, \url{http://web.archive.org/web/20070105144827/http://www.renderware.com/graphics.asp}
 \bibitem{ogreb1} Gregory Junker, \textit{Pro OGRE 3D Programming (Expert's Voice in Open Source)}, Apress 2006

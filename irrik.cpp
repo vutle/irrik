@@ -128,10 +128,13 @@ void anim_ccd1(scene::IBoneSceneNode &effector, // k-chain end-effector node
 	printvec(vecE + tmp, "Effector");
 	printvec(vecT, "vecT");
 	printvec(vecT + tmp, "Target");
+
 	vecE.normalize();
 	vecT.normalize();
 
 	angle = vecE.dotProduct(vecT); //normalized, no need for dividing
+
+	eulers.X=0;
 
 	if (angle < 1) {
 		tmp = vecT.crossProduct(vecE);
@@ -148,11 +151,12 @@ void anim_ccd1(scene::IBoneSceneNode &effector, // k-chain end-effector node
 		}
 
 	}
+
 	eulers.Y = 0;
 	eulers.Z = 0;
 	std::cout << eulers.X << " " << tmp.X << std::endl;
 
-	bone.setRotation(eulers);
+	bone.setRotation(bone.getRotation()+eulers);
 	parent = (scene::IBoneSceneNode*) bone.getParent();
 	parent->updateAbsolutePositionOfAllChildren();
 	if (steps > 0 && !inner) {
@@ -182,64 +186,64 @@ void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
 	vecT.normalize();
 	vecE.normalize();
 
+	if ((bone.getBoneName()[5]) == '2' && (bone.getBoneName()[6] == '2')) {
+		// 1DOF for a knee
+		vecE.X = 0;
+		vecT.X = 0;
 
-		if ((bone.getBoneName()[5]) == '2' && (bone.getBoneName()[6] == '2')) {
-			// 1DOF for a knee
-			vecE.X = 0;
-			vecT.X = 0;
+		eulers.X = core::RADTODEG * acos(vecE.dotProduct(vecT));
 
-			eulers.X = core::RADTODEG * acos(vecE.dotProduct(vecT));
+		if (vecE.crossProduct(vecT).X > 0 && eulers.X > 15)
+			eulers.X = 15;
+		else
+			eulers.X *= -1;
 
-			if (vecE.crossProduct(vecT).X > 0 && eulers.X > 15)
-				eulers.X = 15;
-			else
-				eulers.X *= -1;
+		drv->draw3DLine(VEC0, vecT.crossProduct(vecE) * 50,
+				video::SColor(205, 250, 250, 255));
+		eulers.Y = 0;
+		eulers.Z = 0;
 
-			drv->draw3DLine(VEC0, vecT.crossProduct(vecE) * 50,
-					video::SColor(205, 250, 250, 255));
-			eulers.Y = 0;
-			eulers.Z = 0;
+	} else {
 
-		} else {
+		core::quaternion quat;
+		quat.rotationFromTo(vecE, vecT);
+		quat.toEuler(eulers);
 
-			core::quaternion quat;
-			quat.rotationFromTo(vecE, vecT);
-			quat.toEuler(eulers);
+		eulers *= core::RADTODEG;
 
-			eulers *= core::RADTODEG;
-
-		}
+	}
 //		std::cout << i << " step " << steps << " " << bone.getBoneName()
 //				<< " euler X: " << eulers.X << std::endl;
 
-		bone.setRotation(eulers);
-		parent = (scene::IBoneSceneNode*) bone.getParent();
-		parent->updateAbsolutePositionOfAllChildren();
-		video::SMaterial material;
-		material.setFlag(video::EMF_LIGHTING, false);
+//	bone.setRotation(eulers);
+	bone.setRotation(bone.getRotation()+eulers);
 
-		drv->setMaterial(material);
-		drv->setTransform(video::ETS_WORLD, core::IdentityMatrix);
+	parent = (scene::IBoneSceneNode*) bone.getParent();
+	parent->updateAbsolutePositionOfAllChildren();
+	video::SMaterial material;
+	material.setFlag(video::EMF_LIGHTING, false);
 
-		drv->draw3DLine(vec3, vecE , RED);
-		drv->draw3DLine(vec3, vecE, RED);
-		drv->draw3DLine(vec3, effector.getAbsolutePosition(), GREEN);
-		drv->draw3DLine(vec3, target, BLUE);
-		drv->draw3DLine(vec3, bone.getAbsolutePosition(),
-				video::SColor(205, 150, 150, 255));
+	drv->setMaterial(material);
+	drv->setTransform(video::ETS_WORLD, core::IdentityMatrix);
 
-		drv->draw3DLine(VEC0, vecE, RED);
-		drv->draw3DLine(VEC0, vecT, BLUE);
-		drv->draw3DLine(VEC0, effector.getAbsolutePosition(), GREEN);
+	drv->draw3DLine(vec3, vecE, RED);
+	drv->draw3DLine(vec3, effector.getAbsolutePosition(), GREEN);
+	drv->draw3DLine(vec3, target, BLUE);
+	drv->draw3DLine(vec3, bone.getAbsolutePosition(),
+			video::SColor(205, 150, 150, 255));
 
-		drv->draw3DLine(VEC0, target, BLUE);
-		drv->draw3DLine(VEC0, vec3 , video::SColor(255, 255, 255, 255));
+	drv->draw3DLine(VEC0, vecE, RED);
+	drv->draw3DLine(VEC0, vecT, BLUE);
+	drv->draw3DLine(VEC0, effector.getAbsolutePosition(), GREEN);
 
+	drv->draw3DLine(VEC0, target, BLUE);
+	drv->draw3DLine(VEC0, vec3, video::SColor(255, 255, 255, 255));
 
-		if (steps > 0) {
-			anim_ccd(effector, *parent, target, steps - 1, drv, true);
-		} else
-			return;
+	if (steps > 0) {
+		anim_ccd(effector, *parent, target, steps - 1, drv, true);
+	} else {
+		return;
+	}
 
 }
 void boneLabels(scene::ISceneManager *scene, gui::IGUIFont* font,
@@ -266,7 +270,7 @@ int main() {
 	Input input;
 	//create irrlicht opengl device
 	IrrlichtDevice *dev = createDevice(video::EDT_OPENGL,
-			core::dimension2d<u32>(800, 600), 32, false, false, false, &input);
+			core::dimension2d<u32>(800, 450), 32, false, false, false, &input);
 
 	if (!dev)
 		return EXIT_FAILURE;
@@ -341,7 +345,7 @@ int main() {
 	radius = box1.MaxEdge - box1.getCenter();
 	anim = scene->createCollisionResponseAnimator(selector, node, radius,
 			core::vector3df(0, -10, 0), core::vector3df(0, -9, 5));
-	node->addAnimator(anim);
+//	node->addAnimator(anim);
 	anim->drop();
 
 //text
@@ -358,13 +362,12 @@ int main() {
 
 	scene::IBoneSceneNode *bone, *rootbone = node->getJointNode((u32) 0);
 	bone = node->getJointNode("Joint13");
-
 	Target target(dev, 0, 0, 0);
 	target.show();
 
-	core::vector3df vec, normal, old = node1->getAbsolutePosition();
+	core::vector3df vec, normal, old = node1->getAbsolutePosition(),r;
 	float delta = 2;
-
+r.X=30;
 //main loop
 
 	while (dev->run()) {
@@ -373,6 +376,7 @@ int main() {
 //starting the scene =====================
 
 		node->updateAbsolutePosition();
+		rootbone->updateAbsolutePositionOfAllChildren();
 
 		int fps = drv->getFPS();
 
@@ -394,7 +398,9 @@ int main() {
 			if (scene->getSceneNodeFromId(BONELABEL) == NULL) {
 				boneLabels(scene, font, rootbone);
 				node->setDebugDataVisible(
-						(scene::E_DEBUG_SCENE_TYPE) (scene::EDS_MESH_WIRE_OVERLAY | scene::EDS_HALF_TRANSPARENCY | scene::EDS_SKELETON));
+						(scene::E_DEBUG_SCENE_TYPE) (scene::EDS_MESH_WIRE_OVERLAY
+								| scene::EDS_HALF_TRANSPARENCY
+								| scene::EDS_SKELETON));
 			} else {
 				while ((tsn =
 						(scene::IBillboardTextSceneNode *) scene->getSceneNodeFromId(
@@ -411,17 +417,17 @@ int main() {
 			input.unpress(irr::KEY_TAB);
 		}
 		if (input.isPressed(irr::KEY_F1)) {
-			//bone = node->getJointNode("Joint13");
-			//target.setPosition(bone->getAbsolutePosition());
-			node->setDebugDataVisible(
-								(scene::E_DEBUG_SCENE_TYPE) (scene::EDS_MESH_WIRE_OVERLAY | scene::EDS_HALF_TRANSPARENCY | scene::EDS_SKELETON));
+			bone = node->getJointNode("Joint13");
+			target.setPosition(bone->getAbsolutePosition());
+//			node->setDebugDataVisible(
+//								(scene::E_DEBUG_SCENE_TYPE) (scene::EDS_MESH_WIRE_OVERLAY | scene::EDS_HALF_TRANSPARENCY | scene::EDS_SKELETON));
 
 		}
 		if (input.isPressed(irr::KEY_F2)) {
-			//bone = node->getJointNode("Joint16");
-			//target.setPosition(bone->getAbsolutePosition());
-			node->setDebugDataVisible(
-					(scene::E_DEBUG_SCENE_TYPE) ( scene::EDS_HALF_TRANSPARENCY | scene::EDS_SKELETON));
+			bone = node->getJointNode("Joint16");
+			target.setPosition(bone->getAbsolutePosition());
+//			node->setDebugDataVisible(
+//					(scene::E_DEBUG_SCENE_TYPE) ( scene::EDS_HALF_TRANSPARENCY | scene::EDS_SKELETON));
 
 		}
 		if (input.isPressed(irr::KEY_F3)) {
@@ -461,8 +467,8 @@ int main() {
 		if (vec != target.getPosition() || input.isPressed(irr::KEY_SPACE)) {
 
 			target.setPosition(vec);
-			for (int i = 0; i < 10; ++i) {
-				anim_ccd(*bone, (scene::IBoneSceneNode &) *(bone->getParent()),
+			for (int i = 0; i < 5; ++i) {
+				anim_ccd1(*bone, (scene::IBoneSceneNode &) *(bone->getParent()),
 						target.getAbsolutePosition(), 1, drv);
 				rootbone->updateAbsolutePositionOfAllChildren();
 				node->updateAbsolutePosition();
@@ -477,9 +483,14 @@ int main() {
 			vec += normal * wheel * 10;
 			camera->setTarget(vec);
 		}
-
+		if (input.isPressed(irr::KEY_KEY_Z)) {
+			r.X+=5;
+			node->getJointNode("Joint21")->setRotation(r);
+			printvec(node->getJointNode("Joint22")->getAbsolutePosition(), "Pos");
+			printvec(bone->getRotation(), "Rot");
+		}
 //drawing scene =====================
-		scene->drawAll();
+		scene->drawAll();scene->drawAll();
 		guienv->drawAll();
 
 //ending scene =====================
@@ -495,7 +506,7 @@ int main() {
 		if (-600 > vec.Z)
 			vec.Z = -150;
 
-		vec.Z -= 0.3;
+		vec.Z -= 0.25;
 		node1->setPosition(vec);
 		node1->updateAbsolutePosition();
 
