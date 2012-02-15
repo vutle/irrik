@@ -335,7 +335,7 @@ int main() {
 	node = scene->addAnimatedMeshSceneNode(
 			scene->getMesh("media/zombie/zombie.b3d"));
 	node->setScale(core::vector3df(7, 7, 7));
-	node->setPosition(core::vector3df(0, 50, 0));
+	node->setPosition(core::vector3df(0, 50, -300));
 	node->getMaterial(0).NormalizeNormals = true;
 	node->setJointMode(scene::EJUOR_CONTROL);
 	node->setMaterialFlag(video::EMF_LIGHTING, false);
@@ -467,7 +467,7 @@ r.X=30;
 
 			target.setPosition(vec);
 			for (int i = 0; i < 5; ++i) {
-				anim_ccd(*bone, (scene::IBoneSceneNode &) *(bone->getParent()),
+				anim_ccd1(*bone, (scene::IBoneSceneNode &) *(bone->getParent()),
 						target.getAbsolutePosition(), 1, drv);
 				rootbone->updateAbsolutePositionOfAllChildren();
 				node->updateAbsolutePosition();
@@ -482,12 +482,19 @@ r.X=30;
 			vec += normal * wheel * 10;
 			camera->setTarget(vec);
 		}
-		if (input.isPressed(irr::KEY_KEY_Z)) {
-			r.X+=5;
-			node->getJointNode("Joint21")->setRotation(r);
-			printvec(node->getJointNode("Joint22")->getAbsolutePosition(), "Pos");
-			printvec(bone->getRotation(), "Rot");
+		if (input.isPressed(irr::KEY_LEFT)) {
+			node->setPosition(node->getAbsolutePosition() + core::vector3df(0, 0, -1));
 		}
+		if (input.isPressed(irr::KEY_RIGHT)) {
+			node->setPosition(node->getAbsolutePosition() + core::vector3df(0, 0, 1));
+		}
+		if (input.isPressed(irr::KEY_UP)) {
+			node->setPosition(node->getAbsolutePosition() + core::vector3df(0, 10, 0));
+		}
+		if (input.isPressed(irr::KEY_DOWN)) {
+			node->setPosition(node->getAbsolutePosition() + core::vector3df(0, -10, 0));
+		}
+
 //drawing scene =====================
 		scene->drawAll();scene->drawAll();
 		guienv->drawAll();
