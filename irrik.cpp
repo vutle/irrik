@@ -123,18 +123,18 @@ void anim_ccd1(scene::IBoneSceneNode &effector, // k-chain end-effector node
 	vecE.X = 0;
 	vecT.X = 0;
 
-	printvec(tmp, "bone");
-	printvec(vecE, "vecE");
-	printvec(vecE + tmp, "Effector");
-	printvec(vecT, "vecT");
-	printvec(vecT + tmp, "Target");
+//	printvec(tmp, "bone");
+//	printvec(vecE, "vecE");
+//	printvec(vecE + tmp, "Effector");
+//	printvec(vecT, "vecT");
+//	printvec(vecT + tmp, "Target");
 
 	vecE.normalize();
 	vecT.normalize();
 
 	angle = vecE.dotProduct(vecT); //normalized, no need for dividing
 
-	eulers.X=0;
+	eulers.X = 0;
 
 	if (angle < 1) {
 		tmp = vecT.crossProduct(vecE);
@@ -154,9 +154,9 @@ void anim_ccd1(scene::IBoneSceneNode &effector, // k-chain end-effector node
 
 	eulers.Y = 0;
 	eulers.Z = 0;
-	std::cout << eulers.X << " " << tmp.X << std::endl;
+//	std::cout << eulers.X << " " << tmp.X << std::endl;
 
-	bone.setRotation(bone.getRotation()+eulers);
+	bone.setRotation(bone.getRotation() + eulers);
 	parent = (scene::IBoneSceneNode*) bone.getParent();
 	parent->updateAbsolutePositionOfAllChildren();
 	if (steps > 0 && !inner) {
@@ -216,7 +216,7 @@ void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
 //				<< " euler X: " << eulers.X << std::endl;
 
 //	bone.setRotation(eulers);
-	bone.setRotation(bone.getRotation()+eulers);
+	bone.setRotation(bone.getRotation() + eulers);
 
 	parent = (scene::IBoneSceneNode*) bone.getParent();
 	parent->updateAbsolutePositionOfAllChildren();
@@ -246,6 +246,7 @@ void anim_ccd(scene::IBoneSceneNode &effector, // k-chain end-effector node
 	}
 
 }
+
 void boneLabels(scene::ISceneManager *scene, gui::IGUIFont* font,
 		scene::IBoneSceneNode *root) {
 
@@ -265,6 +266,72 @@ void boneLabels(scene::ISceneManager *scene, gui::IGUIFont* font,
 			core::dimension2d<f32>(10.0f, 4.0f), VEC0, BONELABEL);
 }
 
+void stairsclimb(scene::IAnimatedMeshSceneNode* node, IrrlichtDevice *dev) {
+
+	static int frame = -1;
+	static Target target(dev, 0, 0, 0);
+	int speed = 50;
+	core::vector3df vec(0, 0, 0), vec1(0,0,0);
+//	std::cout << "FRAME: " << frame << std::endl;
+
+	video::IVideoDriver *drv = dev->getVideoDriver();
+
+	scene::IBoneSceneNode *e1 = node->getJointNode("Joint23");
+	scene::IBoneSceneNode *e2 = node->getJointNode("Joint19");
+	static scene::IBoneSceneNode *e,*f;
+
+	if(frame == -1){
+		target.show();
+		e = e1;
+		f = e2;
+	}
+	if(frame < (1*speed)) {
+
+		vec = e->getAbsolutePosition();
+		vec.Y+=0.5;
+		vec.Z+=2;
+		vec1=f->getAbsolutePosition();
+		vec1.Z+=1;
+//		printvec(vec,"V1");
+	}
+
+	if (frame >= (1*speed) && frame < (2*speed)) {
+
+		vec = e->getAbsolutePosition();
+		vec.Y-=0.5;
+		vec.Z-=2;
+		vec1=f->getAbsolutePosition();
+		vec1.Z+=1;
+//		printvec(vec,"V2");
+	}
+
+	if (frame >= (2*speed) && frame < (3*speed)) {
+		vec = e->getAbsolutePosition();
+		vec = f->getAbsolutePosition();
+//		vec = node->getAbsolutePosition();
+//		printvec(vec,"V3");
+	}
+
+	if(frame >= (3*speed)){
+//		printvec(vec,"V4");
+		frame = 0;
+
+		e = (e==e1) ? e2 : e1;
+		f = (f==e1) ? e2 : e1;
+		vec = e->getAbsolutePosition();
+		vec = f->getAbsolutePosition();
+	}
+
+
+	anim_ccd1(*e, (scene::IBoneSceneNode &) *(e->getParent()), vec, 1,
+			drv);
+	anim_ccd1(*f, (scene::IBoneSceneNode &) *(f->getParent()), vec1, 1,
+			drv);
+
+	++frame;
+	target.setPosition(vec);
+
+}
 int main() {
 
 	Input input;
@@ -306,7 +373,7 @@ int main() {
 	node1 = scene->addAnimatedMeshSceneNode(
 			scene->getMesh("media/zombie/zombie.b3d"));
 	node1->setScale(core::vector3df(7, 7, 7));
-	node1->setPosition(core::vector3df(0, 90, -150));
+	node1->setPosition(core::vector3df(0, 90, 150));
 	node1->setRotation(core::vector3df(0, -0, 0));
 	node1->getMaterial(0).NormalizeNormals = true;
 	node1->setFrameLoop(2, 18);
@@ -356,17 +423,23 @@ int main() {
 	textinfo->setOverrideFont(font);
 	textinfo->setWordWrap(true);
 
+	int maxfps=0,minfps=9999,sumfps=0,fcount=0;
 	int lastFPS = -1;
 	float wheel = 0;
 
-	scene::IBoneSceneNode *bone, *rootbone = node->getJointNode((u32) 0);
+	scene::IBoneSceneNode *bone, *e1, *e2, *rootbone = node->getJointNode(
+			(u32) 0);
+
+	e1 = node->getJointNode("Joint23");
+	e2 = node->getJointNode("Joint19");
 	bone = node->getJointNode("Joint13");
 	Target target(dev, 0, 0, 0);
 	target.show();
 
-	core::vector3df vec, normal, old = node1->getAbsolutePosition(),r;
+	core::vector3df vec, normal, v1, v2, old = node1->getAbsolutePosition(), r;
+
 	float delta = 2;
-r.X=30;
+	r.X = 30;
 //main loop
 
 	while (dev->run()) {
@@ -387,6 +460,14 @@ r.X=30;
 			textinfo->setText(istr.c_str());
 			dev->setWindowCaption(str.c_str());
 			lastFPS = fps;
+
+			sumfps+=fps;
+			++fcount;
+			if(fps > maxfps)
+				maxfps=fps;
+			if((fps < minfps) && fcount > 2)
+				minfps = fps;
+			std::cout<<" min: "<<minfps<<" max: "<<maxfps<<" avg: "<<sumfps/fcount<<std::endl;
 		}
 
 // keys ===============
@@ -406,7 +487,7 @@ r.X=30;
 								BONELABEL))) {
 
 					tsn->remove();
-					std::cout << tsn << std::endl;
+
 				}
 
 				node->setDebugDataVisible(
@@ -483,38 +564,67 @@ r.X=30;
 			camera->setTarget(vec);
 		}
 		if (input.isPressed(irr::KEY_LEFT)) {
-			node->setPosition(node->getAbsolutePosition() + core::vector3df(0, 0, -1));
+			node->setPosition(
+					node->getAbsolutePosition() + core::vector3df(0, 0, -1));
 		}
 		if (input.isPressed(irr::KEY_RIGHT)) {
-			node->setPosition(node->getAbsolutePosition() + core::vector3df(0, 0, 1));
+			node->setPosition(
+					node->getAbsolutePosition() + core::vector3df(0, 0, 1));
 		}
 		if (input.isPressed(irr::KEY_UP)) {
-			node->setPosition(node->getAbsolutePosition() + core::vector3df(0, 10, 0));
+			node->setPosition(
+					node->getAbsolutePosition() + core::vector3df(0, 10, 0));
 		}
 		if (input.isPressed(irr::KEY_DOWN)) {
-			node->setPosition(node->getAbsolutePosition() + core::vector3df(0, -10, 0));
+			node->setPosition(
+					node->getAbsolutePosition() + core::vector3df(0, -10, 0));
 		}
 
 //drawing scene =====================
-		scene->drawAll();scene->drawAll();
+		scene->drawAll();
+		scene->drawAll();
 		guienv->drawAll();
 
 //ending scene =====================
 		drv->endScene();
 
 		//frame animation stairs climbing
-		vec = node1->getAbsolutePosition();
+//		vec = node1->getAbsolutePosition();
+//		delta = old.Z - vec.Z;
+//
+//		old = vec;
+//		if ((-540 < vec.Z) && (vec.Z < -265) && (delta == 0)) {
+//			vec.Y += 5;
+//		}
+//		if (-600 > vec.Z)
+//			vec.Z = -150;
+//
+//		vec.Z -= 0.25;
+//		node1->setPosition(vec);
+//		node1->updateAbsolutePosition();
+
+		vec = node->getAbsolutePosition();
 		delta = old.Z - vec.Z;
+
 		old = vec;
 		if ((-540 < vec.Z) && (vec.Z < -265) && (delta == 0)) {
 			vec.Y += 5;
+			target.setPosition(vec + core::vector3df(0, 10, -20));
 		}
-		if (-600 > vec.Z)
-			vec.Z = -150;
-
+		if (-600 > vec.Z) {
+			vec.Z = -300;
+			target.setPosition(core::vector3df(0, 0, -300));
+		}
 		vec.Z -= 0.25;
-		node1->setPosition(vec);
-		node1->updateAbsolutePosition();
+		node->setPosition(vec);
+		node->updateAbsolutePosition();
+
+//		target.setPosition(e1->getAbsolutePosition()+core::vector3df(0, 1, -1));
+//		anim_ccd1(*e1, (scene::IBoneSceneNode &) *(e1->getParent()),
+//				target.getAbsolutePosition(), 1, drv);
+
+		stairsclimb(node, dev);
+		rootbone->updateAbsolutePositionOfAllChildren();
 
 	} //mainloop end
 
